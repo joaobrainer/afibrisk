@@ -155,8 +155,8 @@
 
                 <p data-translate="alcohol_consumption">22. Alcohol consumption:
                     <input type="radio" name="22_alcohol_consumption" value="0"> 0
-                    <input type="radio" name="22_alcohol_consumption" value="1_7"> 0-7 std. drinks per week
-                    <input type="radio" name="22_alcohol_consumption" value="8_14"> 7-14 std. drinks per week
+                    <input type="radio" name="22_alcohol_consumption" value="0_7"> 0-7 std. drinks per week
+                    <input type="radio" name="22_alcohol_consumption" value="7_14"> 7-14 std. drinks per week
                     <input type="radio" name="22_alcohol_consumption" value="15_plus"> 15+ std. drinks per week
                     <input type="radio" name="22_alcohol_consumption" value="none"> no consumption
                 </p>
