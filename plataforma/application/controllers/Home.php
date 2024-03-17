@@ -54,6 +54,7 @@ class Home extends CI_Controller {
 			'pergunta_22' => $this->input->post('22_alcohol_consumption') ? $this->input->post('22_alcohol_consumption') : null,
 			'pergunta_23' => $this->input->post('23_symptomatic_stenosis') ? $this->input->post('23_symptomatic_stenosis') : null,
 			'pergunta_24' => $this->input->post('24_significant_murmur') ? $this->input->post('24_significant_murmur') : null,
+			'pergunta_24_1' => $this->input->post('24_1_precordial_murmur') ? $this->input->post('24_1_precordial_murmur') : null,
 			'pergunta_25' => $this->input->post('25_valve_disease') ? $this->input->post('25_valve_disease') : null,
 			'pergunta_26' => $this->input->post('26_vascular_disease') ? $this->input->post('26_vascular_disease') : null,
 			'pergunta_27' => $this->input->post('27_white') ? $this->input->post('27_white') : null,
@@ -72,6 +73,8 @@ class Home extends CI_Controller {
 			'pergunta_40' => $this->input->post('40_bnp_level') ? $this->input->post('40_bnp_level') : 0
 
 		);
+
+		var_dump($dados);
 		// 1.BRAFIL
 		$this->calculoBRAFIL($dados);
 
@@ -89,6 +92,24 @@ class Home extends CI_Controller {
 
 		// 6. STAF
 		$this->calculaSTAF($dados);
+
+		// 7. Framingham AF risk score 
+		$this->calculaFRAMI($dados);
+
+		//8. HAVOC
+		$this->calculaHAVOC($dados);
+
+		//9. ARIC Score
+		$this->calculaARIC($dados);
+
+		//10.Taiwan AF Score
+		$this->calculaTAIWANAF($dados);
+
+		//11. SUITA Score
+		$this->calculaSUITA($dados);
+
+		//12. Hamada Score
+		$this->calculaHAMADA($dados);
 		
 		
 	}
@@ -223,7 +244,7 @@ class Home extends CI_Controller {
 		if ($dados['pergunta_20'] == 'yes') {
 			$pontuacaoHARMS2AF += 1;
 		}
-		if ($pergunta['pergunta_2'] == 'male') {
+		if ($dados['pergunta_2'] == 'male') {
 			$pontuacaoHARMS2AF += 2;
 		}
 		if ($dados['pergunta_14'] == 'yes') {
@@ -261,9 +282,13 @@ class Home extends CI_Controller {
 				break;
 		}
 
+		echo '<br>';
+		var_dump($respostaHARMS2AF);
+		echo '<br>';
+
 	}
 
-	public function calculaHATCH() { 
+	public function calculaHATCH($dados) { 
 		$pontuacaoHATCH = 0;
 		$respostaHATCH = '';
 
@@ -316,6 +341,10 @@ class Home extends CI_Controller {
 				$respostaHATCH = 'Incidence (per 1000 person-years of follow-up) of Afib detection = 0.8 / Hazard Ratio 1';
 				break;
 		}
+
+		echo '<br>';
+		var_dump($respostaHATCH);
+		echo '<br>';
 	}
 
 	public function calculaSTAF($dados) { 
@@ -340,6 +369,563 @@ class Home extends CI_Controller {
 		}else{
 			$respostaSTAF = 'High chance of Afib detection on follow-up (3 months)  - AUC of 0.94 (0.92-0.96, SD 0.012; p-value < 0.001)';
 		}
+
+		echo '<br>';
+		var_dump($respostaSTAF);
+		echo '<br>';
+	}
+
+	public function calculaFRAMI($dados) { 
+		$pontuacaoFRAMI = 0;
+		$respostaFRAMI = '';
+
+		$male = 0;
+		$female = 0;
+
+		if ($dados['pergunta_2'] == 'male') {
+			$male = 1;
+		}elseif ($dados['pergunta_2'] == 'female') {
+			$female = 1;
+		}
+
+		if ($dados['pergunta_1'] >= 85) {
+			$pontuacaoFRAMI += 8;
+		}elseif ($dados['pergunta_1'] >= 80 && $dados['pergunta_1'] <= 84) {
+			$pontuacaoFRAMI += 7;
+		}elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
+			if ($male == 1) {
+				$pontuacaoFRAMI += 7;
+			}elseif ($female == 1) {
+				$pontuacaoFRAMI += 6;
+			}
+		}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
+			if ($male == 1) {
+				$pontuacaoFRAMI += 6;
+			}elseif ($female == 1) {
+				$pontuacaoFRAMI += 4;
+			}
+		}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
+			if ($male == 1) {
+				$pontuacaoFRAMI += 5;
+			}elseif ($female == 1) {
+				$pontuacaoFRAMI += 3;
+			}
+		}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+			if ($male == 1) {
+				$pontuacaoFRAMI += 4;
+			}elseif ($female == 1) {
+				$pontuacaoFRAMI += 1;
+			}
+		}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
+			if ($male == 1) {
+				$pontuacaoFRAMI += 3;
+			}elseif ($female == 1) {
+				$pontuacaoFRAMI += 0;
+			}
+		}elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 54) {
+			if ($male == 1) {
+				$pontuacaoFRAMI += 2;
+			}elseif ($female == 1) {
+				$pontuacaoFRAMI += -2;
+			}
+		}elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 49) {
+			if ($male == 1) {
+				$pontuacaoFRAMI += 1;
+			}elseif ($female == 1) {
+				$pontuacaoFRAMI += -3;
+			}
+		}
+
+		if ($dados['pergunta_15'] >= 160) {
+			$pontuacaoFRAMI++;
+		}
+
+		if ($dados['pergunta_8'] == 'yes') {
+			$pontuacaoFRAMI++;
+		}
+
+		if ($dados['pergunta_19'] >= 160 && $dados['pergunta_19'] <= 190) {
+			$pontuacaoFRAMI++;
+		}elseif ($dados['pergunta_19'] >= 200) {
+			$pontuacaoFRAMI += 2;
+		}
+
+		if ($dados['pergunta_24'] == 'yes') {
+			if($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 84) {
+				$pontuacaoFRAMI ++;
+			}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 74) {
+				$pontuacaoFRAMI += 2;
+			}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 64) {
+				$pontuacaoFRAMI += 4;
+			}elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 54) {
+				$pontuacaoFRAMI += 5;
+			}
+		}
+
+		if ($dados['pergunta_9'] == 'yes') {
+			if ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 74) {
+				$pontuacaoFRAMI += 2;
+			}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 64) {
+				$pontuacaoFRAMI += 6;
+			}elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 54) {
+				$pontuacaoFRAMI += 10;
+			}
+		}
+
+		switch ($pontuacaoFRAMI) {		
+			case 0:
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = < 1% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';	
+				break;
+
+			case 1:
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 2% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';	
+				break;
+			
+			case 2:
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 2% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				break;
+
+			case 3:
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 3% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				break;
+
+			case 4:
+				$respostaFRAMI = ' Chance of Afib detection on follow-up (10 years) = 4% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				break;
+
+			case 5:
+				$respostaFRAMI = '> Chance of Afib detection on follow-up (10 years) = 6% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				break;
+
+			case 6:
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 8% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				break;
+
+			case 7:
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 12% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				break;
+
+			case 8:
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 16% {C	statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				break;
+
+			case 9:
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 22% {C	statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				break;
+			
+			default:
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) => 30% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this	risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				break;
+		}
+
+		echo '<br>';
+		var_dump($respostaFRAMI);
+		echo '<br>';
+		
+	}
+
+	public function calculaHAVOC($dados) { 
+		$pontuacaoHAVOC = 0;
+		$respostaHAVOC = '';
+
+		if ($dados['pergunta_1'] >= 75) {
+			$pontuacaoHAVOC += 2;
+		}
+
+		if ($dados['pergunta_8'] == 'yes') {
+			$pontuacaoHAVOC += 2;
+		}
+
+		if ($dados['pergunta_25'] == 'yes') {
+			$pontuacaoHAVOC += 2;
+		}
+
+		if ($dados['pergunta_20'] == 'yes') {
+			$pontuacaoHAVOC++;
+		}
+
+		if ($dados['pergunta_26'] == 'yes') {
+			$pontuacaoHAVOC++;
+		}
+
+		if ($dados['pergunta_9'] == 'yes') {
+			$pontuacaoHAVOC += 4;
+		}
+
+		if ($dados['pergunta_6'] == 'yes') {
+			$pontuacaoHAVOC += 2;
+		}
+
+		switch ($pontuacaoHAVOC) {
+			case 0:
+			case 1:
+			case 2:
+			case 3:	
+			case 4:
+				$respostaHAVOC = 'Low chance of Afib detection on follow; 2.5%';
+				break;
+			
+			case 5:
+			case 6:
+			case 7:	
+			case 8:
+			case 9:
+				$respostaHAVOC = 'Medium chance of Afib detection on follow; 11.8%';
+				break;
+
+			// 10-14	
+			default: 
+				$respostaHAVOC = 'High chance of Afib detection on follow; 24.9%';
+				break;
+		}
+
+		echo '<br>';
+		var_dump($respostaHAVOC);
+		echo '<br>';
+	}
+
+	public function calculaARIC($dados) { 
+		$pontuacaoARIC = 0;
+		$respostaARIC = '';
+
+		if ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] < 55) {
+			$pontuacaoARIC += 3;
+		}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] < 60) {
+			$pontuacaoARIC += 4;
+		}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+			$pontuacaoARIC += 8;
+		}
+
+		if ($dados['pergunta_28'] == 'yes') {
+			$pontuacaoARIC += -4;
+		}
+
+		if ($dados['pergunta_12'] >= 164 && $dados['pergunta_12'] < 173) {
+			$pontuacaoARIC ++;
+		}elseif ($dados['pergunta_12'] >= 173) {
+			$pontuacaoARIC += 4;
+		}
+
+		if ($dados['pergunta_15'] < 100) {
+			$pontuacaoARIC += -1;
+		}elseif ($dados['pergunta_15'] >= 120 && $dados['pergunta_15'] < 140) {
+			$pontuacaoARIC ++;
+		}elseif ($dados['pergunta_15'] >= 140 && $dados['pergunta_15'] < 160) {
+			$pontuacaoARIC += 2;
+		}elseif ($dados['pergunta_15'] >= 160) {
+			$pontuacaoARIC += 3;
+		}
+
+		if ($dados['pergunta_8'] == 'yes') {
+			$pontuacaoARIC += 3;
+		}
+		if ($dados['pergunta_14'] == 'yes') {
+			$pontuacaoARIC += 3;
+		}
+		if ($dados['pergunta_14_1'] == 'yes') {
+			$pontuacaoARIC ++;
+		}
+		if ($dados['pergunta_24_1'] == 'yes') {
+			$pontuacaoARIC += 2;
+		}
+		if ($dados['pergunta_29'] == 'yes') {
+			$pontuacaoARIC += 2;
+		}
+		if ($dados['pergunta_9'] == 'yes') {
+			$pontuacaoARIC += 2;
+		}
+
+		if ($dados['pergunta_6'] == 'yes') {
+			if ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] < 50) {
+				$pontuacaoARIC += 5;
+			}elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] < 60) {
+				$pontuacaoARIC += 3;
+			}
+		}
+
+		if ($dados['pergunta_17'] == 'yes') {
+			if ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] < 55) {
+				$pontuacaoARIC += 4;
+			}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] < 60) {
+				$pontuacaoARIC ++;
+			}
+		}
+
+		if ($dados['pergunta_18'] == 'yes') {
+			if ($dados['pergunta_27'] == 'yes') {
+				$pontuacaoARIC += 4;
+			}
+		}
+
+		if ($pontuacaoARIC <= 1) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = <1%";
+		} elseif ($pontuacaoARIC >= 2 && $pontuacaoARIC <= 6) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 1%";
+		} elseif ($pontuacaoARIC >= 7 && $pontuacaoARIC <= 8) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 2%";
+		} elseif ($pontuacaoARIC == 9) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 3%";
+		} elseif ($pontuacaoARIC >= 10 && $pontuacaoARIC <= 11) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 4%";
+		} elseif ($pontuacaoARIC == 12) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 6%";
+		} elseif ($pontuacaoARIC == 13) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 7%";
+		} elseif ($pontuacaoARIC == 14) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 9%";
+		} elseif ($pontuacaoARIC == 15) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 11%";
+		} elseif ($pontuacaoARIC == 16) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 13%";
+		} elseif ($pontuacaoARIC == 17) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 16%";
+		} elseif ($pontuacaoARIC == 18) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = 20%";
+		} elseif ($pontuacaoARIC >= 19) {
+			$respostaARIC = "Chance (%) of Afib in 10 years = >24%";
+		} 
+
+		echo '<br>';
+		var_dump($respostaARIC);
+		echo '<br>';
+	}
+
+	public function calculaTAIWANAF($dados) { 
+		$pontuacaoTAIWANAF = 0;
+		$respostaTAIWANAF = '';
+
+		if ($dados['pergunta_1'] >= 80) {
+			$pontuacaoTAIWANAF += 8;
+		}elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
+			$pontuacaoTAIWANAF += 5;
+		}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
+			$pontuacaoTAIWANAF += 4;
+		}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
+			$pontuacaoTAIWANAF += 3;	
+		}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+			$pontuacaoTAIWANAF += 2;
+		}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
+			$pontuacaoTAIWANAF += 1;
+		}elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 49) {
+			$pontuacaoTAIWANAF += -1;
+		}elseif ($dados['pergunta_1'] >= 40 && $dados['pergunta_1'] <= 44) {
+			$pontuacaoTAIWANAF += -2;
+		}
+
+		if ($dados['pergunta_2'] == 'male') {
+			$pontuacaoTAIWANAF += 1;
+		}
+
+		if ($dados['pergunta_8'] == 'yes') {
+			$pontuacaoTAIWANAF += 1;
+		}
+
+		if ($dados['pergunta_9'] == 'yes') {
+			$pontuacaoTAIWANAF += 2;
+		}
+
+		if ($dados['pergunta_6'] == 'yes') {
+			$pontuacaoTAIWANAF += 1;
+		}
+
+		if ($dados['pergunta_31'] == 'yes') {
+			$pontuacaoTAIWANAF += 1;
+		}
+
+		switch ($dados['pergunta_22']) {
+			case '0_7':
+			case '7_14':
+			case '15_plus':	
+				$pontuacaoTAIWANAF += 1;
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+
+		if ($pontuacaoTAIWANAF >= -3 && $pontuacaoTAIWANAF <= 3) {
+			$respostaTAIWANAF = 'Low incidence of Afib detection on follow; 0.08% (2 years) 1.26% (10 years) and 2.81% (16 years)';
+		}elseif ($pontuacaoTAIWANAF >= 4 && $pontuacaoTAIWANAF <= 9) {
+			$respostaTAIWANAF = 'Medium incidence of Afib detection on follow; 2.03% (2 years) 11.13% (10 years) and 19.59% (16 years)';
+		}elseif ($pontuacaoTAIWANAF >= 10) {
+			$respostaTAIWANAF = 'High incidence of Afib detection on follow; 7.82% (2 years) 27.9% (10 years) and 38.9% (16 years)';
+		}
+
+		echo '<br>';
+		var_dump($respostaTAIWANAF);
+		echo '<br>';
+
+	}
+
+	public function calculaSUITA($dados) { 
+		$pontuacaoSUITA = 0;
+		$respostaSUITA = 'none';
+
+		if ($dados['pergunta_1'] >= 30) {
+			$male = 0;
+			$female = 0;
+			if ($dados['pergunta_2'] == 'male') {
+				$male = 1;
+			}elseif ($dados['pergunta_2'] == 'female') {
+				$female = 1;
+			}
+
+			if ($dados['pergunta_1'] >= 30 && $dados['pergunta_1'] <= 49) {
+				if ($female == 1) {
+					$pontuacaoSUITA += -5;
+				}
+			}elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 59) {
+				if ($male == 1) {
+					$pontuacaoSUITA += 3;
+				}
+			}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 69) {
+				if ($male == 1) {
+					$pontuacaoSUITA += 7;
+				}elseif ($female == 1) {
+					$pontuacaoSUITA += 5;
+				}
+			}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 79) {				
+				$pontuacaoSUITA += 9;				
+			}
+
+			if ($dados['pergunta_8'] == 'yes') {
+				$pontuacaoSUITA += 2;
+			}
+
+			if ($dados['pergunta_20_1'] == 'yes') {
+				$pontuacaoSUITA += 2;
+			}
+
+			if($dados['pergunta_22'] == '15_plus') {
+				$pontuacaoSUITA += 2;
+			}
+
+			if ($dados['pergunta_14'] == 'yes') {
+				$pontuacaoSUITA += 1;
+			}	
+
+			if ($dados['pergunta_33'] >= 130 && $dados['pergunta_33'] <= 189) {
+				$pontuacaoSUITA += -1;
+			}
+
+			if ($dados['pergunta_32'] == 'yes') {
+				$pontuacaoSUITA += 4;
+			}
+			
+			if ($dados['pergunta_6'] == 'yes') {
+				$pontuacaoSUITA += 2;
+			}
+
+			if ($dados['pergunta_24_1'] == 'yes') {
+				if ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 69) {
+					$pontuacaoSUITA += 2;
+				}elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 59) {
+					$pontuacaoSUITA += 6;
+				}elseif ($dados['pergunta_1'] >= 30 && $dados['pergunta_1'] <= 49) {
+					$pontuacaoSUITA += 8;
+				}
+			}
+
+			if ($pontuacaoSUITA < 0) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF <0.5 %";
+			} elseif ($pontuacaoSUITA == 0) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 0.8%";
+			} elseif ($pontuacaoSUITA >= 1 && $pontuacaoSUITA <= 2) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 1%";
+			} elseif ($pontuacaoSUITA == 3) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 2%";
+			} elseif ($pontuacaoSUITA == 4) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 3%";
+			} elseif ($pontuacaoSUITA >= 5 && $pontuacaoSUITA <= 7) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 4%";
+			} elseif ($pontuacaoSUITA >= 8 && $pontuacaoSUITA <= 9) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 7%";
+			} elseif ($pontuacaoSUITA >= 10 && $pontuacaoSUITA <= 11) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 9%";
+			} elseif ($pontuacaoSUITA == 12) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 12%";
+			} elseif ($pontuacaoSUITA == 13) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 16%";
+			} elseif ($pontuacaoSUITA >= 14 && $pontuacaoSUITA <= 15) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 20%";
+			} elseif ($pontuacaoSUITA >= 16) {
+				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 27%";
+			}
+
+		}
+
+		echo '<br>';
+		var_dump($respostaSUITA);
+		echo '<br>';
+
+
+	}
+
+	public function calculaHAMADA($dados) { 
+		$pontuacaoHAMADA = 0;
+		$respostaHAMADA = 'none';
+
+		if ($dados['pergunta_1'] >= 40 && $dados['pergunta_1'] <= 79) {
+			if ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 59) {
+				$pontuacaoHAMADA += 2;
+			}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+				$pontuacaoHAMADA += 3;
+			}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
+				$pontuacaoHAMADA += 4;
+			}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 79) {
+				$pontuacaoHAMADA += 5;
+			}
+
+			if ($dados['pergunta_2'] == 'male') {
+				$pontuacaoHAMADA += 2;
+				if ($dados['pergunta_34'] >= 85) {
+					$pontuacaoHAMADA += 1;
+				}
+			}elseif ($dados['pergunta_2'] == 'female') {
+				if ($dados['pergunta_34'] >= 90) {
+					$pontuacaoHAMADA += 1;
+				}
+			}
+
+			if ($dados['pergunta_16'] >= 90) {
+				$pontuacaoHAMADA += 1;
+			}
+
+			if ($dados['pergunta_22'] == '7_14') {
+				$pontuacaoHAMADA += 1;
+			}elseif ($dados['pergunta_22'] == '15_plus') {
+				$pontuacaoHAMADA += 2;
+			}
+
+			if ($dados['pergunta_35'] <= 50) {
+				$pontuacaoHAMADA += 1;
+			}
+
+			if ($dados['pergunta_36'] == 'yes') {
+				$pontuacaoHAMADA += 3;
+			}
+
+			if ($dados['pergunta_18'] == 'yes') {
+				$pontuacaoHAMADA += 1;
+			}
+
+			if($dados['pergunta_29'] == 'yes') {
+				$pontuacaoHAMADA += 5;
+			}
+
+			if ($dados['pergunta_37'] == 'yes') {
+				$pontuacaoHAMADA += 2;
+			}
+
+			//chamar a imagem do grafico com a resposta			
+			$respostaHAMADA = $pontuacaoHAMADA;
+			
+		}
+
+		echo '<br>';
+		var_dump($respostaHAMADA);
+		echo '<br>';
 	}
 
 
