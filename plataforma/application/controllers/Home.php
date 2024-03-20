@@ -74,9 +74,9 @@ class Home extends CI_Controller {
 
 		);
 
-		var_dump($dados);
+		// var_dump($dados);
 		// 1.BRAFIL
-		$this->calculoBRAFIL($dados);
+		$this->calculaBRAFIL($dados);
 
 		// 2. C2HEST
 		$this->calculaC2HEST($dados);
@@ -110,11 +110,29 @@ class Home extends CI_Controller {
 
 		//12. Hamada Score
 		$this->calculaHAMADA($dados);
+
+		//13. MHS Score
+		$this->calculaMHS($dados);
+
+		//14. CHA2DS2-VASc
+		$this->calculaCHA2DS2($dados);
+
+		//15. Mayo Score
+		$this->calculaMAYO($dados);
+
+		//16. The Heinz Nixdorf Recall Study
+		$this->calculaTHNRS($dados);
+
+		//17. Takase
+		$this->calculaTAKASE($dados);
+
+		//18. ASAS
+		$this->calculaASAS($dados);
 		
 		
 	}
 
-	public function calculoBRAFIL($dados) { 
+	public function calculaBRAFIL($dados) { 
 		$pontuacaoBRAFIL = 0;
 		$respostaBRAFIL = '';
 		if ($dados['pergunta_1'] >= 70) {
@@ -225,7 +243,109 @@ class Home extends CI_Controller {
 	}
 
 	public function calculaCHARGEAF($dados) { 
-		// Verificar
+
+		$age = ($dados['pergunta_1'] >= 46 && $dados['pergunta_1'] <= 94) ? $dados['pergunta_1'] : "none";
+		$race = $dados['pergunta_27'] === 'yes' ? 1 : ($dados['pergunta_27'] === 'no' ? 0 : 'none');
+		$height = ($dados['pergunta_12'] >= 121.9 && $dados['pergunta_12'] <= 241.4) ? $dados['pergunta_12'] : "none";
+		$weight = ($dados['pergunta_13'] >= 31.75 && $dados['pergunta_13'] <= 185.1) ? $dados['pergunta_13'] : "none";
+		$systolicBP = ($dados['pergunta_15'] >= 71 && $dados['pergunta_14'] <= 248) ? $dados['pergunta_15'] : "none";
+		$diastolicBP = ($dados['pergunta_16'] >= 23 && $dados['pergunta_15'] <= 136) ? $dados['pergunta_16'] : "none";
+		$smoking = $dados['pergunta_14'] === 'yes' ? 1 : ($dados['pergunta_14'] === 'no' ? 0 : 'none');
+		$hypertensionTreatment = $dados['pergunta_8'] === 'yes' ? 1 : ($dados['pergunta_8'] === 'no' ? 0 : 'none');
+		$diabetes = $dados['pergunta_17'] === 'yes' ? 1 : ($dados['pergunta_17'] === 'no' ? 0 : 'none');
+		$heartFailure = $dados['pergunta_9'] === 'yes' ? 1 : ($dados['pergunta_9'] === 'no' ? 0 : 'none');
+		$myocardialInfarction = $dados['pergunta_6'] === 'yes' ? 1 : ($dados['pergunta_6'] === 'no' ? 0 : 'none');
+		$eCGLVH = $dados['pergunta_18'] === 'yes' ? 1 : ($dados['pergunta_18'] === 'no' ? 0 : 'none');
+
+		$pRIntervalLT = 0;
+		$pRIntervalGT = 0;
+		if ($dados['pergunta_19'] < 120 && $dados['pergunta_19'] >= 56) {
+			$pRIntervalLT = 1;
+		} elseif ($dados['pergunta_19'] > 199 && $dados['pergunta_19'] <= 481) {
+			$pRIntervalGT = 1;
+		} elseif ($dados['pergunta_19'] < 56 || $dados['pergunta_19'] > 481) {
+			$pRIntervalLT = $pRIntervalGT = "none";
+		}
+
+		$normal = array(
+			'heigth' => 22.5 * (pow($heigth / 100, 2))
+		);
+
+		
+
+		$coefSimple = [
+			'Age' => 0.010616,
+			'Race (White)' => 0.46491,
+			'Height' => 0.02478,
+			'Weight' => 0.0077,
+			'SystolicBP' => 0.00986,
+			'DiastolicBP' => -0.01013,
+			'Smoking' => 0.35931,
+			'Hypertension Treatment' => 0.34889,
+			'Diabetes' => 0.23666,
+			'Heart Failure' => 0.70127,
+			'Myocardial Infarction' => 0.49536,
+			'ECG LVH' => 0,
+			'PR Interval LT' => 0,
+			'PR Interval GT' => 0
+		];
+		
+		$means = [
+			'Age' => 65.096357,
+			'Race (White)' => 0.8335309,
+			'Height' => 166.554394,
+			'Weight' => 78.2681334,
+			'SystolicBP' => 130.7214969,
+			'DiastolicBP' => 71.7049472,
+			'Smoking' => 0.133645,
+			'Hypertension Treatment' => 0.41576865,
+			'Diabetes' => 0.1528886,
+			'Heart Failure' => 0.0378314,
+			'Myocardial Infarction' => 0.0594417,
+			'ECG LVH' => 0.02656822,
+			'PR Interval LT' => 0.0193577,
+			'PR Interval GT' => 0.1195301
+		];
+
+		// Inicialize as variáveis com valores de exemplo, você precisará substituir isso pelos valores reais
+		// As variáveis devem ser obtidas por meio do input do usuário, arquivo ou banco de dados
+		$age = 65; // em anos
+		$height_in_inches = 0; // altura em polegadas, se aplicável
+		$height_in_cm = 160; // altura em centímetros, se aplicável
+		$weight_in_pounds = 0; // peso em libras, se aplicável
+		$weight_in_kg = 70; // peso em quilogramas, se aplicável
+		$systolicBP = 120; // pressão arterial sistólica
+		$diastolicBP = 80; // pressão arterial diastólica
+		$prInterval = 100; // intervalo PR
+		$answerB3 = 'yes'; // resposta para a pergunta B3
+
+		// Valores de exemplo para converter unidades
+		$height = ($height_in_inches > 0) ? $height_in_inches / 0.393700787 : $height_in_cm;
+		$weight = ($weight_in_pounds > 0) ? $weight_in_pounds / 2.20462262 : $weight_in_kg;
+
+		// Converta as respostas "yes"/"no" em "y"/"n"
+		$answerB3 = strtolower($answerB3) === 'yes' ? 'y' : (strtolower($answerB3) === 'no' ? 'n' : $answerB3);
+
+		// Valide as faixas de valores para diferentes variáveis
+		$validatedAge = ($age >= 46 && $age <= 94) ? $age : null;
+		$validatedWeight = ($weight >= 31.75 && $weight <= 185.1) ? $weight : null;
+		// Repita a validação para outras variáveis conforme necessário
+
+		// Realize os cálculos das somas dos produtos dos valores pelas médias e coeficientes
+		$riskScoreSimple = $age * $coefSimple['Age'] + $height * $coefSimple['Height'] + $weight * $coefSimple['Weight']; // ...continuar para outros valores
+		// Realize os cálculos de risco
+		$risk = (1 - pow(0.9719033184, exp($riskScoreSimple - 12.4411305))) * 100; // para o risco simples
+
+		// Condicional para verificar os valores de corte
+		$finalRisk = $risk > 0.2638808 ? 0.264 : $risk;
+
+		
+		echo "<br>";
+		echo "O risco calculado é: " . number_format($finalRisk, 3) . "%\n";
+		echo "<br>";
+
+
+		
 	}
 
 	public function calculaHARMS2AF($dados) { 
@@ -926,6 +1046,360 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaHAMADA);
 		echo '<br>';
+	}
+
+	public function calculaMHS($dados) { 
+		$pontuacaoMHS = 0;
+		$respostaMHS = 'none';
+
+		if ($dados['pergunta_1'] >= 50) {
+			if ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
+				$pontuacaoMHS++;
+			}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+				$pontuacaoMHS =+ 2;
+			}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
+				$pontuacaoMHS =+ 3;
+			}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
+				$pontuacaoMHS =+ 4;
+			}elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
+				$pontuacaoMHS =+ 5;
+			}elseif ($dados['pergunta_1'] >= 80 && $dados['pergunta_1'] <= 84) {
+				$pontuacaoMHS =+ 6;
+			}elseif ($dados['pergunta_1'] >= 85) {
+				$pontuacaoMHS =+ 7;
+			}
+
+			if ($dados['pergunta_2'] == 'female') {
+				$pontuacaoMHS =+ -1;
+			}
+	
+			if ($dados['pergunta_20_1'] == 'yes') {
+				if ($dados['pergunta_20_2'] >= 25 && $dados['pergunta_20_2'] <= 31) {
+					$pontuacaoMHS++;
+				}elseif ($dados['pergunta_20_2'] >= 32 && $dados['pergunta_20_2'] <= 38) {
+					$pontuacaoMHS =+ 2;
+				}elseif ($dados['pergunta_20_2'] >= 39) {
+					$pontuacaoMHS =+ 3;
+				}
+			}
+	
+			if ($dados['pergunta_6'] == 'yes') {
+				$pontuacaoMHS++;
+			}
+	
+			if ($dados['pergunta_26'] == 'yes') {
+				$pontuacaoMHS++;
+			}
+	
+			if ($dados['pergunta_8'] == 'yes') {
+				$pontuacaoMHS++;
+			}
+	
+			if ($dados['pergunta_15'] >= 160) {
+				$pontuacaoMHS++;
+			}
+	
+			if ($dados['pergunta_7'] == 'yes') {
+				$pontuacaoMHS++;
+			}
+	
+			if ($dados['pergunta_38'] == 'yes') {
+				$pontuacaoMHS++;
+			}
+	
+			if ($dados['pergunta_9'] == 'yes') {
+				if ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 54) {
+					$pontuacaoMHS =+ 6;
+				}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
+					$pontuacaoMHS =+ 5;
+				}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+					$pontuacaoMHS =+ 4;
+				}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
+					$pontuacaoMHS =+ 3;
+				}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
+					$pontuacaoMHS =+ 2;
+				}elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
+					$pontuacaoMHS =+ 1;
+				}
+			}
+	
+			switch ($pontuacaoMHS) {
+				case -1:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 1.0%';	
+					break;
+
+				case 0:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 1.4%';	
+					break;
+	
+				case 1:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 1.9%';	
+					break;
+				
+				case 2:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 2.7%';
+					break;
+	
+				case 3:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 3.8%';
+					break;
+	
+				case 4:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 5.3%';
+					break;
+	
+				case 5:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 7.5%';
+					break;
+	
+				case 6:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 10.5%';
+					break;
+	
+				case 7:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 14.6%';
+					break;
+	
+				case 8:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 20.1%';
+					break;
+	
+				case 9:
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 27.2%';
+					break;
+				
+				default:
+					$respostaMHS = 'There are no confident data for predicting the risk of AFib in patients with score ≥ 10 points - according to the original paper';
+					break;
+			}
+
+		}
+
+		echo '<br>';
+		var_dump($respostaMHS);
+		echo '<br>';	
+
+	}
+
+	public function calculaCHA2DS2($dados) { 
+
+		$pontuacaoCHA2DS2 = 0;
+		$respostaCHA2DS2 = '';
+
+		if ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 74) {
+			$pontuacaoCHA2DS2++;
+		}elseif ($dados['pergunta_1'] >= 75) {
+			$pontuacaoCHA2DS2 += 2;
+		}
+
+		if ($dados['pergunta_2'] == 'female') {
+			$pontuacaoCHA2DS2++;
+		}
+
+		if ($dados['pergunta_9'] == 'yes') {
+			$pontuacaoCHA2DS2++;
+		}
+
+		if ($dados['pergunta_8'] == 'yes') {
+			$pontuacaoCHA2DS2++;
+		}
+
+		if ($dados['pergunta_30'] == 'yes') {
+			$pontuacaoCHA2DS2 += 2;
+		}
+
+		if ($dados['pergunta_26'] == 'yes' || $dados['pergunta_6'] == 'yes' || $dados['pergunta_39'] == 'yes') {
+			$pontuacaoCHA2DS2++;
+		}
+
+		if ($dados['pergunta_17'] == 'yes') {
+			$pontuacaoCHA2DS2++;
+		}
+
+		switch ($pontuacaoCHA2DS2) {
+
+			case 0:
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 0.17 ; Hazard Ratio (95% CI) 1';	
+				break;
+
+			case 1:
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 0.21 ; Hazard Ratio (95% CI) 1.19 (1.09-1.29)';	
+				break;
+			
+			case 2:
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 0.49 ; Hazard Ratio (95% CI) 2.81 (2.60-3.04)';
+				break;
+
+			case 3:
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 0.94 ; Hazard Ratio (95% CI) 5.42 (5.02-5.84)';
+				break;
+
+			case 4:
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 1.65 ; Hazard Ratio (95% CI) 9.46 (8.78-10.19)';
+				break;
+
+			case 5:
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 2.31 ; Hazard Ratio (95% CI) 13.24 (12.26-14.29)';
+				break;
+
+			case 6:
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 2.75 ; Hazard Ratio (95% CI) 15.70 (14.47-17.04)';
+				break;
+
+			case 7:
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 3.39 ; Hazard Ratio (95% CI) 19.40 (17.71-21.25)';
+				break;
+
+			case 8:
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 4.09 ; Hazard Ratio (95% CI) 23.34 (20.59-26.46)';
+				break;
+
+			case 9:
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 6.71 ; Hazard Ratio (95% CI) 38.16 (30.54-47.67)';
+				break;
+			
+			default:
+				$respostaCHA2DS2 = '';
+				break;
+		}
+
+		echo '<br>';
+		var_dump($respostaCHA2DS2);
+		echo '<br>';	
+
+	}
+
+	public function calculaMAYO($dados) { 
+
+		$pontuacaoMAYO = 0;
+		$respostaMAYO = '';
+
+		if ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 75) {
+			$pontuacaoMAYO++;
+		}elseif ($dados['pergunta_1'] >= 76) {
+			$pontuacaoMAYO += 2;
+		}
+
+		if ($dados['pergunta_2'] == 'female') {
+			$pontuacaoMAYO++;
+		}
+
+		if ($dados['pergunta_9'] == 'yes') {
+			$pontuacaoMAYO += 3;
+		}
+
+		if ($dados['pergunta_25'] == 'yes') {
+			$pontuacaoMAYO += 2;
+		}
+
+		if ($dados['pergunta_6'] == 'yes') {
+			$pontuacaoMAYO += 2;
+		}
+
+		if ($dados['pergunta_8'] == 'yes') {
+			$pontuacaoMAYO++;
+		}
+
+		if ($dados['pergunta_17'] == 'yes') {
+			$pontuacaoMAYO++;
+		}
+
+		switch ($pontuacaoMAYO) {
+
+			case 0:
+				$respostaMAYO = 'Cumulative incidence of AF 0.07% / Odd ratio (95% CI) 1 (vs a score of	0)';	
+				break;
+
+			case 1:
+				$respostaMAYO = 'Cumulative incidence of AF 2.02% / Odd ratio (95% CI) 3.05 (2.67-3.49)	(vs a score of 0)';	
+				break;
+			
+			case 2:
+				$respostaMAYO = 'Cumulative incidence of AF 8.22% / Odd ratio (95% CI) 12.9 (11.4-14.8)	(vs a score of 0)';
+				break;
+
+			case 3:
+				$respostaMAYO = 'Cumulative incidence of AF 13.2% / Odd ratio (95% CI) 22.8 (19.9-26.1)	(vs a score of 0)';
+				break;
+
+			case 4:
+				$respostaMAYO = 'Cumulative incidence of AF 18.7% / Odd ratio (95% CI) 34.0 (29.2-39.5)	(vs a score of 0)';
+				break;				
+			
+			default:
+				$respostaMAYO = 'Cumulative incidence of AF 22.2% / Odd ratio (95% CI) 48.0	(41.9-54.9) (vs a score of 0)';
+				break;
+		}
+
+		echo '<br>';
+		var_dump($respostaMAYO);
+		echo '<br>';	
+	}
+
+	public function calculaTHNRS($dados) { 
+
+		$pontuacaoTHNRS = 0;
+		$respostaTHNRS = 'none';
+
+		if ($dados['pergunta_2'] == 'female') {
+			if ($dados['pergunta_40'] >= 45) {
+				$respostaTHNRS = 'A higher chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
+			}else{
+				$respostaTHNRS = 'A lower chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
+			}
+		}
+
+		if ($dados['pergunta_2'] == 'male') {
+			if ($dados['pergunta_40'] >= 31) {
+				$respostaTHNRS = 'A higher chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
+			}else{
+				$respostaTHNRS = 'A lower chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
+			}
+		}
+
+		echo '<br>';
+		var_dump($respostaTHNRS);
+		echo '<br>';	
+
+	}
+
+	public function calculaTAKASE($dados) { 
+
+		$pontuacaoTAKASE = 0;
+		$respostaTAKASE = 'none';
+
+		if ($dados['pergunta_40'] >= 11.4) {
+			$respostaTAKASE = 'A higher chance of incident AFib in a 5-years follow-up, based on BNP levels. Sensitivity and specificity of 81.1%, and 55.2%, respectively. The area under the ROC curve was 0.703';
+		}else{
+			$respostaTAKASE = 'A lower chance of incident AFib in a 5-years follow-up, based on BNP levels. Sensitivity and specificity of 81.1%, and 55.2%, respectively. The area under the ROC curve was 0.703';
+		}
+
+		echo '<br>';
+		var_dump($respostaTAKASE);
+		echo '<br>';	
+
+	}
+
+	public function calculaASAS($dados) { 
+
+		$respostaASAS = '';
+
+		$pontuacao_pergunta29 = 0;
+		if ($dados['pergunta_29'] == 'yes') {
+			$pontuacao_pergunta29++;
+		}
+
+		$e = exp(1);
+		$asas = -6 + ($dados['pergunta_1'] / 20) + ($dados['pergunta_3'] / 10) + (0.9 * $pontuacao_pergunta29);	
+		$probabilidade = (pow($e, $asas)) / (1 + pow($e, $asas));	
+		$probabilidadeEmProcentagem = $probabilidade * 100;
+
+		$respostaASAS = 'Probability of new AFib in a 3-year period: ' . number_format($probabilidadeEmProcentagem, 2) . '%';
+
+		echo '<br>';
+		var_dump($respostaASAS);
+		echo '<br>';
+		
 	}
 
 
