@@ -244,108 +244,129 @@ class Home extends CI_Controller {
 
 	public function calculaCHARGEAF($dados) { 
 
-		$age = ($dados['pergunta_1'] >= 46 && $dados['pergunta_1'] <= 94) ? $dados['pergunta_1'] : "none";
-		$race = $dados['pergunta_27'] === 'yes' ? 1 : ($dados['pergunta_27'] === 'no' ? 0 : 'none');
-		$height = ($dados['pergunta_12'] >= 121.9 && $dados['pergunta_12'] <= 241.4) ? $dados['pergunta_12'] : "none";
-		$weight = ($dados['pergunta_13'] >= 31.75 && $dados['pergunta_13'] <= 185.1) ? $dados['pergunta_13'] : "none";
-		$systolicBP = ($dados['pergunta_15'] >= 71 && $dados['pergunta_14'] <= 248) ? $dados['pergunta_15'] : "none";
-		$diastolicBP = ($dados['pergunta_16'] >= 23 && $dados['pergunta_15'] <= 136) ? $dados['pergunta_16'] : "none";
-		$smoking = $dados['pergunta_14'] === 'yes' ? 1 : ($dados['pergunta_14'] === 'no' ? 0 : 'none');
-		$hypertensionTreatment = $dados['pergunta_8'] === 'yes' ? 1 : ($dados['pergunta_8'] === 'no' ? 0 : 'none');
-		$diabetes = $dados['pergunta_17'] === 'yes' ? 1 : ($dados['pergunta_17'] === 'no' ? 0 : 'none');
-		$heartFailure = $dados['pergunta_9'] === 'yes' ? 1 : ($dados['pergunta_9'] === 'no' ? 0 : 'none');
-		$myocardialInfarction = $dados['pergunta_6'] === 'yes' ? 1 : ($dados['pergunta_6'] === 'no' ? 0 : 'none');
-		$eCGLVH = $dados['pergunta_18'] === 'yes' ? 1 : ($dados['pergunta_18'] === 'no' ? 0 : 'none');
-
-		$pRIntervalLT = 0;
-		$pRIntervalGT = 0;
-		if ($dados['pergunta_19'] < 120 && $dados['pergunta_19'] >= 56) {
-			$pRIntervalLT = 1;
-		} elseif ($dados['pergunta_19'] > 199 && $dados['pergunta_19'] <= 481) {
-			$pRIntervalGT = 1;
-		} elseif ($dados['pergunta_19'] < 56 || $dados['pergunta_19'] > 481) {
-			$pRIntervalLT = $pRIntervalGT = "none";
-		}
-
-		$normal = array(
-			'heigth' => 22.5 * (pow($heigth / 100, 2))
+		$Mvalues = array(
+			'D2' => ($dados['pergunta_1'] >= 46 && $dados['pergunta_1'] <= 94) ? $dados['pergunta_1'] : 0,
+			'D3' => $dados['pergunta_27'] === 'yes' ? 1 : 0,
+			'D4' => ($dados['pergunta_12'] >= 121.9 && $dados['pergunta_12'] <= 241.4) ? $dados['pergunta_12'] : 0,
+			'D5' => ($dados['pergunta_13'] >= 31.75 && $dados['pergunta_13'] <= 185.1) ? $dados['pergunta_13'] : 0,
+			'D6' => ($dados['pergunta_15'] >= 71 && $dados['pergunta_15'] <= 248) ? $dados['pergunta_15'] : 0,
+			'D7' => ($dados['pergunta_16'] >= 23 && $dados['pergunta_16'] <= 136) ? $dados['pergunta_16'] : 0,
+			'D8' => $dados['pergunta_14'] === 'yes' ? 1 : 0,
+			'D9' => $dados['pergunta_8'] === 'yes' ? 1 : 0,
+			'D10' => $dados['pergunta_17'] === 'yes' ? 1 : 0,
+			'D11' => $dados['pergunta_9'] === 'yes' ? 1 : 0,
+			'D12' => $dados['pergunta_6'] === 'yes' ? 1 : 0,
 		);
 
+		$normal = array(
+			'J2' => $Mvalues['D2'],
+			'J3' => $Mvalues['D3'],			
+			'J4' => $Mvalues['D4'],
+			'J5' => 22.5 * (pow($Mvalues['D4'] / 100, 2)),
+			'J6' => 125,
+			'J7' => 82,
+			'J8' => 0,
+			'J9' => 0,
+			'J10' => 0,
+			'J11' => 0,
+			'J12' => 0,
+		);	
 		
+		$optimal = array(
+			'K2' => $Mvalues['D2'],
+			'K3' => $Mvalues['D3'],			
+			'K4' => $Mvalues['D4'],
+			'K5' => 21 * (pow($Mvalues['D4'] / 100, 2)),
+			'K6' => 110,
+			'K7' => 75,
+			'K8' => 0,
+			'K9' => 0,
+			'K10' => 0,
+			'K11' => 0,
+			'K12' => 0,
+		);	
 
 		$coefSimple = [
-			'Age' => 0.010616,
-			'Race (White)' => 0.46491,
-			'Height' => 0.02478,
-			'Weight' => 0.0077,
-			'SystolicBP' => 0.00986,
-			'DiastolicBP' => -0.01013,
-			'Smoking' => 0.35931,
-			'Hypertension Treatment' => 0.34889,
-			'Diabetes' => 0.23666,
-			'Heart Failure' => 0.70127,
-			'Myocardial Infarction' => 0.49536,
-			'ECG LVH' => 0,
-			'PR Interval LT' => 0,
-			'PR Interval GT' => 0
+			'F2' => 0.10166,
+			'F3' => 0.46491,
+			'F4' => 0.02478,
+			'F5' => 0.0077,
+			'F6' => 0.00986,
+			'F7' => - 0.01013,
+			'F8' => 0.35931,
+			'F9' => 0.34889,
+			'F10' => 0.23666,
+			'F11' => 0.70127,
+			'F12' => 0.49596,
 		];
+
+		$ebxNormalJ18 = 0;
+		foreach ($normal as $key => $value) {
+			$index = substr($key, 1); 
+			$coefKey = 'F' . $index; 
+			$ebxNormalJ18 += $value * $coefSimple[$coefKey];
+		}
+
+		$ebxOptimalK18 = 0;
+		foreach ($optimal as $key => $value) {
+			$index = substr($key, 1); 
+			$coefKey = 'F' . $index; 
+			$ebxOptimalK18 += $value * $coefSimple[$coefKey];
+		}
 		
 		$means = [
-			'Age' => 65.096357,
-			'Race (White)' => 0.8335309,
-			'Height' => 166.554394,
-			'Weight' => 78.2681334,
-			'SystolicBP' => 130.7214969,
-			'DiastolicBP' => 71.7049472,
-			'Smoking' => 0.133645,
-			'Hypertension Treatment' => 0.41576865,
-			'Diabetes' => 0.1528886,
-			'Heart Failure' => 0.0378314,
-			'Myocardial Infarction' => 0.0594417,
-			'ECG LVH' => 0.02656822,
-			'PR Interval LT' => 0.0193577,
-			'PR Interval GT' => 0.1195301
+			'I2' => 65.096357,
+			'I3' => 0.8335309,
+			'I4' => 166.65494,
+			'I5' => 78.2681334,
+			'I6' => 130.2194169,
+			'I7' => 71.7049472,
+			'I8' => 0.1336495,
+			'I9' => 0.4157685,
+			'I10' => 0.1528886,
+			'I11' => 0.0378314,
+			'I12' => 0.0594417,
 		];
 
-		// Inicialize as variáveis com valores de exemplo, você precisará substituir isso pelos valores reais
-		// As variáveis devem ser obtidas por meio do input do usuário, arquivo ou banco de dados
-		$age = 65; // em anos
-		$height_in_inches = 0; // altura em polegadas, se aplicável
-		$height_in_cm = 160; // altura em centímetros, se aplicável
-		$weight_in_pounds = 0; // peso em libras, se aplicável
-		$weight_in_kg = 70; // peso em quilogramas, se aplicável
-		$systolicBP = 120; // pressão arterial sistólica
-		$diastolicBP = 80; // pressão arterial diastólica
-		$prInterval = 100; // intervalo PR
-		$answerB3 = 'yes'; // resposta para a pergunta B3
+		$ebxBarCoefSimpleF17 = 0;
+		foreach ($means as $key => $value) {
+			$index = substr($key, 1);
+			$coefKey = 'F' . $index; 
+			$ebxBarCoefSimpleF17 += $value * $coefSimple[$coefKey];
+		}
 
-		// Valores de exemplo para converter unidades
-		$height = ($height_in_inches > 0) ? $height_in_inches / 0.393700787 : $height_in_cm;
-		$weight = ($weight_in_pounds > 0) ? $weight_in_pounds / 2.20462262 : $weight_in_kg;
+		$ebxCoefSimpleF18 = 0;
+		foreach ($Mvalues as $key => $value) {
+			$index = substr($key, 1);
+			$coefKey = 'F' . $index; 
+			$ebxCoefSimpleF18 += $value * $coefSimple[$coefKey];
+		}
 
-		// Converta as respostas "yes"/"no" em "y"/"n"
-		$answerB3 = strtolower($answerB3) === 'yes' ? 'y' : (strtolower($answerB3) === 'no' ? 'n' : $answerB3);
+		$riskScoreF19 = 1 - pow(0.9718412736, exp($ebxCoefSimpleF18 - $ebxBarCoefSimpleF17));
+		$normalRiskF20 = 1 - pow(0.9718412736, exp($ebxNormalJ18 - $ebxBarCoefSimpleF17));
+		$OptimalRiskF21 = 1 - pow(0.9718412736, exp($ebxOptimalK18 - $ebxBarCoefSimpleF17));
 
-		// Valide as faixas de valores para diferentes variáveis
-		$validatedAge = ($age >= 46 && $age <= 94) ? $age : null;
-		$validatedWeight = ($weight >= 31.75 && $weight <= 185.1) ? $weight : null;
-		// Repita a validação para outras variáveis conforme necessário
+		if ($riskScoreF19 > 0.2638808) {
+			$riskScoreF19 = 0.264;
+		}
 
-		// Realize os cálculos das somas dos produtos dos valores pelas médias e coeficientes
-		$riskScoreSimple = $age * $coefSimple['Age'] + $height * $coefSimple['Height'] + $weight * $coefSimple['Weight']; // ...continuar para outros valores
-		// Realize os cálculos de risco
-		$risk = (1 - pow(0.9719033184, exp($riskScoreSimple - 12.4411305))) * 100; // para o risco simples
-
-		// Condicional para verificar os valores de corte
-		$finalRisk = $risk > 0.2638808 ? 0.264 : $risk;
-
-		
-		echo "<br>";
-		echo "O risco calculado é: " . number_format($finalRisk, 3) . "%\n";
-		echo "<br>";
+		if ($normalRiskF20 > 0.2638808) {
+			$normalRiskF20 = 0.264;
+		}
+	
+		if ($OptimalRiskF21 > 0.2638808) {
+			$OptimalRiskF21 = 0.264;
+		} 
 
 
-		
+		echo '<pre>';
+		print_r('Risk Score (Simple)'. number_format(($riskScoreF19*100), 1) . '%');
+		echo '<br>';
+		print_r('Normal Risk '.number_format(($normalRiskF20*100), 1) . '%');
+		echo '<br>';
+		print_r('Optimal Risk '. number_format(($OptimalRiskF21*100), 1) . '%');
+		echo '</pre>';
+
 	}
 
 	public function calculaHARMS2AF($dados) { 
