@@ -7,7 +7,7 @@
 	<div class="container-fluid">
 
 		<div class="d-flex flex-row-reverse bd-highlight mt-4 me-4">		
-			<a href="<?php print_r(base_url('sobre')) ?>" class="btn">ABOUT</a>
+			<a href="<?php print_r(base_url('about')) ?>" class="btn btnabout">ABOUT</a>
 		</div>		
 
 		<div class="btnentrar centralizar-botao">			

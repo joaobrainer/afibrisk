@@ -56,6 +56,16 @@ body, html{
     overflow-x: hidden;
 }
 
+#background2 {
+	background-image: url("../images/bg-2.jpg");
+	background-size: 100% 100%;
+   	background-repeat: no-repeat;
+   	background-position: center center;
+   	background-attachment: fixed;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
 .container-fluid {
     height: 96.4vh;
 }
@@ -68,10 +78,9 @@ body, html{
     width: 100%;
     align-items: center
 }
-
 .centralizar-botao .btneng {
-    margin-right: 24%;
-    padding-bottom: 3.5%;
+    margin-right: 23%;
+    padding-bottom: 5.5%;
     z-index: 1;
 }
 .btneng{
@@ -80,9 +89,6 @@ body, html{
     font-weight: 500;
     width: 10%
 }
-
-
-
 .oval-shape {
     display: none;
     width: 150px;
@@ -94,11 +100,47 @@ body, html{
     top: 68%;
     left: 30%;
 }
+.retangular-shape{
+    display: none;
+    width: 80%;
+    height:10%;
+    background-color: #0062c5;
+    border-radius: 15px;
+    position: absolute;
+    left: -5%;
+    box-shadow: 11px 16px 20px 1px #0b5cad69;
+    z-index: -1;
+}
+.btnabout{
+    color: #0964cb;
+    font-size: 25px;
+    font-weight: 600;
+}
+.title{
+    height: 14.5%;
+    padding-left: 55px;
+    align-items: flex-end;
+}
+.title span{
+    color: #fff;
+    font-size: 25px;
+   
+}
+
+.hr-personalizado{
+    width: 25% ;
+    height: 3px !important;
+    background-color: #5ac88d ;
+}
+
+.formquests{
+    margin-top: 10rem;
+}
 
 
 @media (max-width: 700px) {
 
-    #background1 {
+    #background1{
         background-size: 50%;
         background-repeat: no-repeat;
         background-size: cover;
@@ -107,18 +149,38 @@ body, html{
         padding: 0;
     }
 
-    .oval-shape {
+    #background2{
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .centralizar-botao {
+        justify-content: space-evenly;
+    }
+
+    .oval-shape, .retangular-shape{
         display: block;
     }
 
     .centralizar-botao .btneng {
         margin-right: 0;
-        padding-bottom: 5.5%;
+        padding-bottom: 0;
     }
 
     .btneng{
         width: 100%;
     }
+
+    .title span{
+        font-size: 40px;
+       
+    }
+
+    
 
 }
 
@@ -128,7 +190,6 @@ body, html{
     }
 
     .centralizar-botao .btneng {
-        padding-bottom: 2%;
-
+        padding-bottom: 3.5%;
     }
 }

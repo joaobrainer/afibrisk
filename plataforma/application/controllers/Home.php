@@ -1424,13 +1424,11 @@ class Home extends CI_Controller {
 	}
 
 
-
-	public function loadPrivacyPolicy() {
+	public function loadAbout() { 
 		
-		$dados['titulo'] = "iRankin | Privacy Policy";
+		$dados['titulo'] = "AFibrisk | About";
 
-		$this->load->view('privacy', $dados);
-
+		$this->load->view('sobre', $dados);
 	}
 
 

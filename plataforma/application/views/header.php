@@ -8,20 +8,6 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css') ?>">
 
-<!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> -->
-<!-- <link rel="icon" href="/favicon.ico" type="image/x-icon"> -->
 <link href="https://fonts.cdnfonts.com/css/multicolore-pro" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 <script src="<?php echo base_url('assets/js/fontawsome1935e00f36.js') ?>" crossorigin="anonymous"></script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-S0SLY7G9KM"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-
-	gtag('config', 'G-S0SLY7G9KM');
-</script>

@@ -55,5 +55,4 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['questions'] = 'home/loadQuestions';
 
-$route['sobre'] = 'home/loadSobre';
-$route['privacypolicy'] = 'home/loadPrivacyPolicy';
+$route['about'] = 'home/loadAbout';
