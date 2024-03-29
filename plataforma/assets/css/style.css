@@ -66,6 +66,16 @@ body, html{
     overflow-x: hidden;
 }
 
+#background3 {
+	background-image: url("../images/bg-3.jpg");
+	background-size: 100% 100%;
+   	background-repeat: no-repeat;
+   	background-position: center center;
+   	background-attachment: fixed;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
 .container-fluid {
     height: 96.4vh;
 }
@@ -207,6 +217,20 @@ input[type="text"]:not(:placeholder-shown) {
     background-image: none;
 }
 
+.container-resultado{
+    display: flex;
+    justify-content: center;
+    height: 57vh;
+    overflow-x: auto;
+    margin-top: 4rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.subcontainer-resultado{
+    max-width: 95%;
+}
+
 
 @media (max-width: 700px) {
 
@@ -219,7 +243,7 @@ input[type="text"]:not(:placeholder-shown) {
         padding: 0;
     }
 
-    #background2{
+    #background2, #background3{
         background-size: 100%;
         background-repeat: no-repeat;
         background-size: cover;
@@ -248,6 +272,13 @@ input[type="text"]:not(:placeholder-shown) {
     .title span{
         font-size: 40px;
        
+    }
+
+    #formprincipal{
+        width: 100%;
+        /* overflow-y: auto;
+        overflow-x: hidden;
+        height: 60vh; */
     }
 
     

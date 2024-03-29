@@ -8,6 +8,7 @@ class Home extends CI_Controller {
 		$dados['titulo'] = "AFibrisk | Home";
 
 		$this->session->set_userdata('lang', 'pt-br');
+		
 		$this->load->view('home', $dados);
 
 	}
@@ -15,6 +16,27 @@ class Home extends CI_Controller {
 	public function loadQuestions() { 
 		
 		$dados['titulo'] = "AFibrisk | Questions";
+
+		$this->session->set_userdata('resultados', array(
+			'STAF' => '',
+			'Brazilian Afib-Predictive Score (BRAFIL)' => '',
+			'The Heinz Nixdorf Recall Study' => '',
+			'ASAS' => '',
+			'CHA2DS2-VASC' => '',
+			'C2HEST' => '',
+			'Takase' => '',
+			'HAVOC' => '',
+			'CHARGE-AF' => '',
+			'HARMS2-AF ' => '',
+			'Hamada' => '',
+			'Mayo Score' => '',
+			'HATCH' => '',
+			'Framingham AF risk score' => '',
+			'MHS Score' => '',
+			'ARIC Score' => '',
+			'Suita' => '',
+			'Taiwan AF Score' => ''			
+		));
 
 		$this->load->view('perguntas/home', $dados);
 
@@ -128,6 +150,9 @@ class Home extends CI_Controller {
 
 		//18. ASAS
 		$this->calculaASAS($dados);
+
+
+		redirect('results');
 		
 		
 	}
@@ -180,6 +205,9 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaBRAFIL);
 		echo '<br>';
+
+		$this->setSessaoResultado('Brazilian Afib-Predictive Score (BRAFIL)', $respostaBRAFIL);
+
 	}
 
 	public function calculaC2HEST($dados) { 
@@ -240,6 +268,8 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaC2HEST);
 		echo '<br>';
+
+		$this->setSessaoResultado('C2HEST', $respostaC2HEST);
 	}
 
 	public function calculaCHARGEAF($dados) { 
@@ -367,6 +397,8 @@ class Home extends CI_Controller {
 		print_r('Optimal Risk '. number_format(($OptimalRiskF21*100), 1) . '%');
 		echo '</pre>';
 
+		$this->setSessaoResultado('CHARGE-AF', 'Risk Score (Simple)'. number_format(($riskScoreF19*100), 1) . '%');
+
 	}
 
 	public function calculaHARMS2AF($dados) { 
@@ -427,6 +459,8 @@ class Home extends CI_Controller {
 		var_dump($respostaHARMS2AF);
 		echo '<br>';
 
+		$this->setSessaoResultado('HARMS2-AF', $respostaHARMS2AF);
+
 	}
 
 	public function calculaHATCH($dados) { 
@@ -486,6 +520,8 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaHATCH);
 		echo '<br>';
+
+		$this->setSessaoResultado('HATCH', $respostaHATCH);
 	}
 
 	public function calculaSTAF($dados) { 
@@ -514,6 +550,8 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaSTAF);
 		echo '<br>';
+
+		$this->setSessaoResultado('STAF', $respostaSTAF);
 	}
 
 	public function calculaFRAMI($dados) { 
@@ -662,6 +700,8 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaFRAMI);
 		echo '<br>';
+
+		$this->setSessaoResultado('Framingham AF risk score', $respostaFRAMI);
 		
 	}
 
@@ -723,6 +763,8 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaHAVOC);
 		echo '<br>';
+
+		$this->setSessaoResultado('HAVOC', $respostaHAVOC);
 	}
 
 	public function calculaARIC($dados) { 
@@ -829,6 +871,8 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaARIC);
 		echo '<br>';
+
+		$this->setSessaoResultado('ARIC Score', $respostaARIC);
 	}
 
 	public function calculaTAIWANAF($dados) { 
@@ -896,6 +940,8 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaTAIWANAF);
 		echo '<br>';
+
+		$this->setSessaoResultado('Taiwan AF Score', $respostaTAIWANAF);
 
 	}
 
@@ -1000,6 +1046,8 @@ class Home extends CI_Controller {
 		var_dump($respostaSUITA);
 		echo '<br>';
 
+		$this->setSessaoResultado('Suita', $respostaSUITA);
+
 
 	}
 
@@ -1067,6 +1115,8 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaHAMADA);
 		echo '<br>';
+
+		$this->setSessaoResultado('Hamada', $respostaHAMADA);
 	}
 
 	public function calculaMHS($dados) { 
@@ -1200,6 +1250,8 @@ class Home extends CI_Controller {
 		var_dump($respostaMHS);
 		echo '<br>';	
 
+		$this->setSessaoResultado('MHS Score', $respostaMHS);
+
 	}
 
 	public function calculaCHA2DS2($dados) { 
@@ -1288,6 +1340,8 @@ class Home extends CI_Controller {
 		var_dump($respostaCHA2DS2);
 		echo '<br>';	
 
+		$this->setSessaoResultado('CHA2DS2-VASC', $respostaCHA2DS2);
+
 	}
 
 	public function calculaMAYO($dados) { 
@@ -1355,6 +1409,8 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaMAYO);
 		echo '<br>';	
+
+		$this->setSessaoResultado('Mayo Score', $respostaMAYO);
 	}
 
 	public function calculaTHNRS($dados) { 
@@ -1382,6 +1438,8 @@ class Home extends CI_Controller {
 		var_dump($respostaTHNRS);
 		echo '<br>';	
 
+		$this->setSessaoResultado('The Heinz Nixdorf Recall Study', $respostaTHNRS);
+
 	}
 
 	public function calculaTAKASE($dados) { 
@@ -1398,6 +1456,8 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaTAKASE);
 		echo '<br>';	
+
+		$this->setSessaoResultado('Takase', $respostaTAKASE);
 
 	}
 
@@ -1420,7 +1480,25 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaASAS);
 		echo '<br>';
+
+		$this->setSessaoResultado('ASAS', $respostaASAS);
 		
+	}
+
+	public function setSessaoResultado($chave, $valor) { 
+
+		$resultados = $this->session->userdata('resultados');
+		$resultados[$chave] = $valor;
+
+		$this->session->set_userdata('resultados', $resultados);
+
+	}
+
+	public function loadResults() {
+
+		$dados['titulo'] = "AFibrisk | Results";
+
+		$this->load->view('resultado/home', $dados);
 	}
 
 

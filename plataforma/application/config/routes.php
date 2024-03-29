@@ -54,5 +54,6 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['questions'] = 'home/loadQuestions';
+$route['results'] = 'home/loadResults';
 
 $route['about'] = 'home/loadAbout';
