@@ -27,7 +27,7 @@ class Home extends CI_Controller {
 			'Takase' => '',
 			'HAVOC' => '',
 			'CHARGE-AF' => '',
-			'HARMS2-AF ' => '',
+			'HARMS2-AF' => '',
 			'Hamada' => '',
 			'Mayo Score' => '',
 			'HATCH' => '',
@@ -206,7 +206,12 @@ class Home extends CI_Controller {
 		var_dump($respostaBRAFIL);
 		echo '<br>';
 
-		$this->setSessaoResultado('Brazilian Afib-Predictive Score (BRAFIL)', $respostaBRAFIL);
+		$array = array(
+			'message' => '',
+			'resposta' => $respostaBRAFIL
+		);
+
+		$this->setSessaoResultado('Brazilian Afib-Predictive Score (BRAFIL)', $array);
 
 	}
 
@@ -269,7 +274,12 @@ class Home extends CI_Controller {
 		var_dump($respostaC2HEST);
 		echo '<br>';
 
-		$this->setSessaoResultado('C2HEST', $respostaC2HEST);
+		$array = array(
+			'message' => '',
+			'resposta' => $respostaC2HEST
+		);
+
+		$this->setSessaoResultado('C2HEST', $array);
 	}
 
 	public function calculaCHARGEAF($dados) { 
@@ -388,7 +398,7 @@ class Home extends CI_Controller {
 			$OptimalRiskF21 = 0.264;
 		} 
 
-
+		
 		echo '<pre>';
 		print_r('Risk Score (Simple)'. number_format(($riskScoreF19*100), 1) . '%');
 		echo '<br>';
@@ -397,7 +407,14 @@ class Home extends CI_Controller {
 		print_r('Optimal Risk '. number_format(($OptimalRiskF21*100), 1) . '%');
 		echo '</pre>';
 
-		$this->setSessaoResultado('CHARGE-AF', 'Risk Score (Simple)'. number_format(($riskScoreF19*100), 1) . '%');
+		$resposta = number_format(($riskScoreF19*100), 1) . '%';
+
+		$array = array(
+			'message' => 'Chance (%) of Afib in 5 year',
+			'resposta' => "Risk Score (Simple) ". $resposta
+		);
+
+		$this->setSessaoResultado('CHARGE-AF', $array);
 
 	}
 
@@ -459,7 +476,12 @@ class Home extends CI_Controller {
 		var_dump($respostaHARMS2AF);
 		echo '<br>';
 
-		$this->setSessaoResultado('HARMS2-AF', $respostaHARMS2AF);
+		$array = array(
+			'message' => 'Hazard ratio (HR) for Afib detection in up to 10 years. Performance with a 5-year AUC 0.757 (95% CI 0.735–0.779) and 10-year AUC 0.753 (95% CI 0.732–0.775)',
+			'resposta' => $respostaHARMS2AF
+		);
+
+		$this->setSessaoResultado('HARMS2-AF', $array);
 
 	}
 
@@ -521,7 +543,12 @@ class Home extends CI_Controller {
 		var_dump($respostaHATCH);
 		echo '<br>';
 
-		$this->setSessaoResultado('HATCH', $respostaHATCH);
+		$array = array(
+			'message' => 'Chance of AFib detection in about 10 years (AUC 0.716 (95% CI 0.710–0.723). Results from an external validation in a Taiwanese cohort',
+			'resposta' => $respostaHATCH
+		);
+
+		$this->setSessaoResultado('HATCH', $array);
 	}
 
 	public function calculaSTAF($dados) { 
@@ -551,7 +578,12 @@ class Home extends CI_Controller {
 		var_dump($respostaSTAF);
 		echo '<br>';
 
-		$this->setSessaoResultado('STAF', $respostaSTAF);
+		$array = array(
+			'message' => 'A total score of ≥5 enabled the identification of patients with AF in 3 months with a sensitivity of 89% (95% CI, 83 to 94) and a specificity of 88% (95% CI, 84 to 91)',
+			'resposta' => $respostaSTAF
+		);
+
+		$this->setSessaoResultado('STAF', $array);
 	}
 
 	public function calculaFRAMI($dados) { 
@@ -669,11 +701,11 @@ class Home extends CI_Controller {
 				break;
 
 			case 4:
-				$respostaFRAMI = ' Chance of Afib detection on follow-up (10 years) = 4% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 4% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
 				break;
 
 			case 5:
-				$respostaFRAMI = '> Chance of Afib detection on follow-up (10 years) = 6% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 6% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
 				break;
 
 			case 6:
@@ -701,7 +733,12 @@ class Home extends CI_Controller {
 		var_dump($respostaFRAMI);
 		echo '<br>';
 
-		$this->setSessaoResultado('Framingham AF risk score', $respostaFRAMI);
+		$array = array(
+			'message' => '',
+			'resposta' => $respostaFRAMI
+		);
+
+		$this->setSessaoResultado('Framingham AF risk score', $array);
 		
 	}
 
@@ -764,7 +801,12 @@ class Home extends CI_Controller {
 		var_dump($respostaHAVOC);
 		echo '<br>';
 
-		$this->setSessaoResultado('HAVOC', $respostaHAVOC);
+		$array = array(
+			'message' => 'Chance (%) of Afib in 3 years (AUC 0.77)',
+			'resposta' => $respostaHAVOC
+		);
+
+		$this->setSessaoResultado('HAVOC', $array);
 	}
 
 	public function calculaARIC($dados) { 
@@ -872,7 +914,12 @@ class Home extends CI_Controller {
 		var_dump($respostaARIC);
 		echo '<br>';
 
-		$this->setSessaoResultado('ARIC Score', $respostaARIC);
+		$array = array(
+			'message' => 'Chance (%) of Afib in 10 years (The point-based score developed from coefficients in the Cox model had an AUC of 0.76.)',
+			'resposta' => $respostaARIC
+		);
+
+		$this->setSessaoResultado('ARIC Score', $array);
 	}
 
 	public function calculaTAIWANAF($dados) { 
@@ -941,7 +988,12 @@ class Home extends CI_Controller {
 		var_dump($respostaTAIWANAF);
 		echo '<br>';
 
-		$this->setSessaoResultado('Taiwan AF Score', $respostaTAIWANAF);
+		$array = array(
+			'message' => 'Cumulative Incidence of AFib in a 1 to 16-years follow-up. AUC ranged from 0.857 (0.855–0.860) to 0.756 (0.755–0.757) in follow-up of 1 or 16 years, respectively',
+			'resposta' => $respostaTAIWANAF
+		);
+
+		$this->setSessaoResultado('Taiwan AF Score', $array);
 
 	}
 
@@ -1046,7 +1098,12 @@ class Home extends CI_Controller {
 		var_dump($respostaSUITA);
 		echo '<br>';
 
-		$this->setSessaoResultado('Suita', $respostaSUITA);
+		$array = array(
+			'message' => 'Predicted 10-Year Risk of Incident AF (AUC 0.749; 95% CI 0.724−0.774)',
+			'resposta' => $respostaSUITA
+		);
+
+		$this->setSessaoResultado('Suita', $array);
 
 
 	}
@@ -1109,14 +1166,25 @@ class Home extends CI_Controller {
 
 			//chamar a imagem do grafico com a resposta			
 			$respostaHAMADA = $pontuacaoHAMADA;
+
+			if ($respostaHAMADA >= 10) {
+				$respostaHAMADA = 10;
+			}
 			
 		}
+
+		
 
 		echo '<br>';
 		var_dump($respostaHAMADA);
 		echo '<br>';
 
-		$this->setSessaoResultado('Hamada', $respostaHAMADA);
+		$dados = array(
+			'message' => 'A 7-year risk of atrial fibrillation (AUC 0.78)',
+			'resposta' => $respostaHAMADA
+		);
+
+		$this->setSessaoResultado('Hamada', $dados);
 	}
 
 	public function calculaMHS($dados) { 
@@ -1250,7 +1318,12 @@ class Home extends CI_Controller {
 		var_dump($respostaMHS);
 		echo '<br>';	
 
-		$this->setSessaoResultado('MHS Score', $respostaMHS);
+		$array = array(
+			'message' => 'A 10-years predicted risk of AFib (AUC 0.749 (0.740–0.758)',
+			'resposta' => $respostaMHS,
+		);
+
+		$this->setSessaoResultado('MHS Score', $array);
 
 	}
 
@@ -1340,7 +1413,12 @@ class Home extends CI_Controller {
 		var_dump($respostaCHA2DS2);
 		echo '<br>';	
 
-		$this->setSessaoResultado('CHA2DS2-VASC', $respostaCHA2DS2);
+		$array = array(
+			'message' => 'Predicting a new-onset atrial fibrillation in 2-years follow-up (AUC 0.744 (95% CI, 0.741-0.747)',
+			'resposta' => $respostaCHA2DS2
+		);
+
+		$this->setSessaoResultado('CHA2DS2-VASC', $array);
 
 	}
 
@@ -1409,8 +1487,13 @@ class Home extends CI_Controller {
 		echo '<br>';
 		var_dump($respostaMAYO);
 		echo '<br>';	
+		
+		$array = array(
+			'message' => 'Predicting incidente AFib in about 8-years follow-up (AUC 0.812 (95% CI, 0.805-0.820))',
+			'resposta' => $respostaMAYO
+		);
 
-		$this->setSessaoResultado('Mayo Score', $respostaMAYO);
+		$this->setSessaoResultado('Mayo Score', $array);
 	}
 
 	public function calculaTHNRS($dados) { 
@@ -1438,7 +1521,12 @@ class Home extends CI_Controller {
 		var_dump($respostaTHNRS);
 		echo '<br>';	
 
-		$this->setSessaoResultado('The Heinz Nixdorf Recall Study', $respostaTHNRS);
+		$array = array(
+			'message' => '',
+			'resposta' => $respostaTHNRS
+		);
+
+		$this->setSessaoResultado('The Heinz Nixdorf Recall Study', $array);
 
 	}
 
@@ -1455,9 +1543,14 @@ class Home extends CI_Controller {
 
 		echo '<br>';
 		var_dump($respostaTAKASE);
-		echo '<br>';	
+		echo '<br>';
+		
+		$array = array(
+			'message' => '',
+			'resposta' => $respostaTAKASE
+		);
 
-		$this->setSessaoResultado('Takase', $respostaTAKASE);
+		$this->setSessaoResultado('Takase', $array);
 
 	}
 
@@ -1481,7 +1574,12 @@ class Home extends CI_Controller {
 		var_dump($respostaASAS);
 		echo '<br>';
 
-		$this->setSessaoResultado('ASAS', $respostaASAS);
+		$array = array(
+			'message' => 'The AUC for the predicted probabilities of the ASAS was 0.78 [95%CI 0.70-0.86], excluding patients with a previous diagnosis of atrial fibrillation.',
+			'resposta' => $respostaASAS
+		);
+
+		$this->setSessaoResultado('ASAS', $array);
 		
 	}
 

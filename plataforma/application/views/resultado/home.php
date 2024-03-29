@@ -21,16 +21,24 @@
 
                 if($resultado != null){
                     foreach ($resultado as $key => $value) {
-                        echo '<div class="row">';
-                        echo '<div class="col-md-12">';
-                        echo '<div class="card">';
-                        echo '<div class="card-body">';
-                        echo '<h5 class="card-title">'.$key.'</h5>';
-                        echo '<p class="card-text">'.$value.'</p>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '</div>';
+                        if ($value['resposta'] != 'none') {
+                            echo '<div class="card-container">';
+                            echo '<div class="card">';
+                            echo '<div class="card-header">';
+                            echo '<h5 class="card-title">'.$key.'</h5>';
+                            echo '<span class="card-title">'.$value['message'].'</span>'; 
+                            echo '</div>';
+                            echo '<div class="card-body">';    
+                            if ($key == 'Hamada') {
+                                echo '<img src="'.base_url("assets/images/hamada/".$value['resposta'].".png").'" class="img-size" alt="Hamada">';                             
+                            } else{
+                                echo '<p class="card-text">'.$value['resposta'].'</p>'; 
+                            }        
+                           
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
                     }
                 }
             

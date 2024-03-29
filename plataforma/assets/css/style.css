@@ -231,6 +231,69 @@ input[type="text"]:not(:placeholder-shown) {
     max-width: 95%;
 }
 
+.subcontainer-resultado .card-container:nth-child(odd) .card {
+    background-color: #ffffff; /* Cor de fundo para cards ímpares */
+    border: none;
+    border-radius: 0%;
+}
+
+.subcontainer-resultado .card-container:nth-child(odd) .card,
+.subcontainer-resultado .card-container:nth-child(odd) .card h5,
+.subcontainer-resultado .card-container:nth-child(odd) .card p {
+    color: #000000; /* Cor do texto para cards ímpares */
+    /* font-size: 20px; */
+}
+
+.subcontainer-resultado .card-container:nth-child(even) .card {
+    background-color: #10b1ac; /* Cor de fundo para cards pares */
+    border: none;
+    border-radius: 0%;
+}
+
+.subcontainer-resultado .card-header{
+    background-color: transparent;
+    border: none; 
+}
+
+.subcontainer-resultado .card-body p {
+    font-weight: 600;
+}
+
+.subcontainer-resultado .card-container:nth-child(even) .card,
+.subcontainer-resultado .card-container:nth-child(even) .card h5,
+.subcontainer-resultado .card-container:nth-child(even) .card p {
+    color: #ffffff; 
+}
+
+.subcontainer-resultado .card h5{
+    font-size: 25px;
+    font-weight: 800;
+}
+
+::-webkit-scrollbar {
+    width: 10px; 
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+.img-size{
+    max-width: 50%;
+    max-height: 350px;
+}
+
+
 
 @media (max-width: 700px) {
 
@@ -292,5 +355,13 @@ input[type="text"]:not(:placeholder-shown) {
 
     .centralizar-botao .btneng {
         padding-bottom: 3.5%;
+    }
+
+    .container-resultado{
+        height: 60vh;
+    }
+
+    .subcontainer-resultado{
+        max-width: 100%;
     }
 }
