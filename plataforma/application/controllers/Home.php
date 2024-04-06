@@ -42,17 +42,17 @@ class Home extends CI_Controller {
 
 	}
 
+	public function convertToDecimal($number) {
+		return str_replace(',', '.', $number);
+	}
+
 	public function todasRespostas() { 
 
-		$post = $this->input->post();
-
-		// var_dump($post);
-
 		$dados = array(
-			'pergunta_1' => $this->input->post('1_age') ? $this->input->post('1_age') : 0,
+			'pergunta_1' => $this->convertToDecimal($this->input->post('1_age') ? $this->input->post('1_age') : 0),
 			'pergunta_2' => $this->input->post('2_gender') ? $this->input->post('2_gender') : null,
-			'pergunta_3' => $this->input->post('3_nihss') ? $this->input->post('3_nihss') : 0,
-			'pergunta_4' => $this->input->post('4_left_atrium_size') ? $this->input->post('4_left_atrium_size') : 0,
+			'pergunta_3' => $this->convertToDecimal($this->input->post('3_nihss') ? $this->input->post('3_nihss') : 0),
+			'pergunta_4' => $this->convertToDecimal($this->input->post('4_left_atrium_size') ? $this->input->post('4_left_atrium_size') : 0),
 			'pergunta_5' => $this->input->post('5_septal_aneurysm') ? $this->input->post('5_septal_aneurysm') : null,
 			'pergunta_6' => $this->input->post('6_coronary_disease') ? $this->input->post('6_coronary_disease') : null,
 			'pergunta_7' => $this->input->post('7_copd') ? $this->input->post('7_copd') : null,
@@ -60,18 +60,18 @@ class Home extends CI_Controller {
 			'pergunta_9' => $this->input->post('9_heart_failure') ? $this->input->post('9_heart_failure') : null,
 			'pergunta_10' => $this->input->post('10_hyperthyroidism') ? $this->input->post('10_hyperthyroidism') : null,
 			'pergunta_11' => 'N/A',
-			'pergunta_12' => $this->input->post('12_height_cm') ? $this->input->post('12_height_cm') : 0,
-			'pergunta_13' => $this->input->post('13_weight_kg') ? $this->input->post('13_weight_kg') : 0,
+			'pergunta_12' => $this->convertToDecimal($this->input->post('12_height_cm') ? $this->input->post('12_height_cm') : 0),
+			'pergunta_13' => $this->convertToDecimal($this->input->post('13_weight_kg') ? $this->input->post('13_weight_kg') : 0),
 			'pergunta_14' => $this->input->post('14_smoking') ? $this->input->post('14_smoking') : null,
 			'pergunta_14_1' => $this->input->post('14_1_former_smoker') ? $this->input->post('14_1_former_smoker') : null,
-			'pergunta_15' => $this->input->post('15_systolic_bp') ? $this->input->post('15_systolic_bp') : 0,
-			'pergunta_16' => $this->input->post('16_diastolic_bp') ? $this->input->post('16_diastolic_bp') : 0,
+			'pergunta_15' => $this->convertToDecimal($this->input->post('15_systolic_bp') ? $this->input->post('15_systolic_bp') : 0),
+			'pergunta_16' => $this->convertToDecimal($this->input->post('16_diastolic_bp') ? $this->input->post('16_diastolic_bp') : 0),
 			'pergunta_17' => $this->input->post('17_diabetes') ? $this->input->post('17_diabetes') : null,
 			'pergunta_18' => $this->input->post('18_ecg_lv_hypertrophy') ? $this->input->post('18_ecg_lv_hypertrophy') : null,
-			'pergunta_19' => $this->input->post('19_ecg_pr_interval') ? $this->input->post('19_ecg_pr_interval') : 0,
+			'pergunta_19' => $this->convertToDecimal($this->input->post('19_ecg_pr_interval') ? $this->input->post('19_ecg_pr_interval') : 0),
 			'pergunta_20' => $this->input->post('20_raised_bmi') ? $this->input->post('20_raised_bmi') : null,
 			'pergunta_20_1' => $this->input->post('20_1_bmi_25') ? $this->input->post('20_1_bmi_25') : null,
-			'pergunta_20_2' => $this->input->post('20_2_bmi_value') ? $this->input->post('20_2_bmi_value') : 0,
+			'pergunta_20_2' => $this->convertToDecimal($this->input->post('20_2_bmi_value') ? $this->input->post('20_2_bmi_value') : 0),
 			'pergunta_21' => $this->input->post('21_sleep_apnea') ? $this->input->post('21_sleep_apnea') : null,
 			'pergunta_22' => $this->input->post('22_alcohol_consumption') ? $this->input->post('22_alcohol_consumption') : null,
 			'pergunta_23' => $this->input->post('23_symptomatic_stenosis') ? $this->input->post('23_symptomatic_stenosis') : null,
@@ -85,14 +85,14 @@ class Home extends CI_Controller {
 			'pergunta_30' => $this->input->post('30_stroke') ? $this->input->post('30_stroke') : null,
 			'pergunta_31' => $this->input->post('31_renal_disease') ? $this->input->post('31_renal_disease') : null,
 			'pergunta_32' => $this->input->post('32_arrhythmia') ? $this->input->post('32_arrhythmia') : null,
-			'pergunta_33' => $this->input->post('33_cholesterol_ldl') ? $this->input->post('33_cholesterol_ldl') : 0,
-			'pergunta_34' => $this->input->post('34_waist_circumference') ? $this->input->post('34_waist_circumference') : 0,
-			'pergunta_35' => $this->input->post('35_heart_rate') ? $this->input->post('35_heart_rate') : 0,
+			'pergunta_33' => $this->convertToDecimal($this->input->post('33_cholesterol_ldl') ? $this->input->post('33_cholesterol_ldl') : 0),
+			'pergunta_34' => $this->convertToDecimal($this->input->post('34_waist_circumference') ? $this->input->post('34_waist_circumference') : 0),
+			'pergunta_35' => $this->convertToDecimal($this->input->post('35_heart_rate') ? $this->input->post('35_heart_rate') : 0),
 			'pergunta_36' => $this->input->post('36_atrial_premature_contraction') ? $this->input->post('36_atrial_premature_contraction') : null,
 			'pergunta_37' => $this->input->post('37_ventricular_premature_contraction') ? $this->input->post('37_ventricular_premature_contraction') : null,
 			'pergunta_38' => $this->input->post('38_atrial_fibrillation') ? $this->input->post('38_atrial_fibrillation') : null,
 			'pergunta_39' => $this->input->post('39_aortic_plaque') ? $this->input->post('39_aortic_plaque') : null,
-			'pergunta_40' => $this->input->post('40_bnp_level') ? $this->input->post('40_bnp_level') : 0
+			'pergunta_40' => $this->convertToDecimal($this->input->post('40_bnp_level') ? $this->input->post('40_bnp_level') : 0)
 
 		);
 
@@ -151,10 +151,7 @@ class Home extends CI_Controller {
 		//18. ASAS
 		$this->calculaASAS($dados);
 
-
-		redirect('results');
-		
-		
+		redirect('results');			
 	}
 
 	public function calculaBRAFIL($dados) { 
@@ -202,9 +199,9 @@ class Home extends CI_Controller {
 				break;
 		}
 
-		echo '<br>';
-		var_dump($respostaBRAFIL);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaBRAFIL);
+		// echo '<br>';
 
 		$array = array(
 			'message' => '',
@@ -270,9 +267,9 @@ class Home extends CI_Controller {
 			break;
 
 		}
-		echo '<br>';
-		var_dump($respostaC2HEST);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaC2HEST);
+		// echo '<br>';
 
 		$array = array(
 			'message' => '',
@@ -399,13 +396,13 @@ class Home extends CI_Controller {
 		} 
 
 		
-		echo '<pre>';
-		print_r('Risk Score (Simple)'. number_format(($riskScoreF19*100), 1) . '%');
-		echo '<br>';
-		print_r('Normal Risk '.number_format(($normalRiskF20*100), 1) . '%');
-		echo '<br>';
-		print_r('Optimal Risk '. number_format(($OptimalRiskF21*100), 1) . '%');
-		echo '</pre>';
+		// echo '<pre>';
+		// print_r('Risk Score (Simple)'. number_format(($riskScoreF19*100), 1) . '%');
+		// echo '<br>';
+		// print_r('Normal Risk '.number_format(($normalRiskF20*100), 1) . '%');
+		// echo '<br>';
+		// print_r('Optimal Risk '. number_format(($OptimalRiskF21*100), 1) . '%');
+		// echo '</pre>';
 
 		$resposta = number_format(($riskScoreF19*100), 1) . '%';
 
@@ -472,9 +469,9 @@ class Home extends CI_Controller {
 				break;
 		}
 
-		echo '<br>';
-		var_dump($respostaHARMS2AF);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaHARMS2AF);
+		// echo '<br>';
 
 		$array = array(
 			'message' => 'Hazard ratio (HR) for Afib detection in up to 10 years. Performance with a 5-year AUC 0.757 (95% CI 0.735–0.779) and 10-year AUC 0.753 (95% CI 0.732–0.775)',
@@ -539,9 +536,9 @@ class Home extends CI_Controller {
 				break;
 		}
 
-		echo '<br>';
-		var_dump($respostaHATCH);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaHATCH);
+		// echo '<br>';
 
 		$array = array(
 			'message' => 'Chance of AFib detection in about 10 years (AUC 0.716 (95% CI 0.710–0.723). Results from an external validation in a Taiwanese cohort',
@@ -574,9 +571,9 @@ class Home extends CI_Controller {
 			$respostaSTAF = 'High chance of Afib detection on follow-up (3 months)  - AUC of 0.94 (0.92-0.96, SD 0.012; p-value < 0.001)';
 		}
 
-		echo '<br>';
-		var_dump($respostaSTAF);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaSTAF);
+		// echo '<br>';
 
 		$array = array(
 			'message' => 'A total score of ≥5 enabled the identification of patients with AF in 3 months with a sensitivity of 89% (95% CI, 83 to 94) and a specificity of 88% (95% CI, 84 to 91)',
@@ -729,9 +726,9 @@ class Home extends CI_Controller {
 				break;
 		}
 
-		echo '<br>';
-		var_dump($respostaFRAMI);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaFRAMI);
+		// echo '<br>';
 
 		$array = array(
 			'message' => '',
@@ -797,9 +794,9 @@ class Home extends CI_Controller {
 				break;
 		}
 
-		echo '<br>';
-		var_dump($respostaHAVOC);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaHAVOC);
+		// echo '<br>';
 
 		$array = array(
 			'message' => 'Chance (%) of Afib in 3 years (AUC 0.77)',
@@ -910,9 +907,9 @@ class Home extends CI_Controller {
 			$respostaARIC = "Chance (%) of Afib in 10 years = >24%";
 		} 
 
-		echo '<br>';
-		var_dump($respostaARIC);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaARIC);
+		// echo '<br>';
 
 		$array = array(
 			'message' => 'Chance (%) of Afib in 10 years (The point-based score developed from coefficients in the Cox model had an AUC of 0.76.)',
@@ -984,9 +981,9 @@ class Home extends CI_Controller {
 			$respostaTAIWANAF = 'High incidence of Afib detection on follow; 7.82% (2 years) 27.9% (10 years) and 38.9% (16 years)';
 		}
 
-		echo '<br>';
-		var_dump($respostaTAIWANAF);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaTAIWANAF);
+		// echo '<br>';
 
 		$array = array(
 			'message' => 'Cumulative Incidence of AFib in a 1 to 16-years follow-up. AUC ranged from 0.857 (0.855–0.860) to 0.756 (0.755–0.757) in follow-up of 1 or 16 years, respectively',
@@ -1094,9 +1091,9 @@ class Home extends CI_Controller {
 
 		}
 
-		echo '<br>';
-		var_dump($respostaSUITA);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaSUITA);
+		// echo '<br>';
 
 		$array = array(
 			'message' => 'Predicted 10-Year Risk of Incident AF (AUC 0.749; 95% CI 0.724−0.774)',
@@ -1175,9 +1172,9 @@ class Home extends CI_Controller {
 
 		
 
-		echo '<br>';
-		var_dump($respostaHAMADA);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaHAMADA);
+		// echo '<br>';
 
 		$dados = array(
 			'message' => 'A 7-year risk of atrial fibrillation (AUC 0.78)',
@@ -1314,9 +1311,9 @@ class Home extends CI_Controller {
 
 		}
 
-		echo '<br>';
-		var_dump($respostaMHS);
-		echo '<br>';	
+		// echo '<br>';
+		// var_dump($respostaMHS);
+		// echo '<br>';	
 
 		$array = array(
 			'message' => 'A 10-years predicted risk of AFib (AUC 0.749 (0.740–0.758)',
@@ -1409,9 +1406,9 @@ class Home extends CI_Controller {
 				break;
 		}
 
-		echo '<br>';
-		var_dump($respostaCHA2DS2);
-		echo '<br>';	
+		// echo '<br>';
+		// var_dump($respostaCHA2DS2);
+		// echo '<br>';	
 
 		$array = array(
 			'message' => 'Predicting a new-onset atrial fibrillation in 2-years follow-up (AUC 0.744 (95% CI, 0.741-0.747)',
@@ -1484,9 +1481,9 @@ class Home extends CI_Controller {
 				break;
 		}
 
-		echo '<br>';
-		var_dump($respostaMAYO);
-		echo '<br>';	
+		// echo '<br>';
+		// var_dump($respostaMAYO);
+		// echo '<br>';	
 		
 		$array = array(
 			'message' => 'Predicting incidente AFib in about 8-years follow-up (AUC 0.812 (95% CI, 0.805-0.820))',
@@ -1517,9 +1514,9 @@ class Home extends CI_Controller {
 			}
 		}
 
-		echo '<br>';
-		var_dump($respostaTHNRS);
-		echo '<br>';	
+		// echo '<br>';
+		// var_dump($respostaTHNRS);
+		// echo '<br>';	
 
 		$array = array(
 			'message' => '',
@@ -1541,9 +1538,9 @@ class Home extends CI_Controller {
 			$respostaTAKASE = 'A lower chance of incident AFib in a 5-years follow-up, based on BNP levels. Sensitivity and specificity of 81.1%, and 55.2%, respectively. The area under the ROC curve was 0.703';
 		}
 
-		echo '<br>';
-		var_dump($respostaTAKASE);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaTAKASE);
+		// echo '<br>';
 		
 		$array = array(
 			'message' => '',
@@ -1570,9 +1567,9 @@ class Home extends CI_Controller {
 
 		$respostaASAS = 'Probability of new AFib in a 3-year period: ' . number_format($probabilidadeEmProcentagem, 2) . '%';
 
-		echo '<br>';
-		var_dump($respostaASAS);
-		echo '<br>';
+		// echo '<br>';
+		// var_dump($respostaASAS);
+		// echo '<br>';
 
 		$array = array(
 			'message' => 'The AUC for the predicted probabilities of the ASAS was 0.78 [95%CI 0.70-0.86], excluding patients with a previous diagnosis of atrial fibrillation.',

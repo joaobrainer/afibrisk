@@ -21,21 +21,9 @@
                 <details>
                     <summary data-translate="demographic">Demographic</summary>
 
-                        <!-- <p data-translate="age" class="mt-3">Age 
-                            <input name="1_age" maxlength="3" onkeypress="return onlyNumberKey(event);">
-                        </p>  -->
-
-
                         <p data-translate="age" class="age-input mt-3">Age
                             <input type="text" autocomplete="off" name="1_age" maxlength="3" onkeypress="return onlyNumberKey(event);">
                         </p>
-
-                        <!-- <p data-translate="gender">Gender
-                            <label for="male"></label>
-                            <input type="radio" name="2_gender" id="male" value="male" data-translate="male"> Male
-                            <label for="female"></label>
-                            <input type="radio" name="2_gender" id="female" value="female" data-translate="female"> Female
-                        </p> -->
 
                         <p data-translate="gender">Gender
                             <label class="custom-radio">
@@ -50,11 +38,6 @@
                             </label>
                         </p>
 
-                        <!-- <p data-translate="white">White
-                            <input type="radio" name="27_white" value="yes" data-translate="yes"> Yes
-                            <input type="radio" name="27_white" value="no" data-translate="no"> No
-                        </p> -->
-
                         <p data-translate="white">White
                             <label class="custom-radio">
                                 <input type="radio" name="27_white" id="white_yes" value="yes" data-translate="yes">
@@ -67,11 +50,6 @@
                                 No
                             </label>
                         </p>
-
-                        <!-- <p data-translate="black">Black
-                            <input type="radio" name="28_black" value="yes" data-translate="yes"> Yes
-                            <input type="radio" name="28_black" value="no" data-translate="no"> No
-                        </p> -->
 
                         <p data-translate="black">Black
                             <label class="custom-radio">
@@ -95,11 +73,6 @@
                     <p data-translate="nihss" class="mt-3">NIH Stroke Scale on admission
                         <input type="text" autocomplete="off" name="3_nihss" onkeypress="return onlyNumberKey(event);">
                     </p>
-
-                    <!-- <p data-translate="stroke_history">Previous Stroke or Transient Ischemic Attack
-                        <input type="radio" name="30_stroke" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="30_stroke" value="no" data-translate="no"> No
-                    </p> -->
 
                     <p data-translate="stroke_history">Previous Stroke or Transient Ischemic Attack
                         <label class="custom-radio">
@@ -136,12 +109,7 @@
                     
                     <p data-translate="diastolic_bp">Diastolic Blood Pressure (mmHg)
                         <input type="text" autocomplete="off" name="16_diastolic_bp" onkeypress="return onlyNumberKey(event);">
-                    </p>
-                    
-                    <!-- <p data-translate="raised_bmi">Raised BMI (BMI>30kg/m²)
-                        <input type="radio" id="raised_bmi_yes" name="20_raised_bmi" value="yes" data-translate="yes"> Yes
-                        <input type="radio" id="raised_bmi_no" name="20_raised_bmi" value="no" data-translate="no"> No
-                    </p>-->
+                    </p>                
 
                     <p data-translate="raised_bmi">Raised BMI (BMI>30kg/m²)
                         <label class="custom-radio">
@@ -156,12 +124,7 @@
                         </label>
                     </p>
 
-                    <div id="bmi_25_container" style="display:none;">
-
-                        <!-- <p data-translate="bmi_25">BMI ≥25 kg/m²
-                            <input type="radio" id="bmi_25_yes" name="20_1_bmi_25" value="yes" data-translate="yes"> Yes
-                            <input type="radio" id="bmi_25_no" name="20_1_bmi_25" value="no" data-translate="no"> No
-                        </p> -->
+                    <div id="bmi_25_container" style="display:none;">                        
 
                         <p data-translate="bmi_25">BMI ≥25 kg/m²
                             <label class="custom-radio">
@@ -203,11 +166,6 @@
                 <details>
 
                     <summary data-translate="personal_history">Personal history</summary>
-
-                    <!-- <p data-translate="history_coronary_disease" class="mt-3">History of Coronary Disease
-                        <input type="radio" name="6_coronary_disease" value="yes"> Yes
-                        <input type="radio" name="6_coronary_disease" value="no"> No
-                    </p> -->
                     
                     <p data-translate="history_coronary_disease" class="mt-3">History of Coronary Disease
                         <label class="custom-radio">
@@ -222,12 +180,6 @@
                         </label>
                     </p>
 
-
-                    <!-- <p data-translate="history_copd">History of chronic obstructive pulmonary disease (COPD)
-                        <input type="radio" name="7_copd" value="yes"> Yes
-                        <input type="radio" name="7_copd" value="no"> No
-                    </p> -->
-
                     <p data-translate="history_copd">History of chronic obstructive pulmonary disease (COPD)
                         <label class="custom-radio">
                             <input type="radio" id="copd_yes" name="7_copd" value="yes">
@@ -239,13 +191,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>
-
-
-                    <!-- <p data-translate="history_hypertension">History of Arterial Hypertension
-                        <input type="radio" name="8_hypertension" value="yes"> Yes
-                        <input type="radio" name="8_hypertension" value="no"> No
-                    </p> -->
+                    </p>                   
 
                     <p data-translate="history_hypertension">History of Arterial Hypertension
                         <label class="custom-radio">
@@ -258,12 +204,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>
-
-                    <!-- <p data-translate="history_heart_failure">History of Heart Failure
-                        <input type="radio" name="9_heart_failure" value="yes"> Yes
-                        <input type="radio" name="9_heart_failure" value="no"> No
-                    </p> -->
+                    </p>                   
 
                     <p data-translate="history_heart_failure">History of Heart Failure
                         <label class="custom-radio">
@@ -276,13 +217,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>
-
-
-                    <!-- <p data-translate="history_hyperthyroidism">Known Hyperthyroidism
-                        <input type="radio" name="10_hyperthyroidism" value="yes"> Yes
-                        <input type="radio" name="10_hyperthyroidism" value="no"> No
-                    </p> -->
+                    </p>                    
 
                     <p data-translate="history_hyperthyroidism">Known Hyperthyroidism
                         <label class="custom-radio">
@@ -295,13 +230,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>
-
-
-                    <!-- <p data-translate="smoking_status">Smoking
-                        <input type="radio" id="smoking_yes" name="14_smoking" value="yes"> Yes
-                        <input type="radio" id="smoking_no" name="14_smoking" value="no"> No
-                    </p> -->
+                    </p>                   
 
                     <p data-translate="smoking_status">Smoking
                         <label class="custom-radio">
@@ -316,11 +245,7 @@
                         </label>
                     </p>
 
-                    <div id="former_smoker_container" style="display:none;">
-                        <!-- <p data-translate="former_smoker">Former smoker
-                            <input type="radio" name="14_1_former_smoker" value="yes"> Yes
-                            <input type="radio" name="14_1_former_smoker" value="no"> No
-                        </p> -->
+                    <div id="former_smoker_container" style="display:none;">                       
 
                         <p data-translate="former_smoker">Former smoker
                             <label class="custom-radio">
@@ -335,12 +260,7 @@
                             </label>
                         </p>
 
-                    </div>
-
-                    <!-- <p data-translate="history_diabetes">History of Diabetes
-                        <input type="radio" name="17_diabetes" value="yes"> Yes
-                        <input type="radio" name="17_diabetes" value="no"> No
-                    </p> -->
+                    </div>                    
 
                     <p data-translate="history_diabetes">History of Diabetes
                         <label class="custom-radio">
@@ -353,12 +273,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>
-
-                    <!-- <p data-translate="sleep_apnea">Sleep apnea
-                        <input type="radio" name="21_sleep_apnea" value="yes"> Yes
-                        <input type="radio" name="21_sleep_apnea" value="no"> No
-                    </p> -->
+                    </p>                   
                     
                     <p data-translate="sleep_apnea">Sleep apnea
                         <label class="custom-radio">
@@ -371,15 +286,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>
-
-                    <!-- <p data-translate="alcohol_consumption">Alcohol consumption
-                        <input type="radio" name="22_alcohol_consumption" value="0"> 0
-                        <input type="radio" name="22_alcohol_consumption" value="0_7"> 0-7 std. drinks per week
-                        <input type="radio" name="22_alcohol_consumption" value="7_14"> 7-14 std. drinks per week
-                        <input type="radio" name="22_alcohol_consumption" value="15_plus"> 15+ std. drinks per week
-                        <input type="radio" name="22_alcohol_consumption" value="none"> no consumption
-                    </p> -->
+                    </p>                   
                     
                     <p data-translate="alcohol_consumption">Alcohol consumption
                         <br>
@@ -408,12 +315,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             no consumption
                         </label>
-                    </p>
-
-                    <!-- <p data-translate="peripheral_vascular_disease">Peripheral Vascular Disease
-                        <input type="radio" name="26_vascular_disease" value="yes"> Yes
-                        <input type="radio" name="26_vascular_disease" value="no"> No
-                    </p> -->
+                    </p>                    
 
                     <p data-translate="peripheral_vascular_disease">Peripheral Vascular Disease
                         <label class="custom-radio">
@@ -426,12 +328,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>
-
-                    <!-- <p data-translate="end_stage_renal_disease">End-stage renal disease
-                        <input type="radio" name="31_renal_disease" value="yes"> Yes
-                        <input type="radio" name="31_renal_disease" value="no"> No
-                    </p> -->
+                    </p>                    
 
                     <p data-translate="end_stage_renal_disease">End-stage renal disease
                         <label class="custom-radio">
@@ -469,23 +366,9 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>
+                    </p>               
 
-                    
-                    <!-- <p data-translate="presence_septal_aneurysm">Presence of septal aneurysm
-                        <input type="radio" name="5_septal_aneurysm" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="5_septal_aneurysm" value="no" data-translate="no"> No
-                    </p> -->
-
-                    <!-- <p data-translate="valve_disease" class="custom-tooltip">Valve Disease
-                        <input type="radio" name="25_valve_disease" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="25_valve_disease" value="no" data-translate="no"> No
-                        <span class="tooltip-content">
-                            <span style="font-size: 12px;">Aortic, mitral, tricuspid, and/or pulmonary valve disease</span>
-                        </span>
-                    </p> -->
-
-                    <p data-translate="valve_disease" class="custom-tooltip">Valve Disease
+                    <p data-translate="valve_disease" id="field_1">Valve Disease
                         <label class="custom-radio">
                             <input type="radio" id="valve_disease_yes" name="25_valve_disease" value="yes" data-translate="yes">
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
@@ -496,9 +379,6 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                        <span class="tooltip-content">
-                            <span style="font-size: 12px;">Aortic, mitral, tricuspid, and/or pulmonary valve disease</span>
-                        </span>
                     </p>
 
                 </details>
@@ -506,12 +386,7 @@
                 <hr class="hr-personalizado">
 
                 <details>
-                    <summary data-translate="electrocardiogram">Electrocardiogram</summary>
-
-                    <!-- <p data-translate="ecg_lv_hypertrophy" class="mt-3">ECG Left Ventricular Hypertrophy
-                        <input type="radio" name="18_ecg_lv_hypertrophy" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="18_ecg_lv_hypertrophy" value="no" data-translate="no"> No
-                    </p> -->
+                    <summary data-translate="electrocardiogram">Electrocardiogram</summary>                    
 
                     <p data-translate="ecg_lv_hypertrophy" class="mt-3">ECG Left Ventricular Hypertrophy
                         <label class="custom-radio">
@@ -528,18 +403,9 @@
 
                     <p data-translate="ecg_pr_interval">ECG PR Interval 
                         <input type="text" autocomplete="off" name="19_ecg_pr_interval"> ms
-                    </p>
+                    </p>                    
 
-                    <!-- <p data-translate="left_atrial_enlargement" class="custom-tooltip">Presence of Left Atrial Enlargement
-                        <input type="radio" name="29_left_atrial_enlargement" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="29_left_atrial_enlargement" value="no" data-translate="no"> No
-                        <span class="tooltip-content">
-                            <span style="font-size: 12px;">Left atrial enlargement (LAE) by ECG was defined as a p-wave duration of ≥ 120 ms or p wave amplitude >2.5 mm in II and/or terminal p negativity in V1 duration 0.04 s, depth 1 mm.
-                            <br> When from the bidimensional parasternal (as adopted by the ASAS score) long-axis view, LAE may be defined as an anteroposterior diameter ≥4.0cm</span>
-                        </span>
-                    </p> -->
-
-                    <p data-translate="left_atrial_enlargement" class="custom-tooltip">Presence of Left Atrial Enlargement
+                    <p data-translate="left_atrial_enlargement" id="field_2">Presence of Left Atrial Enlargement
                         <label class="custom-radio">
                             <input type="radio" id="left_atrial_enlargement_yes" name="29_left_atrial_enlargement" value="yes" data-translate="yes">
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
@@ -550,29 +416,11 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                        <span class="tooltip-content">
-                            <span style="font-size: 12px;">Left atrial enlargement (LAE) by ECG was defined as a p-wave duration of ≥ 120 ms or p wave amplitude >2.5 mm in II and/or terminal p negativity in V1 duration 0.04 s, depth 1 mm.<br>When from the bidimensional parasternal (as adopted by the ASAS score) long-axis view, LAE may be defined as an anteroposterior diameter ≥4.0cm</span>
-                        </span>
                     </p>
 
+                    <br>                   
 
-                    <br>
-
-                    <!-- <p data-translate="atrial_premature_contraction" class="custom-tooltip">Atrial premature contraction/complex
-                        <input type="radio" name="36_atrial_premature_contraction" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="36_atrial_premature_contraction" value="no" data-translate="no"> No
-                        <span class="tooltip-content">
-                            <span style="font-size: 12px;">An atrial premature contraction (PAC) is an extra heartbeat that starts in the upper chambers of the heart. On an ECG, PACs can appear as: 
-                                <br> - A premature P wave, which is usually a different shape than the other P waves 
-                                <br> - A narrow or normal QRS complex, which is identical to the other normal beats 
-                                <br> - A long pause after the PAC as the heart tries to restore its normal rhythm 
-                                <br> - A normal, short, or longer PR interval than sinus rhythm 
-                                <br> - Post-extrasystolic pause                       
-                            </span>
-                        </span>
-                    </p> -->
-
-                    <p data-translate="atrial_premature_contraction" class="custom-tooltip">Atrial premature contraction/complex
+                    <p data-translate="atrial_premature_contraction" id="field_3">Atrial premature contraction/complex
                         <label class="custom-radio">
                             <input type="radio" id="atrial_premature_contraction_yes" name="36_atrial_premature_contraction" value="yes" data-translate="yes">
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
@@ -583,34 +431,11 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                        <span class="tooltip-content">
-                            <span style="font-size: 12px;">An atrial premature contraction (PAC) is an extra heartbeat that starts in the upper chambers of the heart. On an ECG, PACs can appear as: 
-                                <br> - A premature P wave, which is usually a different shape than the other P waves 
-                                <br> - A narrow or normal QRS complex, which is identical to the other normal beats 
-                                <br> - A long pause after the PAC as the heart tries to restore its normal rhythm 
-                                <br> - A normal, short, or longer PR interval than sinus rhythm 
-                                <br> - Post-extrasystolic pause                       
-                            </span>
-                        </span>
                     </p>
 
+                    <br>                    
 
-                    <br>
-
-                    <!-- <p data-translate="ventricular_premature_contraction" class="custom-tooltip">Ventricular premature contraction/complex
-                        <input type="radio" name="37_ventricular_premature_contraction" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="37_ventricular_premature_contraction" value="no" data-translate="no"> No
-                        <span class="tooltip-content">
-                            <span style="font-size: 12px;">Premature Ventricular Contrations are characterized by:
-                                <br> - Premature QRS complexes that are unusually long (typically >120 msec)
-                                <br> - Wide QRS complexes on the ECG
-                                <br> - Complexes that are not preceded by a P wave
-                                <br> - A large T wave that is oriented in a direction opposite the major deflection of the QRS 
-                            </span>                    
-                        </span>
-                    </p> -->
-
-                    <p data-translate="ventricular_premature_contraction" class="custom-tooltip">Ventricular premature contraction/complex
+                    <p data-translate="ventricular_premature_contraction" id="field_4">Ventricular premature contraction/complex
                         <label class="custom-radio">
                             <input type="radio" id="ventricular_premature_contraction_yes" name="37_ventricular_premature_contraction" value="yes" data-translate="yes">
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
@@ -621,21 +446,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                        <span class="tooltip-content">
-                            <span style="font-size: 12px;">Premature Ventricular Contrations are characterized by:
-                                <br> - Premature QRS complexes that are unusually long (typically >120 msec)
-                                <br> - Wide QRS complexes on the ECG
-                                <br> - Complexes that are not preceded by a P wave
-                                <br> - A large T wave that is oriented in a direction opposite the major deflection of the QRS 
-                            </span>                    
-                        </span>
-                    </p>
-
-                    
-                    <!-- <p data-translate="arrhythmia">Arrhythmia (other than Atrial Fibrillation)
-                        <input type="radio" name="32_arrhythmia" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="32_arrhythmia" value="no" data-translate="no"> No
-                    </p> -->
+                    </p>                    
 
                     <p data-translate="arrhythmia">Arrhythmia (other than Atrial Fibrillation)
                         <label class="custom-radio">
@@ -655,12 +466,7 @@
                 <hr class="hr-personalizado">
 
                 <details>
-                    <summary data-translate="cardiology_general">Cardiology and General</summary>
-
-                    <!-- <p data-translate="presence_symptomatic_stenosis" class="mt-3">Presence of symptomatic extra- or intracranial stenosis ≥50%, symptomatic arterial dissection, clinico-radiological lacunar syndrome
-                        <input type="radio" name="23_symptomatic_stenosis" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="23_symptomatic_stenosis" value="no" data-translate="no"> No
-                    </p> -->
+                    <summary data-translate="cardiology_general">Cardiology and General</summary>                   
 
                     <p data-translate="presence_symptomatic_stenosis" class="mt-3">Presence of symptomatic extra- or intracranial stenosis ≥50%, symptomatic arterial dissection, clinico-radiological lacunar syndrome
                         <label class="custom-radio">
@@ -673,18 +479,9 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>
+                    </p>                   
 
-
-                    <!-- <p data-translate="significant_murmur" class="custom-tooltip">Significant Murmur
-                        <input type="radio" name="24_significant_murmur" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="24_significant_murmur" value="no" data-translate="no"> No
-                        <span class="tooltip-content">
-                            <span style="font-size: 12px;">A significant cardiac murmur was considered present if grade ≥3 out of 6 systolic or any diastolic murmur was auscultated by the physician</span>
-                        </span>
-                    </p> -->
-
-                    <p data-translate="significant_murmur" class="custom-tooltip">Significant Murmur
+                    <p data-translate="significant_murmur" id="field_5">Significant Murmur
                         <label class="custom-radio">
                             <input type="radio" id="significant_murmur_yes" name="24_significant_murmur" value="yes" data-translate="yes">
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
@@ -695,17 +492,10 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                        <span class="tooltip-content">
-                            <span style="font-size: 12px;">A significant cardiac murmur was considered present if grade ≥3 out of 6 systolic or any diastolic murmur was auscultated by the physician</span>
-                        </span>
                     </p>
 
 
-                    <div id="precordial_murmur_container" style="display:none;">
-                        <!-- <p data-translate="presence_precordial_murmur">Presence of any precordial murmur
-                            <input type="radio" name="24_1_precordial_murmur" value="yes" data-translate="yes"> Yes
-                            <input type="radio" name="24_1_precordial_murmur" value="no" data-translate="no"> No
-                        </p> -->
+                    <div id="precordial_murmur_container" style="display:none;">                       
 
                         <p data-translate="presence_precordial_murmur">Presence of any precordial murmur
                             <label class="custom-radio">
@@ -722,11 +512,7 @@
 
                     </div>
                     
-                    <div id="autoimmune_disease_container" style="display:none;">
-                        <!-- <p data-translate="autoimmune_disease">Presence of autoimmune/Inflammatory disease
-                            <input type="radio" name="38_autoimmune_disease" value="yes" data-translate="yes"> Yes
-                            <input type="radio" name="38_autoimmune_disease" value="no" data-translate="no"> No
-                        </p> -->
+                    <div id="autoimmune_disease_container" style="display:none;">                        
 
                         <p data-translate="autoimmune_disease">Presence of autoimmune/Inflammatory disease
                             <label class="custom-radio">
@@ -740,12 +526,7 @@
                                 No
                             </label>
                         </p>
-                    </div>
-
-                    <!-- <p data-translate="aortic_plaque">Presence of aortic plaque
-                        <input type="radio" name="39_aortic_plaque" value="yes" data-translate="yes"> Yes
-                        <input type="radio" name="39_aortic_plaque" value="no" data-translate="no"> No                
-                    </p> -->
+                    </div>                   
 
                     <p data-translate="aortic_plaque">Presence of aortic plaque
                         <label class="custom-radio">
@@ -764,9 +545,13 @@
                         <input type="text" autocomplete="off" name="40_bnp_level" onkeypress="return onlyNumberKey(event);">
                     </p>
 
-                </details>            
+                </details>
+                
+                <div class="d-flex justify-content-end mt-5" style="padding-right: 2rem;">
+                    <button type="submit" name="submit" class="btn btn-primary btn-calculate" data-translate="calculate">Calculate</button>
+                </div>
 
-                <button type="submit" name="submit" class="btn btn-primary mt-4" data-translate="calculate">Calculate</button>
+                
 
             <?php echo form_close(); ?>
 
@@ -782,9 +567,39 @@
 
 <script>
 
+tippy('#field_1', {
+    content: 'Aortic, mitral, tricuspid, and/or pulmonary valve disease',
+    theme: 'customTooltipCssTema', 
+    arrow: false,
+});
+
+tippy('#field_2', {
+    content: 'Left atrial enlargement (LAE) by ECG was defined as a p-wave duration of ≥ 120 ms or p wave amplitude >2.5 mm in II and/or terminal p negativity in V1 duration 0.04 s, depth 1 mm.<br>When from the bidimensional parasternal (as adopted by the ASAS score) long-axis view, LAE may be defined as an anteroposterior diameter ≥4.0cm',
+    theme: 'customTooltipCssTema', 
+    arrow: false,
+});
+
+tippy('#field_3', {
+    content: 'An atrial premature contraction (PAC) is an extra heartbeat that starts in the upper chambers of the heart. On an ECG, PACs can appear as: - A premature P wave, which is usually a different shape than the other P waves - A narrow or normal QRS complex, which is identical to the other normal beats - A long pause after the PAC as the heart tries to restore its normal rhythm - A normal, short, or longer PR interval than sinus rhythm - Post-extrasystolic pause',
+    theme: 'customTooltipCssTema', 
+    arrow: false,
+});
+
+tippy('#field_4', {
+    content: 'Premature Ventricular Contrations are characterized by: - Premature QRS complexes that are unusually long (typically >120 msec) - Wide QRS complexes on the ECG - Complexes that are not preceded by a P wave - A large T wave that is oriented in a direction opposite the major deflection of the QRS ',
+    theme: 'customTooltipCssTema', 
+    arrow: false,
+});
+
+tippy('#field_5', {
+    content: 'A significant cardiac murmur was considered present if grade ≥3 out of 6 systolic or any diastolic murmur was auscultated by the physician',
+    theme: 'customTooltipCssTema', 
+    arrow: false,
+});
+
 function onlyNumberKey(evt) {
-    var ASCIICode = (evt.which) ? evt.which : evt.keyCode
-    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+    var ASCIICode = (evt.which) ? evt.which : evt.keyCode;
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode != 44)
         return false;
     return true;
 }

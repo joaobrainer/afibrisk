@@ -5,7 +5,7 @@
 </head>
 <body id="background3">
 
-    <div class="row title">
+    <div class="row title results">
         <div class="col-md-12">
             <span>Results</span>
         </div>
