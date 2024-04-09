@@ -17,6 +17,8 @@ class Home extends CI_Controller {
 		
 		$dados['titulo'] = "AFibrisk | Questions";
 
+		$this->session->set_userdata('resultados', '');
+
 		$this->session->set_userdata('resultados', array(
 			'STAF' => '',
 			'Brazilian Afib-Predictive Score (BRAFIL)' => '',
@@ -393,8 +395,7 @@ class Home extends CI_Controller {
 	
 		if ($OptimalRiskF21 > 0.2638808) {
 			$OptimalRiskF21 = 0.264;
-		} 
-
+		}	
 		
 		// echo '<pre>';
 		// print_r('Risk Score (Simple)'. number_format(($riskScoreF19*100), 1) . '%');
@@ -402,13 +403,17 @@ class Home extends CI_Controller {
 		// print_r('Normal Risk '.number_format(($normalRiskF20*100), 1) . '%');
 		// echo '<br>';
 		// print_r('Optimal Risk '. number_format(($OptimalRiskF21*100), 1) . '%');
-		// echo '</pre>';
+		// echo '</pre>';		
 
-		$resposta = number_format(($riskScoreF19*100), 1) . '%';
+		$resposta = "Risk Score (Simple) ".number_format(($riskScoreF19*100), 1) . '%';
+
+		if ($dados['pergunta_1'] == 0 || $dados['pergunta_12'] == 0 || $dados['pergunta_13'] == 0 || $dados['pergunta_15'] == 0 || $dados['pergunta_16'] == 0) {
+			$resposta = 'none';
+		}
 
 		$array = array(
 			'message' => 'Chance (%) of Afib in 5 year',
-			'resposta' => "Risk Score (Simple) ". $resposta
+			'resposta' => $resposta
 		);
 
 		$this->setSessaoResultado('CHARGE-AF', $array);
@@ -1168,9 +1173,7 @@ class Home extends CI_Controller {
 				$respostaHAMADA = 10;
 			}
 			
-		}
-
-		
+		}		
 
 		// echo '<br>';
 		// var_dump($respostaHAMADA);

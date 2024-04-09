@@ -19,7 +19,7 @@
             <?= form_open("home/todasRespostas", 'id="formprincipal"'); ?>
 
                 <details>
-                    <summary data-translate="demographic">Demographic</summary>
+                    <summary data-translate="demographic"><a>Demographic</a></summary>
 
                         <p data-translate="age" class="age-input mt-3">Age
                             <input type="text" autocomplete="off" name="1_age" maxlength="3" onkeypress="return onlyNumberKey(event);">
@@ -68,7 +68,7 @@
                 <hr class="hr-personalizado">
 
                 <details>
-                    <summary data-translate="neurological">Neurological</summary>
+                    <summary data-translate="neurological"><a>Neurological</a></summary>
 
                     <p data-translate="nihss" class="mt-3">NIH Stroke Scale on admission
                         <input type="text" autocomplete="off" name="3_nihss" onkeypress="return onlyNumberKey(event);">
@@ -93,7 +93,7 @@
 
                 <details>
 
-                    <summary data-translate="body_metrics">Body metrics and laboratory</summary>
+                    <summary data-translate="body_metrics"><a>Body metrics and laboratory</a></summary>
 
                     <p data-translate="height" class="mt-3">Height (cm)
                         <input type="text" autocomplete="off" name="12_height_cm" onkeypress="return onlyNumberKey(event);">
@@ -165,7 +165,7 @@
 
                 <details>
 
-                    <summary data-translate="personal_history">Personal history</summary>
+                    <summary data-translate="personal_history"><a>Personal history</a></summary>
                     
                     <p data-translate="history_coronary_disease" class="mt-3">History of Coronary Disease
                         <label class="custom-radio">
@@ -349,7 +349,7 @@
 
                 <details>
 
-                    <summary data-translate="echography">Echography</summary>
+                    <summary data-translate="echography"><a>Echography</a></summary>
 
                     <p data-translate="left_atrium_size" class="mt-3">Left Atrium Size 
                         <input type="text" autocomplete="off" name="4_left_atrium_size" onkeypress="return onlyNumberKey(event);"> mm
@@ -386,7 +386,7 @@
                 <hr class="hr-personalizado">
 
                 <details>
-                    <summary data-translate="electrocardiogram">Electrocardiogram</summary>                    
+                    <summary data-translate="electrocardiogram"><a>Electrocardiogram</a></summary>                    
 
                     <p data-translate="ecg_lv_hypertrophy" class="mt-3">ECG Left Ventricular Hypertrophy
                         <label class="custom-radio">
@@ -466,7 +466,7 @@
                 <hr class="hr-personalizado">
 
                 <details>
-                    <summary data-translate="cardiology_general">Cardiology and General</summary>                   
+                    <summary data-translate="cardiology_general"><a>Cardiology and General</a></summary>                   
 
                     <p data-translate="presence_symptomatic_stenosis" class="mt-3">Presence of symptomatic extra- or intracranial stenosis ≥50%, symptomatic arterial dissection, clinico-radiological lacunar syndrome
                         <label class="custom-radio">

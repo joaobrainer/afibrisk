@@ -127,7 +127,23 @@ summary {
     font-size: 20px;
     font-weight: 600;
     display: block;
-    text-decoration:underline ;
+    text-decoration: underline;
+}
+
+summary a {
+    color: #949494;
+    text-decoration: none;
+    border-bottom: 2px solid #949494;
+    padding-bottom: 1px;
+    display: inline-block;
+}
+
+summary a:hover {
+    color: #949494;
+}
+
+#field_1, #field_2, #field_3, #field_4, #field_5{
+    color: #0062c5;
 }
 .custom-radio input[type="radio"] {
     display: none;
@@ -158,14 +174,11 @@ summary {
 }
 
 input[type="text"] {
-    border: none;
-    outline: none;
-    width: 10%;
+    border: 1px solid #949494;
+    outline: none; 
+    width: 15%;
     text-align: center;
-    background-image: linear-gradient(to right, #949494 50%, rgba(255, 255, 255, 0) 0%) !important;
-    background-position: bottom;
-    background-size: 10px 1.5px;
-    background-repeat: repeat-x;
+    border-radius: 3px;
 }
 
 input[type="text"]::placeholder {
@@ -174,6 +187,13 @@ input[type="text"]::placeholder {
 
 input[type="text"]:not(:placeholder-shown) {
     background-image: none;
+}
+
+.card-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center
 }
 
 .container-resultado{
@@ -284,6 +304,14 @@ input[type="text"]:not(:placeholder-shown) {
     max-width: 100% !important;
 }
 
+.div-btn-calculate{
+    padding-right: 2rem;
+}
+
+.card-title{
+    margin-right: 5px;
+}
+
 
 @media (max-width: 700px) {
 
@@ -352,6 +380,10 @@ input[type="text"]:not(:placeholder-shown) {
     .img-size{
         max-width: 100%;
         max-height: 380px;    
+    }
+
+    .div-btn-calculate{
+        padding-right: 0rem;
     }
 
     
