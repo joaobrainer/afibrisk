@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<?php $this->load->view('header'); ?>
+    <?php $this->load->view('header'); ?>
 </head>
+
 <body id="background2">
     <div class="row title">
         <div class="col-md-12">
@@ -11,58 +13,58 @@
         <div class="retangular-shape"></div>
     </div>
 
-    <div class="container">  
+    <div class="container">
 
         <div class="row" id="formquests">
             <div class="col-md-12">
 
-            <?= form_open("home/todasRespostas", 'id="formprincipal"'); ?>
+                <?= form_open("home/todasRespostas", 'id="formprincipal"'); ?>
 
                 <details>
                     <summary data-translate="demographic"><a>Demographic</a></summary>
 
-                        <p data-translate="age" class="age-input mt-3">Age
-                            <input type="text" autocomplete="off" name="1_age" maxlength="3" onkeypress="return onlyNumberKey(event);">
-                        </p>
+                    <p data-translate="age" class="age-input mt-3">Age
+                        <input type="text" autocomplete="off" name="1_age" maxlength="3" onkeypress="return onlyNumberKey(event);">
+                    </p>
 
-                        <p data-translate="gender">Gender
-                            <label class="custom-radio">
-                                <input type="radio" name="2_gender" id="male" value="male" data-translate="male">
-                                <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
-                                Male
-                            </label>
-                            <label class="custom-radio">
-                                <input type="radio" name="2_gender" id="female" value="female" data-translate="female">
-                                <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
-                                Female
-                            </label>
-                        </p>
+                    <p data-translate="gender">Gender
+                        <label class="custom-radio">
+                            <input type="radio" name="2_gender" id="male" value="male" data-translate="male">
+                            <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
+                            Male
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="2_gender" id="female" value="female" data-translate="female">
+                            <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
+                            Female
+                        </label>
+                    </p>
 
-                        <p data-translate="white">White
-                            <label class="custom-radio">
-                                <input type="radio" name="27_white" id="white_yes" value="yes" data-translate="yes">
-                                <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
-                                Yes
-                            </label>
-                            <label class="custom-radio">
-                                <input type="radio" name="27_white" id="white_no" value="no" data-translate="no">
-                                <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
-                                No
-                            </label>
-                        </p>
+                    <p data-translate="white">White
+                        <label class="custom-radio">
+                            <input type="radio" name="27_white" id="white_yes" value="yes" data-translate="yes">
+                            <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
+                            Yes
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="27_white" id="white_no" value="no" data-translate="no">
+                            <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
+                            No
+                        </label>
+                    </p>
 
-                        <p data-translate="black">Black
-                            <label class="custom-radio">
-                                <input type="radio" name="28_black" id="black_yes" value="yes" data-translate="yes">
-                                <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
-                                Yes
-                            </label>
-                            <label class="custom-radio">
-                                <input type="radio" name="28_black" id="black_no" value="no" data-translate="no">
-                                <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
-                                No
-                            </label>
-                        </p>
+                    <p data-translate="black">Black
+                        <label class="custom-radio">
+                            <input type="radio" name="28_black" id="black_yes" value="yes" data-translate="yes">
+                            <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
+                            Yes
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="28_black" id="black_no" value="no" data-translate="no">
+                            <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
+                            No
+                        </label>
+                    </p>
                 </details>
 
                 <hr class="hr-personalizado">
@@ -98,18 +100,18 @@
                     <p data-translate="height" class="mt-3">Height (cm)
                         <input type="text" autocomplete="off" name="12_height_cm" onkeypress="return onlyNumberKey(event);">
                     </p>
-                    
+
                     <p data-translate="weight">Weight (kg)
                         <input type="text" autocomplete="off" name="13_weight_kg" onkeypress="return onlyNumberKey(event);">
                     </p>
-                    
+
                     <p data-translate="systolic_bp">Systolic Blood Pressure (mmHg)
                         <input type="text" autocomplete="off" name="15_systolic_bp" onkeypress="return onlyNumberKey(event);">
                     </p>
-                    
+
                     <p data-translate="diastolic_bp">Diastolic Blood Pressure (mmHg)
                         <input type="text" autocomplete="off" name="16_diastolic_bp" onkeypress="return onlyNumberKey(event);">
-                    </p>                
+                    </p>
 
                     <p data-translate="raised_bmi">Raised BMI (BMI>30kg/m²)
                         <label class="custom-radio">
@@ -124,7 +126,7 @@
                         </label>
                     </p>
 
-                    <div id="bmi_25_container" style="display:none;">                        
+                    <div id="bmi_25_container" style="display:none;">
 
                         <p data-translate="bmi_25">BMI ≥25 kg/m²
                             <label class="custom-radio">
@@ -138,15 +140,15 @@
                                 No
                             </label>
                         </p>
-                        
+
                         <div id="additional_bmi_content" style="display:none;">
                             <p data-translate="bmi_value">BMI (kg/m²)
                                 <input type="text" autocomplete="off" name="20_2_bmi_value" step="0.01" onkeypress="return onlyNumberKey(event);">
-                            </p>                    
+                            </p>
                         </div>
 
                     </div>
-                    
+
                     <p data-translate="waist_circumference">Waist circumference (cm)
                         <input type="text" autocomplete="off" name="34_waist_circumference" onkeypress="return onlyNumberKey(event);">
                     </p>
@@ -166,7 +168,7 @@
                 <details>
 
                     <summary data-translate="personal_history"><a>Personal history</a></summary>
-                    
+
                     <p data-translate="history_coronary_disease" class="mt-3">History of Coronary Disease
                         <label class="custom-radio">
                             <input type="radio" id="coronary_disease_yes" name="6_coronary_disease" value="yes" data-translate="yes">
@@ -191,7 +193,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>                   
+                    </p>
 
                     <p data-translate="history_hypertension">History of Arterial Hypertension
                         <label class="custom-radio">
@@ -204,7 +206,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>                   
+                    </p>
 
                     <p data-translate="history_heart_failure">History of Heart Failure
                         <label class="custom-radio">
@@ -217,7 +219,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>                    
+                    </p>
 
                     <p data-translate="history_hyperthyroidism">Known Hyperthyroidism
                         <label class="custom-radio">
@@ -230,7 +232,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>                   
+                    </p>
 
                     <p data-translate="smoking_status">Smoking
                         <label class="custom-radio">
@@ -245,7 +247,7 @@
                         </label>
                     </p>
 
-                    <div id="former_smoker_container" style="display:none;">                       
+                    <div id="former_smoker_container" style="display:none;">
 
                         <p data-translate="former_smoker">Former smoker
                             <label class="custom-radio">
@@ -260,7 +262,7 @@
                             </label>
                         </p>
 
-                    </div>                    
+                    </div>
 
                     <p data-translate="history_diabetes">History of Diabetes
                         <label class="custom-radio">
@@ -273,8 +275,8 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>                   
-                    
+                    </p>
+
                     <p data-translate="sleep_apnea">Sleep apnea
                         <label class="custom-radio">
                             <input type="radio" id="sleep_apnea_yes" name="21_sleep_apnea" value="yes" data-translate="yes">
@@ -286,8 +288,8 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>                   
-                    
+                    </p>
+
                     <p data-translate="alcohol_consumption">Alcohol consumption
                         <br>
                         <label class="custom-radio">
@@ -315,7 +317,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             no consumption
                         </label>
-                    </p>                    
+                    </p>
 
                     <p data-translate="peripheral_vascular_disease">Peripheral Vascular Disease
                         <label class="custom-radio">
@@ -328,7 +330,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>                    
+                    </p>
 
                     <p data-translate="end_stage_renal_disease">End-stage renal disease
                         <label class="custom-radio">
@@ -351,7 +353,7 @@
 
                     <summary data-translate="echography"><a>Echography</a></summary>
 
-                    <p data-translate="left_atrium_size" class="mt-3">Left Atrium Size 
+                    <p data-translate="left_atrium_size" class="mt-3">Left Atrium Size
                         <input type="text" autocomplete="off" name="4_left_atrium_size" onkeypress="return onlyNumberKey(event);"> mm
                     </p>
 
@@ -366,7 +368,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>               
+                    </p>
 
                     <p data-translate="valve_disease" id="field_1">Valve Disease
                         <label class="custom-radio">
@@ -386,9 +388,9 @@
                 <hr class="hr-personalizado">
 
                 <details>
-                    <summary data-translate="electrocardiogram"><a>Electrocardiogram</a></summary>                    
+                    <summary data-translate="electrocardiogram"><a>Electrocardiogram</a></summary>
 
-                    <p data-translate="ecg_lv_hypertrophy" class="mt-3">ECG Left Ventricular Hypertrophy
+                    <p data-translate="ecg_lv_hypertrophy" class="mt-3">Left Ventricular Hypertrophy
                         <label class="custom-radio">
                             <input type="radio" id="ecg_lv_hypertrophy_yes" name="18_ecg_lv_hypertrophy" value="yes" data-translate="yes">
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
@@ -401,9 +403,9 @@
                         </label>
                     </p>
 
-                    <p data-translate="ecg_pr_interval">ECG PR Interval 
+                    <p data-translate="ecg_pr_interval">PR Interval
                         <input type="text" autocomplete="off" name="19_ecg_pr_interval"> ms
-                    </p>                    
+                    </p>
 
                     <p data-translate="left_atrial_enlargement" id="field_2">Presence of Left Atrial Enlargement
                         <label class="custom-radio">
@@ -418,7 +420,7 @@
                         </label>
                     </p>
 
-                    <br>                   
+                    <br>
 
                     <p data-translate="atrial_premature_contraction" id="field_3">Atrial premature contraction/complex
                         <label class="custom-radio">
@@ -433,7 +435,7 @@
                         </label>
                     </p>
 
-                    <br>                    
+                    <br>
 
                     <p data-translate="ventricular_premature_contraction" id="field_4">Ventricular premature contraction/complex
                         <label class="custom-radio">
@@ -446,7 +448,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>                    
+                    </p>
 
                     <p data-translate="arrhythmia">Arrhythmia (other than Atrial Fibrillation)
                         <label class="custom-radio">
@@ -466,7 +468,7 @@
                 <hr class="hr-personalizado">
 
                 <details>
-                    <summary data-translate="cardiology_general"><a>Cardiology and General</a></summary>                   
+                    <summary data-translate="cardiology_general"><a>Cardiology and General</a></summary>
 
                     <p data-translate="presence_symptomatic_stenosis" class="mt-3">Presence of symptomatic extra- or intracranial stenosis ≥50%, symptomatic arterial dissection, clinico-radiological lacunar syndrome
                         <label class="custom-radio">
@@ -479,7 +481,7 @@
                             <span class="radio-mark">(&nbsp; &nbsp; &nbsp;)</span>
                             No
                         </label>
-                    </p>                   
+                    </p>
 
                     <p data-translate="significant_murmur" id="field_5">Significant Murmur
                         <label class="custom-radio">
@@ -495,7 +497,7 @@
                     </p>
 
 
-                    <div id="precordial_murmur_container" style="display:none;">                       
+                    <div id="precordial_murmur_container" style="display:none;">
 
                         <p data-translate="presence_precordial_murmur">Presence of any precordial murmur
                             <label class="custom-radio">
@@ -511,8 +513,8 @@
                         </p>
 
                     </div>
-                    
-                    <div id="autoimmune_disease_container" style="display:none;">                        
+
+                    <div id="autoimmune_disease_container" style="display:none;">
 
                         <p data-translate="autoimmune_disease">Presence of autoimmune/Inflammatory disease
                             <label class="custom-radio">
@@ -526,7 +528,7 @@
                                 No
                             </label>
                         </p>
-                    </div>                   
+                    </div>
 
                     <p data-translate="aortic_plaque">Presence of aortic plaque
                         <label class="custom-radio">
@@ -546,189 +548,189 @@
                     </p>
 
                 </details>
-                
+
                 <div class="d-flex justify-content-end mt-5" style="padding-right: 2rem;">
                     <button type="submit" name="submit" class="btn btn-primary btn-calculate" data-translate="calculate">Calculate</button>
                 </div>
 
-                
 
-            <?php echo form_close(); ?>
+
+                <?php echo form_close(); ?>
 
             </div>
-        </div>	
+        </div>
     </div>
 </body>
 <footer>
 
-<?php $this->load->view('footer'); ?>
+    <?php $this->load->view('footer'); ?>
 
 </footer>
 
 <script>
+    tippy('#field_1', {
+        content: 'Aortic, mitral, tricuspid, and/or pulmonary valve disease',
+        theme: 'customTooltipCssTema',
+        arrow: false,
+    });
 
-tippy('#field_1', {
-    content: 'Aortic, mitral, tricuspid, and/or pulmonary valve disease',
-    theme: 'customTooltipCssTema', 
-    arrow: false,
-});
+    tippy('#field_2', {
+        content: 'Left atrial enlargement (LAE) by ECG was defined as a p-wave duration of ≥ 120 ms or p wave amplitude >2.5 mm in II and/or terminal p negativity in V1 duration 0.04 s, depth 1 mm.<br>When from the bidimensional parasternal (as adopted by the ASAS score) long-axis view, LAE may be defined as an anteroposterior diameter ≥4.0cm',
+        theme: 'customTooltipCssTema',
+        arrow: false,
+    });
 
-tippy('#field_2', {
-    content: 'Left atrial enlargement (LAE) by ECG was defined as a p-wave duration of ≥ 120 ms or p wave amplitude >2.5 mm in II and/or terminal p negativity in V1 duration 0.04 s, depth 1 mm.<br>When from the bidimensional parasternal (as adopted by the ASAS score) long-axis view, LAE may be defined as an anteroposterior diameter ≥4.0cm',
-    theme: 'customTooltipCssTema', 
-    arrow: false,
-});
+    tippy('#field_3', {
+        content: 'An atrial premature contraction (PAC) is an extra heartbeat that starts in the upper chambers of the heart. On an ECG, PACs can appear as: - A premature P wave, which is usually a different shape than the other P waves - A narrow or normal QRS complex, which is identical to the other normal beats - A long pause after the PAC as the heart tries to restore its normal rhythm - A normal, short, or longer PR interval than sinus rhythm - Post-extrasystolic pause',
+        theme: 'customTooltipCssTema',
+        arrow: false,
+    });
 
-tippy('#field_3', {
-    content: 'An atrial premature contraction (PAC) is an extra heartbeat that starts in the upper chambers of the heart. On an ECG, PACs can appear as: - A premature P wave, which is usually a different shape than the other P waves - A narrow or normal QRS complex, which is identical to the other normal beats - A long pause after the PAC as the heart tries to restore its normal rhythm - A normal, short, or longer PR interval than sinus rhythm - Post-extrasystolic pause',
-    theme: 'customTooltipCssTema', 
-    arrow: false,
-});
+    tippy('#field_4', {
+        content: 'Premature Ventricular Contrations are characterized by: - Premature QRS complexes that are unusually long (typically >120 msec) - Wide QRS complexes on the ECG - Complexes that are not preceded by a P wave - A large T wave that is oriented in a direction opposite the major deflection of the QRS ',
+        theme: 'customTooltipCssTema',
+        arrow: false,
+    });
 
-tippy('#field_4', {
-    content: 'Premature Ventricular Contrations are characterized by: - Premature QRS complexes that are unusually long (typically >120 msec) - Wide QRS complexes on the ECG - Complexes that are not preceded by a P wave - A large T wave that is oriented in a direction opposite the major deflection of the QRS ',
-    theme: 'customTooltipCssTema', 
-    arrow: false,
-});
+    tippy('#field_5', {
+        content: 'A significant cardiac murmur was considered present if grade ≥3 out of 6 systolic or any diastolic murmur was auscultated by the physician',
+        theme: 'customTooltipCssTema',
+        arrow: false,
+    });
 
-tippy('#field_5', {
-    content: 'A significant cardiac murmur was considered present if grade ≥3 out of 6 systolic or any diastolic murmur was auscultated by the physician',
-    theme: 'customTooltipCssTema', 
-    arrow: false,
-});
+    function onlyNumberKey(evt) {
+        var ASCIICode = (evt.which) ? evt.which : evt.keyCode;
+        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode != 44)
+            return false;
+        return true;
+    }
 
-function onlyNumberKey(evt) {
-    var ASCIICode = (evt.which) ? evt.which : evt.keyCode;
-    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode != 44)
-        return false;
-    return true;
-}
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the gender radio buttons
+        var genderRadios = document.querySelectorAll('input[name="gender"]');
 
-document.addEventListener("DOMContentLoaded", function(){
-    // Get the gender radio buttons
-    var genderRadios = document.querySelectorAll('input[name="gender"]');
+        // Add change event listeners to the gender radio buttons
+        genderRadios.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                // Determine whether the "female" radio button is checked
+                var isFemale = document.querySelector('input[name="gender"][value="female"]').checked;
 
-    // Add change event listeners to the gender radio buttons
-    genderRadios.forEach(function(radio) {
-        radio.addEventListener('change', function() {
-            // Determine whether the "female" radio button is checked
-            var isFemale = document.querySelector('input[name="gender"][value="female"]').checked;
+                // Get the autoimmune disease question container
+                var autoimmuneDiseaseContainer = document.getElementById('autoimmune_disease_container');
 
-            // Get the autoimmune disease question container
-            var autoimmuneDiseaseContainer = document.getElementById('autoimmune_disease_container');
-
-            // Show or hide the autoimmune disease question based on the gender selection
-            autoimmuneDiseaseContainer.style.display = isFemale ? 'block' : 'none';
+                // Show or hide the autoimmune disease question based on the gender selection
+                autoimmuneDiseaseContainer.style.display = isFemale ? 'block' : 'none';
+            });
         });
     });
-});
 
-document.getElementById('raised_bmi_yes').addEventListener('change', function() {
-  
-  document.getElementById('bmi_25_container').style.display = 'none';
-  document.getElementById('additional_bmi_content').style.display = 'none';
-  const bmi25Radios = document.querySelectorAll('input[name="bmi_25"]');
-  bmi25Radios.forEach(radio => {
-    radio.checked = false;
-  });
-  
-  const bmiValueInput = document.querySelector('input[name="bmi_value"]');
-  if (bmiValueInput) {
-    bmiValueInput.value = '';
-  }
-});
+    document.getElementById('raised_bmi_yes').addEventListener('change', function() {
 
-document.getElementById('raised_bmi_no').addEventListener('change', function() {
-    document.getElementById('bmi_25_container').style.display = 'block';
-    
-});
+        document.getElementById('bmi_25_container').style.display = 'none';
+        document.getElementById('additional_bmi_content').style.display = 'none';
+        const bmi25Radios = document.querySelectorAll('input[name="bmi_25"]');
+        bmi25Radios.forEach(radio => {
+            radio.checked = false;
+        });
 
-document.getElementById('bmi_25_yes').addEventListener('change', function() {
-    document.getElementById('additional_bmi_content').style.display = 'block';    
-  
-});
-document.getElementById('bmi_25_no').addEventListener('change', function() {
-    document.getElementById('additional_bmi_content').style.display = 'none'; 
-});
+        const bmiValueInput = document.querySelector('input[name="bmi_value"]');
+        if (bmiValueInput) {
+            bmiValueInput.value = '';
+        }
+    });
 
-if (document.getElementById('raised_bmi_yes').checked) {
-  document.getElementById('bmi_25_container').style.display = 'block';
-}
-if (document.getElementById('bmi_25_yes').checked) {
-  document.getElementById('additional_bmi_content').style.display = 'block';
-}
+    document.getElementById('raised_bmi_no').addEventListener('change', function() {
+        document.getElementById('bmi_25_container').style.display = 'block';
 
-document.getElementById('smoking_yes').addEventListener('change', function() {  
-    document.getElementById('former_smoker_container').style.display = 'none';
-    clearRadioSelection('former_smoker');
-});
+    });
 
-document.getElementById('smoking_no').addEventListener('change', function() {
-    document.getElementById('former_smoker_container').style.display = 'block';
-});
+    document.getElementById('bmi_25_yes').addEventListener('change', function() {
+        document.getElementById('additional_bmi_content').style.display = 'block';
 
-function clearRadioSelection(radioName) {
-  document.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
-    radio.checked = false;
-  });
-}
+    });
+    document.getElementById('bmi_25_no').addEventListener('change', function() {
+        document.getElementById('additional_bmi_content').style.display = 'none';
+    });
 
-document.querySelectorAll('input[name="24_significant_murmur"]').forEach(radio => {
-  radio.addEventListener('change', function() {
-    // If 'Yes' is selected for Significant Murmur, show the next question, else hide and clear it
-    const displayStyle = radio.value === 'yes' ? 'block' : 'none';
-    document.getElementById('precordial_murmur_container').style.display = displayStyle;
-    if (radio.value === 'no') {
-      clearRadioSelection('24_1_precordial_murmur');
+    if (document.getElementById('raised_bmi_yes').checked) {
+        document.getElementById('bmi_25_container').style.display = 'block';
     }
-  });
-});
+    if (document.getElementById('bmi_25_yes').checked) {
+        document.getElementById('additional_bmi_content').style.display = 'block';
+    }
 
-function clearRadioSelection(radioName) {
-  document.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
-    radio.checked = false;
-  });
-}
+    document.getElementById('smoking_yes').addEventListener('change', function() {
+        document.getElementById('former_smoker_container').style.display = 'none';
+        clearRadioSelection('former_smoker');
+    });
+
+    document.getElementById('smoking_no').addEventListener('change', function() {
+        document.getElementById('former_smoker_container').style.display = 'block';
+    });
+
+    function clearRadioSelection(radioName) {
+        document.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
+            radio.checked = false;
+        });
+    }
+
+    document.querySelectorAll('input[name="24_significant_murmur"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            // If 'Yes' is selected for Significant Murmur, show the next question, else hide and clear it
+            const displayStyle = radio.value === 'yes' ? 'block' : 'none';
+            document.getElementById('precordial_murmur_container').style.display = displayStyle;
+            if (radio.value === 'no') {
+                clearRadioSelection('24_1_precordial_murmur');
+            }
+        });
+    });
+
+    function clearRadioSelection(radioName) {
+        document.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
+            radio.checked = false;
+        });
+    }
 
 
-// // Sample translations
-// const translations = {
-//   'pt-br': {
-//     demographic: "Demográfico",
-//     age: "Idade:",
-//     gender: "Gênero:",
-//     male: "Masculino",
-//     female: "Feminino",
-//     neurological: "Neurológico",
-//     nihss: "Escala de AVC NIH na admissão:",
-//     stroke_history: "Acidente Vascular Cerebral prévio ou Ataque Isquêmico Transitório:",
-//     yes: "Sim",
-//     no: "Não"
-//     // ... more translations
-//   },
-//   // ... other languages
-// };
+    // // Sample translations
+    // const translations = {
+    //   'pt-br': {
+    //     demographic: "Demográfico",
+    //     age: "Idade:",
+    //     gender: "Gênero:",
+    //     male: "Masculino",
+    //     female: "Feminino",
+    //     neurological: "Neurológico",
+    //     nihss: "Escala de AVC NIH na admissão:",
+    //     stroke_history: "Acidente Vascular Cerebral prévio ou Ataque Isquêmico Transitório:",
+    //     yes: "Sim",
+    //     no: "Não"
+    //     // ... more translations
+    //   },
+    //   // ... other languages
+    // };
 
-// function translate(lang) {
-//   document.querySelectorAll('[data-translate]').forEach((elem) => {
-//     const key = elem.getAttribute('data-translate');
-//     const translation = translations[lang][key];
-//     if (translation) {
-//       if (elem.tagName === 'INPUT' && elem.type === 'radio') {
-//         elem.nextSibling.textContent = translation;
-//       } else {
-//         elem.textContent = translation;
-//       }
-//     }
-//   });
-// }
+    // function translate(lang) {
+    //   document.querySelectorAll('[data-translate]').forEach((elem) => {
+    //     const key = elem.getAttribute('data-translate');
+    //     const translation = translations[lang][key];
+    //     if (translation) {
+    //       if (elem.tagName === 'INPUT' && elem.type === 'radio') {
+    //         elem.nextSibling.textContent = translation;
+    //       } else {
+    //         elem.textContent = translation;
+    //       }
+    //     }
+    //   });
+    // }
 
-// // Event listener for language change
-// document.getElementById('languageSelect').addEventListener('change', function() {
-//   translate(this.value);
-// });
+    // // Event listener for language change
+    // document.getElementById('languageSelect').addEventListener('change', function() {
+    //   translate(this.value);
+    // });
 
-// // Set initial language based on browser preference or default to English
-// translate(navigator.language.toLowerCase() === 'pt-br' ? 'pt-br' : 'en');
+    // // Set initial language based on browser preference or default to English
+    // translate(navigator.language.toLowerCase() === 'pt-br' ? 'pt-br' : 'en');
 </script>
+
 </html>
