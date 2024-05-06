@@ -1184,6 +1184,8 @@ class Home extends CI_Controller {
 			'resposta' => $respostaHAMADA
 		);
 
+		var_dump($dados);
+
 		$this->setSessaoResultado('Hamada', $dados);
 	}
 
