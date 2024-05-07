@@ -607,13 +607,13 @@
 
     document.addEventListener("DOMContentLoaded", function() {
         // Get the gender radio buttons
-        var genderRadios = document.querySelectorAll('input[name="gender"]');
+        var genderRadios = document.querySelectorAll('input[name="2_gender"]');
 
         // Add change event listeners to the gender radio buttons
         genderRadios.forEach(function(radio) {
             radio.addEventListener('change', function() {
                 // Determine whether the "female" radio button is checked
-                var isFemale = document.querySelector('input[name="gender"][value="female"]').checked;
+                var isFemale = document.querySelector('input[name="2_gender"][value="female"]').checked;
 
                 // Get the autoimmune disease question container
                 var autoimmuneDiseaseContainer = document.getElementById('autoimmune_disease_container');
@@ -628,12 +628,10 @@
 
         document.getElementById('bmi_25_container').style.display = 'none';
         document.getElementById('additional_bmi_content').style.display = 'none';
-        const bmi25Radios = document.querySelectorAll('input[name="bmi_25"]');
-        bmi25Radios.forEach(radio => {
-            radio.checked = false;
-        });
 
-        const bmiValueInput = document.querySelector('input[name="bmi_value"]');
+        clearRadioSelection('20_1_bmi_25');
+
+        const bmiValueInput = document.querySelector('input[name="20_2_bmi_value"]');
         if (bmiValueInput) {
             bmiValueInput.value = '';
         }
@@ -650,6 +648,10 @@
     });
     document.getElementById('bmi_25_no').addEventListener('change', function() {
         document.getElementById('additional_bmi_content').style.display = 'none';
+        const bmiValueInput = document.querySelector('input[name="20_2_bmi_value"]');
+        if (bmiValueInput) {
+            bmiValueInput.value = '';
+        }
     });
 
     if (document.getElementById('raised_bmi_yes').checked) {
@@ -661,18 +663,12 @@
 
     document.getElementById('smoking_yes').addEventListener('change', function() {
         document.getElementById('former_smoker_container').style.display = 'none';
-        clearRadioSelection('former_smoker');
+        clearRadioSelection('14_1_former_smoker');
     });
 
     document.getElementById('smoking_no').addEventListener('change', function() {
         document.getElementById('former_smoker_container').style.display = 'block';
-    });
-
-    function clearRadioSelection(radioName) {
-        document.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
-            radio.checked = false;
-        });
-    }
+    });    
 
     document.querySelectorAll('input[name="24_significant_murmur"]').forEach(radio => {
         radio.addEventListener('change', function() {
@@ -690,7 +686,6 @@
             radio.checked = false;
         });
     }
-
 
     // // Sample translations
     // const translations = {
