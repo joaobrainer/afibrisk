@@ -312,6 +312,9 @@ input[type="text"]:not(:placeholder-shown) {
     margin-right: 5px;
 }
 
+.show-reference{
+    cursor: pointer;
+}
 
 @media (max-width: 700px) {
 
