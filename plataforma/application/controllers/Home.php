@@ -206,7 +206,7 @@ class Home extends CI_Controller {
 		// echo '<br>';
 
 		$array = array(
-			'message' => '',
+			'message' => 'BRAFIL',
 			'resposta' => $respostaBRAFIL
 		);
 
@@ -274,7 +274,7 @@ class Home extends CI_Controller {
 		// echo '<br>';
 
 		$array = array(
-			'message' => '',
+			'message' => 'C2HEST',
 			'resposta' => $respostaC2HEST
 		);
 
@@ -736,7 +736,7 @@ class Home extends CI_Controller {
 		// echo '<br>';
 
 		$array = array(
-			'message' => '',
+			'message' => 'FRAMI',
 			'resposta' => $respostaFRAMI
 		);
 
@@ -1524,7 +1524,7 @@ class Home extends CI_Controller {
 		// echo '<br>';	
 
 		$array = array(
-			'message' => '',
+			'message' => 'THNRS',
 			'resposta' => $respostaTHNRS
 		);
 
@@ -1548,7 +1548,7 @@ class Home extends CI_Controller {
 		// echo '<br>';
 		
 		$array = array(
-			'message' => '',
+			'message' => 'Takase',
 			'resposta' => $respostaTAKASE
 		);
 
