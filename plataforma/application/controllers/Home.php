@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Home extends CI_Controller {
 
@@ -8,13 +8,12 @@ class Home extends CI_Controller {
 		$dados['titulo'] = "AFibrisk | Home";
 
 		$this->session->set_userdata('lang', 'pt-br');
-		
-		$this->load->view('home', $dados);
 
+		$this->load->view('home', $dados);
 	}
 
-	public function loadQuestions() { 
-		
+	public function loadQuestions() {
+
 		$dados['titulo'] = "AFibrisk | Questions";
 
 		$this->session->set_userdata('resultados', '');
@@ -37,18 +36,17 @@ class Home extends CI_Controller {
 			'MHS Score' => '',
 			'ARIC Score' => '',
 			'Suita' => '',
-			'Taiwan AF Score' => ''			
+			'Taiwan AF Score' => ''
 		));
 
 		$this->load->view('perguntas/home', $dados);
-
 	}
 
 	public function convertToDecimal($number) {
 		return str_replace(',', '.', $number);
 	}
 
-	public function todasRespostas() { 
+	public function todasRespostas() {
 
 		$dados = array(
 			'pergunta_1' => $this->convertToDecimal($this->input->post('1_age') ? $this->input->post('1_age') : 0),
@@ -153,10 +151,10 @@ class Home extends CI_Controller {
 		//18. ASAS
 		$this->calculaASAS($dados);
 
-		redirect('results');			
+		redirect('results');
 	}
 
-	public function calculaBRAFIL($dados) { 
+	public function calculaBRAFIL($dados) {
 		$pontuacaoBRAFIL = 0;
 		$respostaBRAFIL = '';
 		if ($dados['pergunta_1'] >= 70) {
@@ -172,7 +170,7 @@ class Home extends CI_Controller {
 			$pontuacaoBRAFIL += 2;
 		}
 
-		switch ($pontuacaoBRAFIL) {			
+		switch ($pontuacaoBRAFIL) {
 			case 1:
 				$respostaBRAFIL = 'Chance of Afib detection on follow-up (median 8 months) = 8.5% (AUC of 0.77 (0.72-0.82, SD 0.027; p-value < 0.001)';
 				break;
@@ -211,10 +209,9 @@ class Home extends CI_Controller {
 		);
 
 		$this->setSessaoResultado('Brazilian Afib-Predictive Score (BRAFIL)', $array);
-
 	}
 
-	public function calculaC2HEST($dados) { 
+	public function calculaC2HEST($dados) {
 		$pontuacaoC2HEST = 0;
 		$respostaC2HEST = '';
 
@@ -237,7 +234,7 @@ class Home extends CI_Controller {
 			$pontuacaoC2HEST++;
 		}
 
-		switch ($pontuacaoC2HEST) {			
+		switch ($pontuacaoC2HEST) {
 			case 1:
 				$respostaC2HEST = 'Incidence of Afib per 1,000 person-years = 0.82 (AUC 0.749, 95% CI 0.729-0.769)';
 				break;
@@ -266,8 +263,7 @@ class Home extends CI_Controller {
 
 			default:
 				$respostaC2HEST = 'Incidence of Afib per 1,000 person-years = 0.18 (AUC 0.749, 95% CI 0.729-0.769)';
-			break;
-
+				break;
 		}
 		// echo '<br>';
 		// var_dump($respostaC2HEST);
@@ -281,7 +277,7 @@ class Home extends CI_Controller {
 		$this->setSessaoResultado('C2HEST', $array);
 	}
 
-	public function calculaCHARGEAF($dados) { 
+	public function calculaCHARGEAF($dados) {
 
 		$Mvalues = array(
 			'D2' => ($dados['pergunta_1'] >= 46 && $dados['pergunta_1'] <= 94) ? $dados['pergunta_1'] : 0,
@@ -299,7 +295,7 @@ class Home extends CI_Controller {
 
 		$normal = array(
 			'J2' => $Mvalues['D2'],
-			'J3' => $Mvalues['D3'],			
+			'J3' => $Mvalues['D3'],
 			'J4' => $Mvalues['D4'],
 			'J5' => 22.5 * (pow($Mvalues['D4'] / 100, 2)),
 			'J6' => 125,
@@ -309,11 +305,11 @@ class Home extends CI_Controller {
 			'J10' => 0,
 			'J11' => 0,
 			'J12' => 0,
-		);	
-		
+		);
+
 		$optimal = array(
 			'K2' => $Mvalues['D2'],
-			'K3' => $Mvalues['D3'],			
+			'K3' => $Mvalues['D3'],
 			'K4' => $Mvalues['D4'],
 			'K5' => 21 * (pow($Mvalues['D4'] / 100, 2)),
 			'K6' => 110,
@@ -323,7 +319,7 @@ class Home extends CI_Controller {
 			'K10' => 0,
 			'K11' => 0,
 			'K12' => 0,
-		);	
+		);
 
 		$coefSimple = [
 			'F2' => 0.10166,
@@ -331,7 +327,7 @@ class Home extends CI_Controller {
 			'F4' => 0.02478,
 			'F5' => 0.0077,
 			'F6' => 0.00986,
-			'F7' => - 0.01013,
+			'F7' => -0.01013,
 			'F8' => 0.35931,
 			'F9' => 0.34889,
 			'F10' => 0.23666,
@@ -341,18 +337,18 @@ class Home extends CI_Controller {
 
 		$ebxNormalJ18 = 0;
 		foreach ($normal as $key => $value) {
-			$index = substr($key, 1); 
-			$coefKey = 'F' . $index; 
+			$index = substr($key, 1);
+			$coefKey = 'F' . $index;
 			$ebxNormalJ18 += $value * $coefSimple[$coefKey];
 		}
 
 		$ebxOptimalK18 = 0;
 		foreach ($optimal as $key => $value) {
-			$index = substr($key, 1); 
-			$coefKey = 'F' . $index; 
+			$index = substr($key, 1);
+			$coefKey = 'F' . $index;
 			$ebxOptimalK18 += $value * $coefSimple[$coefKey];
 		}
-		
+
 		$means = [
 			'I2' => 65.096357,
 			'I3' => 0.8335309,
@@ -370,14 +366,14 @@ class Home extends CI_Controller {
 		$ebxBarCoefSimpleF17 = 0;
 		foreach ($means as $key => $value) {
 			$index = substr($key, 1);
-			$coefKey = 'F' . $index; 
+			$coefKey = 'F' . $index;
 			$ebxBarCoefSimpleF17 += $value * $coefSimple[$coefKey];
 		}
 
 		$ebxCoefSimpleF18 = 0;
 		foreach ($Mvalues as $key => $value) {
 			$index = substr($key, 1);
-			$coefKey = 'F' . $index; 
+			$coefKey = 'F' . $index;
 			$ebxCoefSimpleF18 += $value * $coefSimple[$coefKey];
 		}
 
@@ -392,11 +388,11 @@ class Home extends CI_Controller {
 		if ($normalRiskF20 > 0.2638808) {
 			$normalRiskF20 = 0.264;
 		}
-	
+
 		if ($OptimalRiskF21 > 0.2638808) {
 			$OptimalRiskF21 = 0.264;
-		}	
-		
+		}
+
 		// echo '<pre>';
 		// print_r('Risk Score (Simple)'. number_format(($riskScoreF19*100), 1) . '%');
 		// echo '<br>';
@@ -405,7 +401,7 @@ class Home extends CI_Controller {
 		// print_r('Optimal Risk '. number_format(($OptimalRiskF21*100), 1) . '%');
 		// echo '</pre>';		
 
-		$resposta = "Risk Score (Simple) ".number_format(($riskScoreF19*100), 1) . '%';
+		$resposta = "Risk Score (Simple) " . number_format(($riskScoreF19 * 100), 1) . '%';
 
 		if ($dados['pergunta_1'] == 0 || $dados['pergunta_12'] == 0 || $dados['pergunta_13'] == 0 || $dados['pergunta_15'] == 0 || $dados['pergunta_16'] == 0) {
 			$resposta = 'none';
@@ -417,17 +413,16 @@ class Home extends CI_Controller {
 		);
 
 		$this->setSessaoResultado('CHARGE-AF', $array);
-
 	}
 
-	public function calculaHARMS2AF($dados) { 
+	public function calculaHARMS2AF($dados) {
 		$pontuacaoHARMS2AF = 0;
 		$respostaHARMS2AF = '';
-		
+
 		if ($dados['pergunta_1'] >= 65) {
 			$pontuacaoHARMS2AF += 2;
-		}elseif($dados['pergunta_1'] >= 61 && $dados['pergunta_1'] <= 64) {
-			$pontuacaoHARMS2AF ++;			
+		} elseif ($dados['pergunta_1'] >= 61 && $dados['pergunta_1'] <= 64) {
+			$pontuacaoHARMS2AF++;
 		}
 
 		if ($dados['pergunta_8'] == 'yes') {
@@ -440,14 +435,14 @@ class Home extends CI_Controller {
 			$pontuacaoHARMS2AF += 2;
 		}
 		if ($dados['pergunta_14'] == 'yes') {
-			$pontuacaoHARMS2AF ++;
+			$pontuacaoHARMS2AF++;
 		}
 		if ($dados['pergunta_21'] == 'yes') {
 			$pontuacaoHARMS2AF += 2;
 		}
 		if ($dados['pergunta_22'] == '7_14') {
-			$pontuacaoHARMS2AF ++;	
-		}elseif ($dados['pergunta_22'] == '15_plus') {
+			$pontuacaoHARMS2AF++;
+		} elseif ($dados['pergunta_22'] == '15_plus') {
 			$pontuacaoHARMS2AF += 2;
 		}
 
@@ -455,21 +450,21 @@ class Home extends CI_Controller {
 			case 0:
 			case 1:
 			case 2:
-			case 3:	
+			case 3:
 			case 4:
 				$respostaHARMS2AF = 'HR 2.81 (95% CI 1.95, 4.04)';
 				break;
-			
+
 			case 5:
 			case 6:
-			case 7:	
+			case 7:
 			case 8:
 			case 9:
 				$respostaHARMS2AF = 'HR 12.79 (95% CI 8.93, 18.33)';
 				break;
 
 			// 10-14	
-			default: 
+			default:
 				$respostaHARMS2AF = 'HR 38.70 (95% CI 26.96, 55.54)';
 				break;
 		}
@@ -484,34 +479,33 @@ class Home extends CI_Controller {
 		);
 
 		$this->setSessaoResultado('HARMS2-AF', $array);
-
 	}
 
-	public function calculaHATCH($dados) { 
+	public function calculaHATCH($dados) {
 		$pontuacaoHATCH = 0;
 		$respostaHATCH = '';
 
 		if ($dados['pergunta_1'] > 75) {
-			$pontuacaoHATCH ++;
+			$pontuacaoHATCH++;
 		}
 		if ($dados['pergunta_8'] == 'yes') {
-			$pontuacaoHATCH ++;
+			$pontuacaoHATCH++;
 		}
 		if ($dados['pergunta_30'] == 'yes') {
 			$pontuacaoHATCH += 2;
 		}
 		if ($dados['pergunta_7'] == 'yes') {
-			$pontuacaoHATCH ++;
+			$pontuacaoHATCH++;
 		}
 		if ($dados['pergunta_9'] == 'yes') {
 			$pontuacaoHATCH += 2;
 		}
 
-		switch ($pontuacaoHATCH) {		
+		switch ($pontuacaoHATCH) {
 			case 1:
-				$respostaHATCH = 'Incidence (per 1000 person-years of follow-up) of Afib detection = 7.3 / Hazard Ratio 8.3 (95% CI 7.933–8.763)';	
+				$respostaHATCH = 'Incidence (per 1000 person-years of follow-up) of Afib detection = 7.3 / Hazard Ratio 8.3 (95% CI 7.933–8.763)';
 				break;
-			
+
 			case 2:
 				$respostaHATCH = 'Incidence (per 1000 person-years of follow-up) of Afib detection = 9.9 / Hazard Ratio 10.9 (95% CI 10.138–11.719)';
 				break;
@@ -535,7 +529,7 @@ class Home extends CI_Controller {
 			case 7:
 				$respostaHATCH = 'Incidence (per 1000 person-years of follow-up) of Afib detection = 57.3 / Hazard Ratio 55.42 (95% CI 32.067–95.801)';
 				break;
-			
+
 			default:
 				$respostaHATCH = 'Incidence (per 1000 person-years of follow-up) of Afib detection = 0.8 / Hazard Ratio 1';
 				break;
@@ -553,7 +547,7 @@ class Home extends CI_Controller {
 		$this->setSessaoResultado('HATCH', $array);
 	}
 
-	public function calculaSTAF($dados) { 
+	public function calculaSTAF($dados) {
 		$pontuacaoSTAF = 0;
 		$respostaSTAF = '';
 
@@ -561,7 +555,7 @@ class Home extends CI_Controller {
 			$pontuacaoSTAF += 2;
 		}
 		if ($dados['pergunta_3'] >= 8) {
-			$pontuacaoSTAF ++;
+			$pontuacaoSTAF++;
 		}
 		if ($dados['pergunta_4'] >= 40) {
 			$pontuacaoSTAF += 2;
@@ -572,7 +566,7 @@ class Home extends CI_Controller {
 
 		if ($pontuacaoSTAF <= 4) {
 			$respostaSTAF = 'Low chance of Afib detection on follow-up (3 months)  - AUC of 0.94 (0.92-0.96, SD 0.012; p-value < 0.001)';
-		}else{
+		} else {
 			$respostaSTAF = 'High chance of Afib detection on follow-up (3 months)  - AUC of 0.94 (0.92-0.96, SD 0.012; p-value < 0.001)';
 		}
 
@@ -588,7 +582,7 @@ class Home extends CI_Controller {
 		$this->setSessaoResultado('STAF', $array);
 	}
 
-	public function calculaFRAMI($dados) { 
+	public function calculaFRAMI($dados) {
 		$pontuacaoFRAMI = 0;
 		$respostaFRAMI = '';
 
@@ -597,54 +591,54 @@ class Home extends CI_Controller {
 
 		if ($dados['pergunta_2'] == 'male') {
 			$male = 1;
-		}elseif ($dados['pergunta_2'] == 'female') {
+		} elseif ($dados['pergunta_2'] == 'female') {
 			$female = 1;
 		}
 
 		if ($dados['pergunta_1'] >= 85) {
 			$pontuacaoFRAMI += 8;
-		}elseif ($dados['pergunta_1'] >= 80 && $dados['pergunta_1'] <= 84) {
+		} elseif ($dados['pergunta_1'] >= 80 && $dados['pergunta_1'] <= 84) {
 			$pontuacaoFRAMI += 7;
-		}elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
+		} elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
 			if ($male == 1) {
 				$pontuacaoFRAMI += 7;
-			}elseif ($female == 1) {
+			} elseif ($female == 1) {
 				$pontuacaoFRAMI += 6;
 			}
-		}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
+		} elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
 			if ($male == 1) {
 				$pontuacaoFRAMI += 6;
-			}elseif ($female == 1) {
+			} elseif ($female == 1) {
 				$pontuacaoFRAMI += 4;
 			}
-		}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
+		} elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
 			if ($male == 1) {
 				$pontuacaoFRAMI += 5;
-			}elseif ($female == 1) {
+			} elseif ($female == 1) {
 				$pontuacaoFRAMI += 3;
 			}
-		}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+		} elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
 			if ($male == 1) {
 				$pontuacaoFRAMI += 4;
-			}elseif ($female == 1) {
+			} elseif ($female == 1) {
 				$pontuacaoFRAMI += 1;
 			}
-		}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
+		} elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
 			if ($male == 1) {
 				$pontuacaoFRAMI += 3;
-			}elseif ($female == 1) {
+			} elseif ($female == 1) {
 				$pontuacaoFRAMI += 0;
 			}
-		}elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 54) {
+		} elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 54) {
 			if ($male == 1) {
 				$pontuacaoFRAMI += 2;
-			}elseif ($female == 1) {
+			} elseif ($female == 1) {
 				$pontuacaoFRAMI += -2;
 			}
-		}elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 49) {
+		} elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 49) {
 			if ($male == 1) {
 				$pontuacaoFRAMI += 1;
-			}elseif ($female == 1) {
+			} elseif ($female == 1) {
 				$pontuacaoFRAMI += -3;
 			}
 		}
@@ -659,18 +653,18 @@ class Home extends CI_Controller {
 
 		if ($dados['pergunta_19'] >= 160 && $dados['pergunta_19'] <= 190) {
 			$pontuacaoFRAMI++;
-		}elseif ($dados['pergunta_19'] >= 200) {
+		} elseif ($dados['pergunta_19'] >= 200) {
 			$pontuacaoFRAMI += 2;
 		}
 
 		if ($dados['pergunta_24'] == 'yes') {
-			if($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 84) {
-				$pontuacaoFRAMI ++;
-			}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 74) {
+			if ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 84) {
+				$pontuacaoFRAMI++;
+			} elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 74) {
 				$pontuacaoFRAMI += 2;
-			}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 64) {
+			} elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 64) {
 				$pontuacaoFRAMI += 4;
-			}elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 54) {
+			} elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 54) {
 				$pontuacaoFRAMI += 5;
 			}
 		}
@@ -678,22 +672,22 @@ class Home extends CI_Controller {
 		if ($dados['pergunta_9'] == 'yes') {
 			if ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 74) {
 				$pontuacaoFRAMI += 2;
-			}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 64) {
+			} elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 64) {
 				$pontuacaoFRAMI += 6;
-			}elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 54) {
+			} elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 54) {
 				$pontuacaoFRAMI += 10;
 			}
 		}
 
-		switch ($pontuacaoFRAMI) {		
+		switch ($pontuacaoFRAMI) {
 			case 0:
-				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = < 1% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';	
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = < 1% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
 				break;
 
 			case 1:
-				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 2% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';	
+				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 2% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
 				break;
-			
+
 			case 2:
 				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 2% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
 				break;
@@ -725,7 +719,7 @@ class Home extends CI_Controller {
 			case 9:
 				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) = 22% {C	statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
 				break;
-			
+
 			default:
 				$respostaFRAMI = 'Chance of Afib detection on follow-up (10 years) => 30% {C statistic=0.78, 95% confidence interval [CI] 0.76–0.80)}. The applicability of this	risk score, derived from whites, to predict new-onset AF in non-whites is uncertain.';
 				break;
@@ -741,10 +735,9 @@ class Home extends CI_Controller {
 		);
 
 		$this->setSessaoResultado('Framingham AF risk score', $array);
-		
 	}
 
-	public function calculaHAVOC($dados) { 
+	public function calculaHAVOC($dados) {
 		$pontuacaoHAVOC = 0;
 		$respostaHAVOC = '';
 
@@ -780,21 +773,21 @@ class Home extends CI_Controller {
 			case 0:
 			case 1:
 			case 2:
-			case 3:	
+			case 3:
 			case 4:
 				$respostaHAVOC = 'Low chance of Afib detection on follow; 2.5%';
 				break;
-			
+
 			case 5:
 			case 6:
-			case 7:	
+			case 7:
 			case 8:
 			case 9:
 				$respostaHAVOC = 'Medium chance of Afib detection on follow; 11.8%';
 				break;
 
 			// 10-14	
-			default: 
+			default:
 				$respostaHAVOC = 'High chance of Afib detection on follow; 24.9%';
 				break;
 		}
@@ -811,15 +804,15 @@ class Home extends CI_Controller {
 		$this->setSessaoResultado('HAVOC', $array);
 	}
 
-	public function calculaARIC($dados) { 
+	public function calculaARIC($dados) {
 		$pontuacaoARIC = 0;
 		$respostaARIC = '';
 
 		if ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] < 55) {
 			$pontuacaoARIC += 3;
-		}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] < 60) {
+		} elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] < 60) {
 			$pontuacaoARIC += 4;
-		}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+		} elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
 			$pontuacaoARIC += 8;
 		}
 
@@ -828,18 +821,18 @@ class Home extends CI_Controller {
 		}
 
 		if ($dados['pergunta_12'] >= 164 && $dados['pergunta_12'] < 173) {
-			$pontuacaoARIC ++;
-		}elseif ($dados['pergunta_12'] >= 173) {
+			$pontuacaoARIC++;
+		} elseif ($dados['pergunta_12'] >= 173) {
 			$pontuacaoARIC += 4;
 		}
 
 		if ($dados['pergunta_15'] < 100) {
 			$pontuacaoARIC += -1;
-		}elseif ($dados['pergunta_15'] >= 120 && $dados['pergunta_15'] < 140) {
-			$pontuacaoARIC ++;
-		}elseif ($dados['pergunta_15'] >= 140 && $dados['pergunta_15'] < 160) {
+		} elseif ($dados['pergunta_15'] >= 120 && $dados['pergunta_15'] < 140) {
+			$pontuacaoARIC++;
+		} elseif ($dados['pergunta_15'] >= 140 && $dados['pergunta_15'] < 160) {
 			$pontuacaoARIC += 2;
-		}elseif ($dados['pergunta_15'] >= 160) {
+		} elseif ($dados['pergunta_15'] >= 160) {
 			$pontuacaoARIC += 3;
 		}
 
@@ -850,7 +843,7 @@ class Home extends CI_Controller {
 			$pontuacaoARIC += 3;
 		}
 		if ($dados['pergunta_14_1'] == 'yes') {
-			$pontuacaoARIC ++;
+			$pontuacaoARIC++;
 		}
 		if ($dados['pergunta_24_1'] == 'yes') {
 			$pontuacaoARIC += 2;
@@ -865,7 +858,7 @@ class Home extends CI_Controller {
 		if ($dados['pergunta_6'] == 'yes') {
 			if ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] < 50) {
 				$pontuacaoARIC += 5;
-			}elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] < 60) {
+			} elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] < 60) {
 				$pontuacaoARIC += 3;
 			}
 		}
@@ -873,8 +866,8 @@ class Home extends CI_Controller {
 		if ($dados['pergunta_17'] == 'yes') {
 			if ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] < 55) {
 				$pontuacaoARIC += 4;
-			}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] < 60) {
-				$pontuacaoARIC ++;
+			} elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] < 60) {
+				$pontuacaoARIC++;
 			}
 		}
 
@@ -910,7 +903,7 @@ class Home extends CI_Controller {
 			$respostaARIC = "Chance (%) of Afib in 10 years = 20%";
 		} elseif ($pontuacaoARIC >= 19) {
 			$respostaARIC = "Chance (%) of Afib in 10 years = >24%";
-		} 
+		}
 
 		// echo '<br>';
 		// var_dump($respostaARIC);
@@ -924,25 +917,25 @@ class Home extends CI_Controller {
 		$this->setSessaoResultado('ARIC Score', $array);
 	}
 
-	public function calculaTAIWANAF($dados) { 
+	public function calculaTAIWANAF($dados) {
 		$pontuacaoTAIWANAF = 0;
 		$respostaTAIWANAF = '';
 
 		if ($dados['pergunta_1'] >= 80) {
 			$pontuacaoTAIWANAF += 8;
-		}elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
+		} elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
 			$pontuacaoTAIWANAF += 5;
-		}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
+		} elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
 			$pontuacaoTAIWANAF += 4;
-		}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
-			$pontuacaoTAIWANAF += 3;	
-		}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+		} elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
+			$pontuacaoTAIWANAF += 3;
+		} elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
 			$pontuacaoTAIWANAF += 2;
-		}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
+		} elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
 			$pontuacaoTAIWANAF += 1;
-		}elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 49) {
+		} elseif ($dados['pergunta_1'] >= 45 && $dados['pergunta_1'] <= 49) {
 			$pontuacaoTAIWANAF += -1;
-		}elseif ($dados['pergunta_1'] >= 40 && $dados['pergunta_1'] <= 44) {
+		} elseif ($dados['pergunta_1'] >= 40 && $dados['pergunta_1'] <= 44) {
 			$pontuacaoTAIWANAF += -2;
 		}
 
@@ -969,10 +962,10 @@ class Home extends CI_Controller {
 		switch ($dados['pergunta_22']) {
 			case '0_7':
 			case '7_14':
-			case '15_plus':	
+			case '15_plus':
 				$pontuacaoTAIWANAF += 1;
 				break;
-			
+
 			default:
 				# code...
 				break;
@@ -980,9 +973,9 @@ class Home extends CI_Controller {
 
 		if ($pontuacaoTAIWANAF >= -3 && $pontuacaoTAIWANAF <= 3) {
 			$respostaTAIWANAF = 'Low incidence of Afib detection on follow; 0.08% (2 years) 1.26% (10 years) and 2.81% (16 years)';
-		}elseif ($pontuacaoTAIWANAF >= 4 && $pontuacaoTAIWANAF <= 9) {
+		} elseif ($pontuacaoTAIWANAF >= 4 && $pontuacaoTAIWANAF <= 9) {
 			$respostaTAIWANAF = 'Medium incidence of Afib detection on follow; 2.03% (2 years) 11.13% (10 years) and 19.59% (16 years)';
-		}elseif ($pontuacaoTAIWANAF >= 10) {
+		} elseif ($pontuacaoTAIWANAF >= 10) {
 			$respostaTAIWANAF = 'High incidence of Afib detection on follow; 7.82% (2 years) 27.9% (10 years) and 38.9% (16 years)';
 		}
 
@@ -996,10 +989,9 @@ class Home extends CI_Controller {
 		);
 
 		$this->setSessaoResultado('Taiwan AF Score', $array);
-
 	}
 
-	public function calculaSUITA($dados) { 
+	public function calculaSUITA($dados) {
 		$pontuacaoSUITA = 0;
 		$respostaSUITA = 'none';
 
@@ -1008,7 +1000,7 @@ class Home extends CI_Controller {
 			$female = 0;
 			if ($dados['pergunta_2'] == 'male') {
 				$male = 1;
-			}elseif ($dados['pergunta_2'] == 'female') {
+			} elseif ($dados['pergunta_2'] == 'female') {
 				$female = 1;
 			}
 
@@ -1016,18 +1008,18 @@ class Home extends CI_Controller {
 				if ($female == 1) {
 					$pontuacaoSUITA += -5;
 				}
-			}elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 59) {
+			} elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 59) {
 				if ($male == 1) {
 					$pontuacaoSUITA += 3;
 				}
-			}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 69) {
+			} elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 69) {
 				if ($male == 1) {
 					$pontuacaoSUITA += 7;
-				}elseif ($female == 1) {
+				} elseif ($female == 1) {
 					$pontuacaoSUITA += 5;
 				}
-			}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 79) {				
-				$pontuacaoSUITA += 9;				
+			} elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 79) {
+				$pontuacaoSUITA += 9;
 			}
 
 			if ($dados['pergunta_8'] == 'yes') {
@@ -1038,13 +1030,13 @@ class Home extends CI_Controller {
 				$pontuacaoSUITA += 2;
 			}
 
-			if($dados['pergunta_22'] == '15_plus') {
+			if ($dados['pergunta_22'] == '15_plus') {
 				$pontuacaoSUITA += 2;
 			}
 
 			if ($dados['pergunta_14'] == 'yes') {
 				$pontuacaoSUITA += 1;
-			}	
+			}
 
 			if ($dados['pergunta_33'] >= 130 && $dados['pergunta_33'] <= 189) {
 				$pontuacaoSUITA += -1;
@@ -1053,7 +1045,7 @@ class Home extends CI_Controller {
 			if ($dados['pergunta_32'] == 'yes') {
 				$pontuacaoSUITA += 4;
 			}
-			
+
 			if ($dados['pergunta_6'] == 'yes') {
 				$pontuacaoSUITA += 2;
 			}
@@ -1061,9 +1053,9 @@ class Home extends CI_Controller {
 			if ($dados['pergunta_24_1'] == 'yes') {
 				if ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 69) {
 					$pontuacaoSUITA += 2;
-				}elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 59) {
+				} elseif ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 59) {
 					$pontuacaoSUITA += 6;
-				}elseif ($dados['pergunta_1'] >= 30 && $dados['pergunta_1'] <= 49) {
+				} elseif ($dados['pergunta_1'] >= 30 && $dados['pergunta_1'] <= 49) {
 					$pontuacaoSUITA += 8;
 				}
 			}
@@ -1093,7 +1085,6 @@ class Home extends CI_Controller {
 			} elseif ($pontuacaoSUITA >= 16) {
 				$respostaSUITA = "Predicted 10-Year Risk of Incident AF 27%";
 			}
-
 		}
 
 		// echo '<br>';
@@ -1106,22 +1097,20 @@ class Home extends CI_Controller {
 		);
 
 		$this->setSessaoResultado('Suita', $array);
-
-
 	}
 
-	public function calculaHAMADA($dados) { 
+	public function calculaHAMADA($dados) {
 		$pontuacaoHAMADA = 0;
 		$respostaHAMADA = 'none';
 
 		if ($dados['pergunta_1'] >= 40 && $dados['pergunta_1'] <= 79) {
 			if ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 59) {
 				$pontuacaoHAMADA += 2;
-			}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+			} elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
 				$pontuacaoHAMADA += 3;
-			}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
+			} elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
 				$pontuacaoHAMADA += 4;
-			}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 79) {
+			} elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 79) {
 				$pontuacaoHAMADA += 5;
 			}
 
@@ -1130,7 +1119,7 @@ class Home extends CI_Controller {
 				if ($dados['pergunta_34'] >= 85) {
 					$pontuacaoHAMADA += 1;
 				}
-			}elseif ($dados['pergunta_2'] == 'female') {
+			} elseif ($dados['pergunta_2'] == 'female') {
 				if ($dados['pergunta_34'] >= 90) {
 					$pontuacaoHAMADA += 1;
 				}
@@ -1142,7 +1131,7 @@ class Home extends CI_Controller {
 
 			if ($dados['pergunta_22'] == '7_14') {
 				$pontuacaoHAMADA += 1;
-			}elseif ($dados['pergunta_22'] == '15_plus') {
+			} elseif ($dados['pergunta_22'] == '15_plus') {
 				$pontuacaoHAMADA += 2;
 			}
 
@@ -1158,7 +1147,7 @@ class Home extends CI_Controller {
 				$pontuacaoHAMADA += 1;
 			}
 
-			if($dados['pergunta_29'] == 'yes') {
+			if ($dados['pergunta_29'] == 'yes') {
 				$pontuacaoHAMADA += 5;
 			}
 
@@ -1172,8 +1161,7 @@ class Home extends CI_Controller {
 			if ($respostaHAMADA >= 10) {
 				$respostaHAMADA = 10;
 			}
-			
-		}		
+		}
 
 		// echo '<br>';
 		// var_dump($respostaHAMADA);
@@ -1187,131 +1175,130 @@ class Home extends CI_Controller {
 		$this->setSessaoResultado('Hamada', $dados);
 	}
 
-	public function calculaMHS($dados) { 
+	public function calculaMHS($dados) {
 		$pontuacaoMHS = 0;
 		$respostaMHS = 'none';
 
 		if ($dados['pergunta_1'] >= 50) {
 			if ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
 				$pontuacaoMHS++;
-			}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
-				$pontuacaoMHS =+ 2;
-			}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
-				$pontuacaoMHS =+ 3;
-			}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
-				$pontuacaoMHS =+ 4;
-			}elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
-				$pontuacaoMHS =+ 5;
-			}elseif ($dados['pergunta_1'] >= 80 && $dados['pergunta_1'] <= 84) {
-				$pontuacaoMHS =+ 6;
-			}elseif ($dados['pergunta_1'] >= 85) {
-				$pontuacaoMHS =+ 7;
+			} elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+				$pontuacaoMHS = +2;
+			} elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
+				$pontuacaoMHS = +3;
+			} elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
+				$pontuacaoMHS = +4;
+			} elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
+				$pontuacaoMHS = +5;
+			} elseif ($dados['pergunta_1'] >= 80 && $dados['pergunta_1'] <= 84) {
+				$pontuacaoMHS = +6;
+			} elseif ($dados['pergunta_1'] >= 85) {
+				$pontuacaoMHS = +7;
 			}
 
 			if ($dados['pergunta_2'] == 'female') {
-				$pontuacaoMHS =+ -1;
+				$pontuacaoMHS = +-1;
 			}
-	
+
 			if ($dados['pergunta_20_1'] == 'yes') {
 				if ($dados['pergunta_20_2'] >= 25 && $dados['pergunta_20_2'] <= 31) {
 					$pontuacaoMHS++;
-				}elseif ($dados['pergunta_20_2'] >= 32 && $dados['pergunta_20_2'] <= 38) {
-					$pontuacaoMHS =+ 2;
-				}elseif ($dados['pergunta_20_2'] >= 39) {
-					$pontuacaoMHS =+ 3;
+				} elseif ($dados['pergunta_20_2'] >= 32 && $dados['pergunta_20_2'] <= 38) {
+					$pontuacaoMHS = +2;
+				} elseif ($dados['pergunta_20_2'] >= 39) {
+					$pontuacaoMHS = +3;
 				}
 			}
-	
+
 			if ($dados['pergunta_6'] == 'yes') {
 				$pontuacaoMHS++;
 			}
-	
+
 			if ($dados['pergunta_26'] == 'yes') {
 				$pontuacaoMHS++;
 			}
-	
+
 			if ($dados['pergunta_8'] == 'yes') {
 				$pontuacaoMHS++;
 			}
-	
+
 			if ($dados['pergunta_15'] >= 160) {
 				$pontuacaoMHS++;
 			}
-	
+
 			if ($dados['pergunta_7'] == 'yes') {
 				$pontuacaoMHS++;
 			}
-	
+
 			if ($dados['pergunta_38'] == 'yes') {
 				$pontuacaoMHS++;
 			}
-	
+
 			if ($dados['pergunta_9'] == 'yes') {
 				if ($dados['pergunta_1'] >= 50 && $dados['pergunta_1'] <= 54) {
-					$pontuacaoMHS =+ 6;
-				}elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
-					$pontuacaoMHS =+ 5;
-				}elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
-					$pontuacaoMHS =+ 4;
-				}elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
-					$pontuacaoMHS =+ 3;
-				}elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
-					$pontuacaoMHS =+ 2;
-				}elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
-					$pontuacaoMHS =+ 1;
+					$pontuacaoMHS = +6;
+				} elseif ($dados['pergunta_1'] >= 55 && $dados['pergunta_1'] <= 59) {
+					$pontuacaoMHS = +5;
+				} elseif ($dados['pergunta_1'] >= 60 && $dados['pergunta_1'] <= 64) {
+					$pontuacaoMHS = +4;
+				} elseif ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 69) {
+					$pontuacaoMHS = +3;
+				} elseif ($dados['pergunta_1'] >= 70 && $dados['pergunta_1'] <= 74) {
+					$pontuacaoMHS = +2;
+				} elseif ($dados['pergunta_1'] >= 75 && $dados['pergunta_1'] <= 79) {
+					$pontuacaoMHS = +1;
 				}
 			}
-	
+
 			switch ($pontuacaoMHS) {
 				case -1:
-					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 1.0%';	
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 1.0%';
 					break;
 
 				case 0:
-					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 1.4%';	
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 1.4%';
 					break;
-	
+
 				case 1:
-					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 1.9%';	
+					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 1.9%';
 					break;
-				
+
 				case 2:
 					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 2.7%';
 					break;
-	
+
 				case 3:
 					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 3.8%';
 					break;
-	
+
 				case 4:
 					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 5.3%';
 					break;
-	
+
 				case 5:
 					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 7.5%';
 					break;
-	
+
 				case 6:
 					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 10.5%';
 					break;
-	
+
 				case 7:
 					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 14.6%';
 					break;
-	
+
 				case 8:
 					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 20.1%';
 					break;
-	
+
 				case 9:
 					$respostaMHS = 'Predicted 10-year risk of atrial fibrillation by risk score 27.2%';
 					break;
-				
+
 				default:
 					$respostaMHS = 'There are no confident data for predicting the risk of AFib in patients with score ≥ 10 points - according to the original paper';
 					break;
 			}
-
 		}
 
 		// echo '<br>';
@@ -1324,17 +1311,16 @@ class Home extends CI_Controller {
 		);
 
 		$this->setSessaoResultado('MHS Score', $array);
-
 	}
 
-	public function calculaCHA2DS2($dados) { 
+	public function calculaCHA2DS2($dados) {
 
 		$pontuacaoCHA2DS2 = 0;
 		$respostaCHA2DS2 = '';
 
 		if ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 74) {
 			$pontuacaoCHA2DS2++;
-		}elseif ($dados['pergunta_1'] >= 75) {
+		} elseif ($dados['pergunta_1'] >= 75) {
 			$pontuacaoCHA2DS2 += 2;
 		}
 
@@ -1365,13 +1351,13 @@ class Home extends CI_Controller {
 		switch ($pontuacaoCHA2DS2) {
 
 			case 0:
-				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 0.17 ; Hazard Ratio (95% CI) 1';	
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 0.17 ; Hazard Ratio (95% CI) 1';
 				break;
 
 			case 1:
-				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 0.21 ; Hazard Ratio (95% CI) 1.19 (1.09-1.29)';	
+				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 0.21 ; Hazard Ratio (95% CI) 1.19 (1.09-1.29)';
 				break;
-			
+
 			case 2:
 				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 0.49 ; Hazard Ratio (95% CI) 2.81 (2.60-3.04)';
 				break;
@@ -1403,7 +1389,7 @@ class Home extends CI_Controller {
 			case 9:
 				$respostaCHA2DS2 = 'Incidence Density Rate of AF (Per 100 Person-Years) 6.71 ; Hazard Ratio (95% CI) 38.16 (30.54-47.67)';
 				break;
-			
+
 			default:
 				$respostaCHA2DS2 = '';
 				break;
@@ -1419,17 +1405,16 @@ class Home extends CI_Controller {
 		);
 
 		$this->setSessaoResultado('CHA2DS2-VASC', $array);
-
 	}
 
-	public function calculaMAYO($dados) { 
+	public function calculaMAYO($dados) {
 
 		$pontuacaoMAYO = 0;
 		$respostaMAYO = '';
 
 		if ($dados['pergunta_1'] >= 65 && $dados['pergunta_1'] <= 75) {
 			$pontuacaoMAYO++;
-		}elseif ($dados['pergunta_1'] >= 76) {
+		} elseif ($dados['pergunta_1'] >= 76) {
 			$pontuacaoMAYO += 2;
 		}
 
@@ -1460,13 +1445,13 @@ class Home extends CI_Controller {
 		switch ($pontuacaoMAYO) {
 
 			case 0:
-				$respostaMAYO = 'Cumulative incidence of AF 0.07% / Odd ratio (95% CI) 1 (vs a score of	0)';	
+				$respostaMAYO = 'Cumulative incidence of AF 0.07% / Odd ratio (95% CI) 1 (vs a score of	0)';
 				break;
 
 			case 1:
-				$respostaMAYO = 'Cumulative incidence of AF 2.02% / Odd ratio (95% CI) 3.05 (2.67-3.49)	(vs a score of 0)';	
+				$respostaMAYO = 'Cumulative incidence of AF 2.02% / Odd ratio (95% CI) 3.05 (2.67-3.49)	(vs a score of 0)';
 				break;
-			
+
 			case 2:
 				$respostaMAYO = 'Cumulative incidence of AF 8.22% / Odd ratio (95% CI) 12.9 (11.4-14.8)	(vs a score of 0)';
 				break;
@@ -1477,8 +1462,8 @@ class Home extends CI_Controller {
 
 			case 4:
 				$respostaMAYO = 'Cumulative incidence of AF 18.7% / Odd ratio (95% CI) 34.0 (29.2-39.5)	(vs a score of 0)';
-				break;				
-			
+				break;
+
 			default:
 				$respostaMAYO = 'Cumulative incidence of AF 22.2% / Odd ratio (95% CI) 48.0	(41.9-54.9) (vs a score of 0)';
 				break;
@@ -1487,7 +1472,7 @@ class Home extends CI_Controller {
 		// echo '<br>';
 		// var_dump($respostaMAYO);
 		// echo '<br>';	
-		
+
 		$array = array(
 			'message' => 'Predicting incidente AFib in about 8-years follow-up (AUC 0.812 (95% CI, 0.805-0.820))',
 			'resposta' => $respostaMAYO
@@ -1496,7 +1481,7 @@ class Home extends CI_Controller {
 		$this->setSessaoResultado('Mayo Score', $array);
 	}
 
-	public function calculaTHNRS($dados) { 
+	public function calculaTHNRS($dados) {
 
 		$pontuacaoTHNRS = 0;
 		$respostaTHNRS = 'none';
@@ -1504,7 +1489,7 @@ class Home extends CI_Controller {
 		if ($dados['pergunta_2'] == 'female') {
 			if ($dados['pergunta_40'] >= 45) {
 				$respostaTHNRS = 'A higher chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
-			}else{
+			} elseif ($dados['pergunta_40'] > 0 && $dados['pergunta_40'] <= 44) {
 				$respostaTHNRS = 'A lower chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
 			}
 		}
@@ -1512,7 +1497,7 @@ class Home extends CI_Controller {
 		if ($dados['pergunta_2'] == 'male') {
 			if ($dados['pergunta_40'] >= 31) {
 				$respostaTHNRS = 'A higher chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
-			}else{
+			} elseif ($dados['pergunta_40'] > 0 && $dados['pergunta_40'] <= 30) {
 				$respostaTHNRS = 'A lower chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
 			}
 		}
@@ -1527,34 +1512,32 @@ class Home extends CI_Controller {
 		);
 
 		$this->setSessaoResultado('The Heinz Nixdorf Recall Study', $array);
-
 	}
 
-	public function calculaTAKASE($dados) { 
+	public function calculaTAKASE($dados) {
 
 		$pontuacaoTAKASE = 0;
 		$respostaTAKASE = 'none';
 
 		if ($dados['pergunta_40'] >= 11.4) {
 			$respostaTAKASE = 'A higher chance of incident AFib in a 5-years follow-up, based on BNP levels. Sensitivity and specificity of 81.1%, and 55.2%, respectively. The area under the ROC curve was 0.703';
-		}else{
+		} else {
 			$respostaTAKASE = 'A lower chance of incident AFib in a 5-years follow-up, based on BNP levels. Sensitivity and specificity of 81.1%, and 55.2%, respectively. The area under the ROC curve was 0.703';
 		}
 
 		// echo '<br>';
 		// var_dump($respostaTAKASE);
 		// echo '<br>';
-		
+
 		$array = array(
 			'message' => 'Takase',
 			'resposta' => $respostaTAKASE
 		);
 
 		$this->setSessaoResultado('Takase', $array);
-
 	}
 
-	public function calculaASAS($dados) { 
+	public function calculaASAS($dados) {
 
 		$respostaASAS = '';
 
@@ -1564,8 +1547,8 @@ class Home extends CI_Controller {
 		}
 
 		$e = exp(1);
-		$asas = -6 + ($dados['pergunta_1'] / 20) + ($dados['pergunta_3'] / 10) + (0.9 * $pontuacao_pergunta29);	
-		$probabilidade = (pow($e, $asas)) / (1 + pow($e, $asas));	
+		$asas = -6 + ($dados['pergunta_1'] / 20) + ($dados['pergunta_3'] / 10) + (0.9 * $pontuacao_pergunta29);
+		$probabilidade = (pow($e, $asas)) / (1 + pow($e, $asas));
 		$probabilidadeEmProcentagem = $probabilidade * 100;
 
 		$respostaASAS = 'Probability of new AFib in a 3-year period: ' . number_format($probabilidadeEmProcentagem, 2) . '%';
@@ -1580,16 +1563,14 @@ class Home extends CI_Controller {
 		);
 
 		$this->setSessaoResultado('ASAS', $array);
-		
 	}
 
-	public function setSessaoResultado($chave, $valor) { 
+	public function setSessaoResultado($chave, $valor) {
 
 		$resultados = $this->session->userdata('resultados');
 		$resultados[$chave] = $valor;
 
 		$this->session->set_userdata('resultados', $resultados);
-
 	}
 
 	public function loadResults() {
@@ -1600,20 +1581,10 @@ class Home extends CI_Controller {
 	}
 
 
-	public function loadAbout() { 
-		
+	public function loadAbout() {
+
 		$dados['titulo'] = "AFibrisk | About";
 
 		$this->load->view('sobre', $dados);
 	}
-
-
-
-
-
-
-
-
-
-
 }
