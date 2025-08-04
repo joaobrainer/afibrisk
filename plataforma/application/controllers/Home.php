@@ -1488,16 +1488,20 @@ class Home extends CI_Controller {
 
 		if ($dados['pergunta_2'] == 'female') {
 			if ($dados['pergunta_40'] >= 45) {
+
 				$respostaTHNRS = 'A higher chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
 			} elseif ($dados['pergunta_40'] > 0 && $dados['pergunta_40'] <= 44) {
+
 				$respostaTHNRS = 'A lower chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
 			}
 		}
 
 		if ($dados['pergunta_2'] == 'male') {
 			if ($dados['pergunta_40'] >= 31) {
+
 				$respostaTHNRS = 'A higher chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
 			} elseif ($dados['pergunta_40'] > 0 && $dados['pergunta_40'] <= 30) {
+
 				$respostaTHNRS = 'A lower chance of incident Afib in a 2-years follow-up (AUC 0.826), based on BNP levels';
 			}
 		}
