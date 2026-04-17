@@ -314,5 +314,124 @@
     <?php echo form_close(); ?>
 
     <?php $this->load->view('footer'); ?>
+<script>
+(function () {
+    const sidebar = document.getElementById('sidebar');
+    const drawerToggle = document.getElementById('drawerToggle');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    const progressFill = document.getElementById('progressFill');
+    const progressPct  = document.getElementById('progressPct');
+    const form = document.getElementById('formprincipal');
+    const sectionLinks = sidebar.querySelectorAll('a[data-section]');
+    const sections = Array.from(document.querySelectorAll('.question-section'));
+
+    // ---- Drawer (mobile) ----
+    function openDrawer() {
+        sidebar.classList.add('open');
+        drawerBackdrop.classList.add('open');
+        drawerToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeDrawer() {
+        sidebar.classList.remove('open');
+        drawerBackdrop.classList.remove('open');
+        drawerToggle.setAttribute('aria-expanded', 'false');
+    }
+    drawerToggle.addEventListener('click', () => {
+        sidebar.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    drawerBackdrop.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+    sidebar.addEventListener('click', (e) => {
+        if (e.target.closest('a[data-section]') && window.innerWidth <= 767) closeDrawer();
+    });
+
+    // ---- Scroll-spy (IntersectionObserver) ----
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                sectionLinks.forEach(a => a.classList.toggle('active', a.dataset.section === id));
+            }
+        });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s));
+
+    // ---- Smooth scroll from sidebar clicks ----
+    sectionLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const id = link.dataset.section;
+            const target = document.getElementById(id);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // ---- Progress + done markers ----
+    function updateProgress() {
+        let doneCount = 0;
+        sections.forEach(section => {
+            const inputs = section.querySelectorAll('input');
+            const filled = Array.from(inputs).some(inp => {
+                if (inp.type === 'radio') return inp.checked;
+                return inp.value && inp.value.trim() !== '';
+            });
+            const link = sidebar.querySelector(`a[data-section="${section.id}"]`);
+            if (link) link.classList.toggle('done', filled);
+            if (filled) doneCount++;
+        });
+        const pct = Math.round((doneCount / sections.length) * 100);
+        progressFill.style.width = pct + '%';
+        progressPct.textContent = pct + '%';
+    }
+    form.addEventListener('input', updateProgress);
+    form.addEventListener('change', updateProgress);
+    updateProgress();
+
+    // ---- Conditional fields (preserves existing behaviour) ----
+    function show(el) { if (el) el.hidden = false; }
+    function hide(el) { if (el) { el.hidden = true; el.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false); el.querySelectorAll('input[type="number"], input[type="text"]').forEach(i => i.value = ''); } }
+
+    const bmi25Container = document.getElementById('bmi_25_container');
+    const bmi25Extra     = document.getElementById('additional_bmi_content');
+    const formerContainer = document.getElementById('former_smoker_container');
+    const precordialContainer = document.getElementById('precordial_murmur_container');
+    const autoimmuneContainer = document.getElementById('autoimmune_disease_container');
+
+    // Raised BMI: No → show bmi_25_container; Yes → hide both
+    document.querySelectorAll('input[name="20_raised_bmi"]').forEach(r => r.addEventListener('change', (e) => {
+        if (e.target.value === 'no') { show(bmi25Container); }
+        else { hide(bmi25Container); hide(bmi25Extra); }
+    }));
+    document.querySelectorAll('input[name="20_1_bmi_25"]').forEach(r => r.addEventListener('change', (e) => {
+        if (e.target.value === 'yes') show(bmi25Extra); else hide(bmi25Extra);
+    }));
+
+    // Smoking: No → show former smoker container
+    document.querySelectorAll('input[name="14_smoking"]').forEach(r => r.addEventListener('change', (e) => {
+        if (e.target.value === 'no') show(formerContainer); else hide(formerContainer);
+    }));
+
+    // Significant murmur: Yes → show precordial murmur
+    document.querySelectorAll('input[name="24_significant_murmur"]').forEach(r => r.addEventListener('change', (e) => {
+        if (e.target.value === 'yes') show(precordialContainer); else hide(precordialContainer);
+    }));
+
+    // Gender female → show autoimmune disease
+    document.querySelectorAll('input[name="2_gender"]').forEach(r => r.addEventListener('change', (e) => {
+        if (e.target.value === 'female') show(autoimmuneContainer); else hide(autoimmuneContainer);
+    }));
+
+    // ---- Tippy tooltips (preserves existing content) ----
+    if (window.tippy) {
+        tippy('#field_1', { content: 'Aortic, mitral, tricuspid, and/or pulmonary valve disease', theme: 'customTooltipCssTema' });
+        tippy('#field_2', { content: 'Left atrial enlargement (LAE) by ECG: p-wave duration ≥120 ms or p-wave amplitude >2.5 mm in II, or terminal p negativity in V1 (duration 0.04 s, depth 1 mm). By parasternal long-axis view, LAE = anteroposterior diameter ≥4.0 cm.', theme: 'customTooltipCssTema' });
+        tippy('#field_3', { content: 'Premature P wave (often different shape), narrow/normal QRS identical to other beats, a long pause after the PAC, normal/short/longer PR than sinus, post-extrasystolic pause.', theme: 'customTooltipCssTema' });
+        tippy('#field_4', { content: 'Premature QRS complexes unusually long (>120 ms), wide QRS, no preceding P wave, large T wave oriented opposite the major QRS deflection.', theme: 'customTooltipCssTema' });
+        tippy('#field_5', { content: 'Significant if grade ≥3/6 systolic or any diastolic murmur on auscultation.', theme: 'customTooltipCssTema' });
+    }
+})();
+</script>
 </body>
 </html>
