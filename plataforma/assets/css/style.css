@@ -203,3 +203,23 @@ input[type="text"]:focus, input[type="number"]:focus {
     .home-hero .actions { flex-direction: column; width: 100%; max-width: 320px; }
     .home-hero .actions .btn { width: 100%; }
 }
+
+/* ============================================================================
+   About page
+   ============================================================================ */
+.about-section { margin-bottom: var(--space-8); }
+.about-section h2 { font-size: 18px; margin-bottom: var(--space-3); }
+.about-section p  { color: var(--color-ink-2); }
+.about-credits p { margin-bottom: var(--space-1); color: var(--color-muted); font-size: 14px; }
+.about-credits p:first-child { color: var(--color-ink); font-weight: 600; font-size: 15px; }
+.disclaimer-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-danger);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+}
+.disclaimer-card h2 { color: var(--color-danger); text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px; }
+.disclaimer-card p { font-size: 13px; color: var(--color-ink-2); margin-bottom: var(--space-3); }
+.disclaimer-card p:last-child { margin-bottom: 0; }
