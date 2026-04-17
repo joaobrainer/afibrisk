@@ -187,6 +187,14 @@
         return parts.join('');
     }
 
+    function makePdfOverlay() {
+        const o = document.createElement('div');
+        o.setAttribute('data-afibrisk-pdf-overlay', '');
+        o.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(248,250,252,0.96);backdrop-filter:blur(2px);font:600 15px system-ui,sans-serif;color:#0f172a;letter-spacing:0.02em';
+        o.textContent = 'Generating PDF…';
+        return o;
+    }
+
     async function doPDF() {
         if (typeof window.html2pdf === 'undefined') {
             toast('PDF failed to generate. Try Print as a workaround.', 'error');
@@ -197,6 +205,16 @@
         if (!tpl || !body) return;
 
         body.innerHTML = buildPdfBody();
+
+        // Move the template on-screen so html2canvas can render it reliably,
+        // and cover the page with a loading overlay so the user doesn't see the flash.
+        const origLeft = tpl.style.left;
+        const origTop  = tpl.style.top;
+        tpl.style.left = '0';
+        tpl.style.top  = '0';
+        const overlay = makePdfOverlay();
+        document.body.appendChild(overlay);
+
         try {
             await window.html2pdf()
                 .from(tpl)
@@ -204,7 +222,7 @@
                     filename: 'afibrisk-report-' + nowFilename() + '.pdf',
                     margin: [15, 15, 15, 15],
                     image: { type: 'jpeg', quality: 0.95 },
-                    html2canvas: { scale: 2, useCORS: true },
+                    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
                     pagebreak: { mode: ['css', 'legacy'] }
                 })
@@ -213,7 +231,10 @@
         } catch (e) {
             toast('PDF failed to generate. Try Print as a workaround.', 'error');
         } finally {
-            body.innerHTML = ''; // free memory
+            tpl.style.left = origLeft || '-10000px';
+            tpl.style.top  = origTop  || '0';
+            body.innerHTML = '';
+            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
         }
     }
 
