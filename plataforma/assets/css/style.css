@@ -1,428 +1,180 @@
-* {
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-body, html{
-    height: 100%;
+/* ============================================================================
+   AFibRisk — Design tokens
+   ============================================================================ */
+:root {
+    --color-ink:          #0f172a;
+    --color-ink-2:        #1e293b;
+    --color-muted:        #64748b;
+    --color-border:       #e2e8f0;
+    --color-surface:      #ffffff;
+    --color-surface-alt:  #f8fafc;
+    --color-primary:      #2563eb;
+    --color-primary-dark: #1d4ed8;
+    --color-success:      #16a34a;
+    --color-danger:       #dc2626;
+
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+
+    --radius-sm: 6px;
+    --radius:    10px;
+    --radius-lg: 16px;
+
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+    --shadow:    0 4px 12px rgba(15, 23, 42, 0.08);
+
+    --topbar-h: 56px;
+    --sidebar-w: 260px;
 }
 
-#background1 {
-	background-image: url("../images/bg-1.jpg");
-	background-size: 100% 100%;
-   	background-repeat: no-repeat;
-   	background-position: center center;
-   	background-attachment: fixed;
-    overflow-y: hidden;
-    overflow-x: hidden;
+/* ============================================================================
+   Reset + base
+   ============================================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--color-ink-2);
+    background: var(--color-surface-alt);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
 }
 
-#background2 {
-	background-image: url("../images/bg-2.jpg");
-	background-size: 100% 100%;
-   	background-repeat: no-repeat;
-   	background-position: center center;
-   	background-attachment: fixed;
-    overflow-y: hidden;
-    overflow-x: hidden;
+h1, h2, h3, h4 { color: var(--color-ink); font-weight: 700; margin: 0 0 var(--space-4); line-height: 1.25; }
+h1 { font-size: 32px; }
+h2 { font-size: 22px; }
+h3 { font-size: 18px; }
+p  { margin: 0 0 var(--space-4); }
+a  { color: var(--color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ============================================================================
+   Focus ring — accessibility baseline
+   ============================================================================ */
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
 }
 
-#background3 {
-	background-image: url("../images/bg-3.jpg");
-	background-size: 100% 100%;
-   	background-repeat: no-repeat;
-   	background-position: center center;
-   	background-attachment: fixed;
-    overflow-y: hidden;
-    overflow-x: hidden;
+/* ============================================================================
+   Utility
+   ============================================================================ */
+.sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.container-narrow {
+    max-width: 720px; margin: 0 auto; padding: var(--space-8) var(--space-4);
 }
 
-.container-fluid {
-    height: 96.4vh;
+/* ============================================================================
+   Buttons
+   ============================================================================ */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+    padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-sm);
+    font-family: inherit; font-size: 14px; font-weight: 600;
+    cursor: pointer; text-decoration: none; transition: background 120ms, border-color 120ms;
+    background: transparent; color: var(--color-ink);
+}
+.btn:hover { text-decoration: none; }
+.btn-primary { background: var(--color-primary); color: #fff; }
+.btn-primary:hover { background: var(--color-primary-dark); color: #fff; }
+.btn-secondary { background: var(--color-surface); color: var(--color-ink); border-color: var(--color-border); }
+.btn-secondary:hover { background: var(--color-surface-alt); }
+.btn-ghost { background: transparent; color: var(--color-muted); }
+.btn-ghost:hover { color: var(--color-ink); background: var(--color-surface-alt); }
+.btn[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
+
+/* ============================================================================
+   Topbar — shared across all pages
+   ============================================================================ */
+.topbar {
+    position: sticky; top: 0; z-index: 20;
+    height: var(--topbar-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 var(--space-4);
+    background: var(--color-ink); color: #e2e8f0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.topbar .brand { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: 700; color: #fff; font-size: 15px; letter-spacing: 0.01em; text-decoration: none; }
+.topbar .brand:hover { text-decoration: none; }
+.topbar .brand::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--color-primary); }
+.topbar nav { display: flex; gap: var(--space-2); align-items: center; }
+.topbar nav a { color: #cbd5e1; font-size: 14px; font-weight: 500; padding: 6px 10px; border-radius: var(--radius-sm); }
+.topbar nav a:hover { color: #fff; background: rgba(255,255,255,0.08); text-decoration: none; }
+.topbar .hamburger {
+    display: none; background: none; border: 0; color: #cbd5e1; font-size: 22px; cursor: pointer;
+    padding: 4px 8px; border-radius: var(--radius-sm);
+}
+.topbar .hamburger:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+/* ============================================================================
+   Forms
+   ============================================================================ */
+label { display: block; font-size: 13px; font-weight: 600; color: var(--color-ink-2); margin-bottom: 6px; }
+input[type="text"], input[type="number"] {
+    display: block; width: 100%; max-width: 220px;
+    padding: 8px 10px; font-family: inherit; font-size: 14px;
+    color: var(--color-ink); background: var(--color-surface);
+    border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+    outline: none; transition: border-color 120ms, box-shadow 120ms;
+}
+input[type="text"]:focus, input[type="number"]:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-.centralizar-botao {
-    display: flex;
-    justify-content: space-around;
-    height: 100%;
-    flex-direction: column;
-    width: 100%;
-    align-items: center
+/* Pill radios: Yes/No, alcohol, etc. */
+.pill-group { display: inline-flex; flex-wrap: wrap; gap: 8px; }
+.pill-group input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+.pill-group label {
+    display: inline-flex; align-items: center;
+    padding: 6px 14px; margin: 0;
+    background: var(--color-surface); color: var(--color-ink-2);
+    border: 1px solid var(--color-border); border-radius: 999px;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    transition: background 120ms, border-color 120ms, color 120ms;
 }
-.centralizar-botao .btneng {
-    margin-right: 23%;
-    padding-bottom: 5.5%;
-    z-index: 1;
+.pill-group label:hover { border-color: var(--color-muted); }
+.pill-group input[type="radio"]:checked + label {
+    background: var(--color-primary); color: #fff; border-color: var(--color-primary);
 }
-.btneng{
-    color: #fff;
-    font-size: 30px;
-    font-weight: 500;
-    width: 10%
-}
-.oval-shape {
-    display: none;
-    width: 150px;
-    height: 120px;
-    background-color: #031231;
-    border-radius: 50%;
-    transform: scaleX(2) rotate(128deg);
-    position: absolute;
-    top: 68%;
-    left: 30%;
-}
-.retangular-shape{
-    display: none;
-    width: 80%;
-    height:10%;
-    background-color: #0062c5;
-    border-radius: 15px;
-    position: absolute;
-    left: -5%;
-    box-shadow: 11px 16px 20px 1px #0b5cad69;
-    z-index: -1;
-}
-.btnabout{
-    color: #0964cb;
-    font-size: 25px;
-    font-weight: 600;
-}
-.title{
-    height: 14.5%;
-    padding-left: 55px;
-    align-items: flex-end;
-}
-.title span{
-    color: #fff;
-    font-size: 25px;
-   
+.pill-group input[type="radio"]:focus-visible + label {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
-.hr-personalizado{
-    width: 60% ;
-    height: 4px !important;
-    background-color: #53cc8b ;
-    color:  #53cc8b ;
-    border-radius: 10px;
-    margin: 1.5rem 0;
-}
-p{
-    color: #949494;
-    padding-left: 2px;
-}
+/* Field row (label + control inline on desktop) */
+.field { margin-bottom: var(--space-4); }
+.field .hint { font-size: 12px; color: var(--color-muted); margin-top: 4px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
 
-#formquests{
-    margin-top: 5rem;
-    padding-left: 25px;
-}
+/* ============================================================================
+   Scrollbar (webkit)
+   ============================================================================ */
+::-webkit-scrollbar        { width: 10px; height: 10px; }
+::-webkit-scrollbar-track  { background: var(--color-surface-alt); }
+::-webkit-scrollbar-thumb  { background: #cbd5e1; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-muted); }
 
-#formprincipal{
-    width: 55%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 60vh;
-}
-
-summary {
-    padding-left: 2px;
-    color: #949494;
-    font-size: 20px;
-    font-weight: 600;
-    display: block;
-    text-decoration: underline;
-}
-
-summary a {
-    color: #949494;
-    text-decoration: none;
-    border-bottom: 2px solid #949494;
-    padding-bottom: 1px;
-    display: inline-block;
-}
-
-summary a:hover {
-    color: #949494;
-}
-
-#field_1, #field_2, #field_3, #field_4, #field_5{
-    color: #0062c5;
-}
-.custom-radio input[type="radio"] {
-    display: none;
-}
-
-/* Estilo para o span que vai mostrar os parênteses e o "X" */
-.custom-radio .radio-mark {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 5px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-/* Quando o input está selecionado, adiciona o "X" dentro dos parênteses */
-.custom-radio input[type="radio"]:checked + .radio-mark::before {
-    content: '( ✓ ';
-    position: absolute;
-    margin-right: 0;
-    pointer-events: none;    
-    font-size: 18px;
-}
-
-.custom-radio {
-    font-size: 18px;
-    margin-right: 10px;
-    position: relative; 
-}
-
-input[type="text"] {
-    border: 1px solid #949494;
-    outline: none; 
-    width: 15%;
-    text-align: center;
-    border-radius: 3px;
-}
-
-input[type="text"]::placeholder {
-    vertical-align: bottom;
-}
-
-input[type="text"]:not(:placeholder-shown) {
-    background-image: none;
-}
-
-.card-header{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center
-}
-
-.container-resultado{
-    display: flex;
-    justify-content: center;
-    height: 57vh;
-    overflow-x: auto;
-    margin-top: 8rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.subcontainer-resultado{
-    max-width: 95%;
-}
-
-.subcontainer-resultado .card-container:nth-child(odd) .card {
-    background-color: #ffffff; /* Cor de fundo para cards ímpares */
-    border: none;
-    border-radius: 0%;
-}
-
-.subcontainer-resultado .card-container:nth-child(odd) .card,
-.subcontainer-resultado .card-container:nth-child(odd) .card h5,
-.subcontainer-resultado .card-container:nth-child(odd) .card p {
-    color: #000000; /* Cor do texto para cards ímpares */
-    /* font-size: 20px; */
-}
-
-.subcontainer-resultado .card-container:nth-child(even) .card {
-    background-color: #10b1ac; /* Cor de fundo para cards pares */
-    border: none;
-    border-radius: 0%;
-}
-
-.subcontainer-resultado .card-header{
-    background-color: transparent;
-    border: none; 
-}
-
-.subcontainer-resultado .card-body p {
-    font-weight: 600;
-}
-
-.subcontainer-resultado .card-container:nth-child(even) .card,
-.subcontainer-resultado .card-container:nth-child(even) .card h5,
-.subcontainer-resultado .card-container:nth-child(even) .card p {
-    color: #ffffff; 
-}
-
-.subcontainer-resultado .card h5{
-    font-size: 25px;
-    font-weight: 800;
-}
-
-::-webkit-scrollbar {
-    width: 10px; 
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px; 
-}
-
-::-webkit-scrollbar-thumb {
-    background: #888; 
-    border-radius: 10px; 
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-}
-
-.img-size{
-    max-width: 50%;
-    max-height: 350px;
-}
-
-.results{
-    display: none;
-}
-
-.btn-calculate{
-    background-color: #0062c5 !important;
-    width: 30% !important;
-}
-
-#sobre {
-    background-color: rgba(255, 255, 255, 0.8); /* Branco com 80% de opacidade */
-    border-radius: 10px; /* Borda arredondada */
-    margin-top: 1.5rem;
-}
-
-#sobre p{
-    color: #000000;
-}
-
+/* ============================================================================
+   Tippy tooltip theme override — matches new palette
+   ============================================================================ */
 .tippy-box[data-theme='customTooltipCssTema'] {
-    background-color: #FFFCFC;
-    color: #565151;
-    border: 1px solid #D9D9D9;
-    border-radius: 10px;
-    font-weight: 600;
-    z-index: 1000 !important;
-    font-size: 12px !important;
-    font-style: normal !important;
-    width: 50% !important;
-    max-width: 100% !important;
+    background: #0f172a; color: #f8fafc;
+    border: 1px solid #1e293b; border-radius: var(--radius-sm);
+    font-weight: 500; font-size: 13px; line-height: 1.45;
+    max-width: 420px !important;
 }
-
-.div-btn-calculate{
-    padding-right: 2rem;
-}
-
-.card-title{
-    margin-right: 5px;
-}
-
-.show-reference{
-    cursor: pointer;
-}
-
-@media (max-width: 700px) {
-
-    #background1{
-        background-size: 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: left; 
-        margin: 0;
-        padding: 0;
-    }
-
-    #background2, #background3{
-        background-size: 100%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        margin: 0;
-        padding: 0;
-    }
-
-    .centralizar-botao {
-        justify-content: space-evenly;
-    }
-
-    .oval-shape, .retangular-shape{
-        display: block;
-    }
-
-    .centralizar-botao .btneng {
-        margin-right: 0;
-        padding-bottom: 0;
-    }
-
-    .btneng{
-        width: 100%;
-    }
-
-    .title span{
-        font-size: 40px;       
-    }
-
-    #formprincipal{
-        width: 100%;
-    }
-    .results{
-        display: flex;
-    
-    }
-
-    .container-resultado{
-        margin-top: 4rem;
-        height: 70vh;
-    }
-
-    .btn-calculate{
-        width: 100% !important;
-    }
-
-    #sobre {
-        height: 91vh;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-
-    .img-size{
-        max-width: 100%;
-        max-height: 380px;    
-    }
-
-    .div-btn-calculate{
-        padding-right: 0rem;
-    }
-
-    
-
-}
-
-@media (min-width: 1920px) {
-    .btneng{
-        font-size: 38px;
-    }
-
-    .centralizar-botao .btneng {
-        padding-bottom: 3.5%;
-    }
-
-    .container-resultado{
-        height: 60vh;
-    }
-
-    .subcontainer-resultado{
-        max-width: 100%;
-    }
-
-    .container{
-        max-width: 1520px;
-    }
-
-    .title span{
-        font-size: 35px;       
-    }
-
-    .container-resultado{
-        margin-top: 13rem;
-    }
-
-    #sobre {
-        margin-top: 15rem;
-    }
-}
+.tippy-box[data-theme='customTooltipCssTema'] .tippy-content { padding: 10px 12px; }
