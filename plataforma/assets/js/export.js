@@ -138,7 +138,85 @@
         }
     }
 
-    function doPDF() { toast('PDF export not available yet', 'error'); }
+    function escapeHtml(s) {
+        return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function buildPdfBody() {
+        const parts = [];
+
+        // Header
+        parts.push('<div style="color:#64748b;font-size:11px;margin-bottom:16px">Generated on ' + escapeHtml(payload.generatedHuman) + '</div>');
+
+        // Inputs
+        const inputKeys = Object.keys(payload.inputs);
+        if (inputKeys.length) {
+            parts.push('<h2>Patient inputs</h2>');
+            inputKeys.forEach(k => {
+                const label = escapeHtml(k.replace(/^\d+_?/, '').replace(/_/g, ' '));
+                parts.push('<div class="pdf-kv"><span>' + label + '</span><span>' + escapeHtml(payload.inputs[k]) + '</span></div>');
+            });
+        }
+
+        // Scores
+        parts.push('<h2>Scores</h2>');
+        payload.scores.forEach(s => {
+            parts.push(
+                '<div class="pdf-score"><strong>' + escapeHtml(s.name) + '</strong>'
+                + '<span class="val">' + escapeHtml(s.value) + '</span>'
+                + (s.interpretation ? '<p style="margin:4px 0 0;font-size:11px;color:#333">' + escapeHtml(s.interpretation) + '</p>' : '')
+                + '</div>'
+            );
+        });
+
+        // References — reuse the DOM content from the modal
+        const modal = document.getElementById('referenceBody');
+        if (modal) {
+            parts.push('<h2>References</h2>');
+            payload.scores.forEach(s => {
+                const key = s.name.replace(/\s+/g, '');
+                const ref = modal.querySelector('.reference.' + CSS.escape(key))
+                         || (/BRAFIL/i.test(s.name) ? modal.querySelector('.reference.BRAFIL') : null);
+                if (ref) {
+                    parts.push('<div class="pdf-ref">' + ref.innerHTML + '</div>');
+                }
+            });
+        }
+
+        return parts.join('');
+    }
+
+    async function doPDF() {
+        if (typeof window.html2pdf === 'undefined') {
+            toast('PDF failed to generate. Try Print as a workaround.', 'error');
+            return;
+        }
+        const tpl = document.getElementById('pdfTemplate');
+        const body = document.getElementById('pdfBody');
+        if (!tpl || !body) return;
+
+        body.innerHTML = buildPdfBody();
+        try {
+            await window.html2pdf()
+                .from(tpl)
+                .set({
+                    filename: 'afibrisk-report-' + nowFilename() + '.pdf',
+                    margin: [15, 15, 15, 15],
+                    image: { type: 'jpeg', quality: 0.95 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                    pagebreak: { mode: ['css', 'legacy'] }
+                })
+                .save();
+            toast('PDF downloaded', 'success');
+        } catch (e) {
+            toast('PDF failed to generate. Try Print as a workaround.', 'error');
+        } finally {
+            body.innerHTML = ''; // free memory
+        }
+    }
 
     // ---- Wire buttons --------------------------------------------------
     document.addEventListener('click', (e) => {
