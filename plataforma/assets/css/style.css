@@ -428,3 +428,25 @@ input[type="text"]:focus, input[type="number"]:focus {
     .toolbar .btn-label { display: none; }
     .toolbar .btn { padding: 8px 10px; }
 }
+
+/* ============================================================================
+   Print
+   ============================================================================ */
+@media print {
+    body { background: #fff; color: #000; }
+    .topbar, .toolbar, .mobile-submit, .drawer-backdrop, .modal-backdrop, .toast,
+    .sidebar, .ref-btn, .btn, .pdf-template { display: none !important; }
+    .results-shell { max-width: none; padding: 0; margin: 0; }
+    .results-header { display: block; margin-bottom: 16px; }
+    .results-header h1 { font-size: 22px; color: #000; }
+    .results-header .timestamp { font-size: 11px; color: #555; }
+    .result-card {
+        border: 1px solid #ccc !important; box-shadow: none !important;
+        page-break-inside: avoid; break-inside: avoid;
+        margin-bottom: 10px; padding: 10px;
+    }
+    .result-card .card-head { gap: 12px; }
+    .result-card h3 { font-size: 13px; color: #000; }
+    .result-card .value { color: #000; font-size: 16px; }
+    .result-card .interp { font-size: 11px; color: #000; border-top: 1px solid #ccc; }
+}
