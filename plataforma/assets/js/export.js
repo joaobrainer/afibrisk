@@ -102,7 +102,42 @@
     function doPrint() { window.print(); }
 
     // Placeholders — implemented in Task 10 (CSV) and Task 11 (PDF)
-    function doCSV() { toast('CSV export not available yet', 'error'); }
+    function csvEscape(v) {
+        if (v === null || v === undefined) return '';
+        const s = String(v);
+        if (/[",\r\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+        return s;
+    }
+
+    function doCSV() {
+        const inputKeys = Object.keys(payload.inputs);
+        const scoreKeys = payload.scores.map(s => 'score_' + s.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''));
+        const headers = ['generated_at', ...inputKeys, ...scoreKeys];
+        const row = [
+            payload.generatedAt,
+            ...inputKeys.map(k => payload.inputs[k]),
+            ...payload.scores.map(s => s.value)
+        ];
+        const csv = '\uFEFF'
+            + headers.map(csvEscape).join(',') + '\r\n'
+            + row.map(csvEscape).join(',') + '\r\n';
+
+        try {
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'afibrisk-' + nowFilename() + '.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            toast('CSV downloaded', 'success');
+        } catch (e) {
+            toast("Couldn't export CSV", 'error');
+        }
+    }
+
     function doPDF() { toast('PDF export not available yet', 'error'); }
 
     // ---- Wire buttons --------------------------------------------------
