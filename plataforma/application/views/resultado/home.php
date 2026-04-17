@@ -69,7 +69,7 @@
 
             <!-- Inputs payload for export.js -->
             <script>
-                window.AFIBRISK_INPUTS = <?= json_encode($respostas, JSON_UNESCAPED_UNICODE) ?>;
+                window.AFIBRISK_INPUTS = <?= json_encode($respostas, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>;
             </script>
 
             <!-- Offscreen PDF template: export.js fills `#pdfBody` on demand -->

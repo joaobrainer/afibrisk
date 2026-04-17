@@ -263,8 +263,8 @@ input[type="text"]:focus, input[type="number"]:focus {
 }
 .sidebar li a.active { background: rgba(37, 99, 235, 0.08); color: var(--color-primary); }
 .sidebar li a.active .marker { border-color: var(--color-primary); background: var(--color-primary); color: #fff; }
-.sidebar li a.done .marker { border-color: var(--color-success); background: var(--color-success); color: #fff; }
-.sidebar li a.done .marker::before { content: "✓"; }
+.sidebar li a.done .marker { border-color: var(--color-success); background: var(--color-success); color: transparent; font-size: 0; }
+.sidebar li a.done .marker::before { content: "✓"; color: #fff; font-size: 11px; }
 
 .sidebar .progress { margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
 .sidebar .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--color-muted); margin-bottom: 6px; }

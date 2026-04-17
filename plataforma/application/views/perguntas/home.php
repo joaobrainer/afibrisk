@@ -330,6 +330,8 @@
         sidebar.classList.add('open');
         drawerBackdrop.classList.add('open');
         drawerToggle.setAttribute('aria-expanded', 'true');
+        const firstLink = sidebar.querySelector('a[data-section]');
+        if (firstLink) firstLink.focus();
     }
     function closeDrawer() {
         sidebar.classList.remove('open');
