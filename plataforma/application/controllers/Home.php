@@ -151,6 +151,9 @@ class Home extends CI_Controller {
 		//18. ASAS
 		$this->calculaASAS($dados);
 
+		// Persist raw inputs for exports (Copy, CSV, PDF) on the results page
+		$this->session->set_userdata('respostas', $this->input->post());
+
 		redirect('results');
 	}
 
