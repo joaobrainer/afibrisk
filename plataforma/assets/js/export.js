@@ -137,104 +137,128 @@
         }
     }
 
-    function escapeHtml(s) {
-        return String(s == null ? '' : s)
-            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-    }
-
-    function buildPdfBody() {
-        const parts = [];
-
-        // Header
-        parts.push('<div style="color:#64748b;font-size:11px;margin-bottom:16px">Generated on ' + escapeHtml(payload.generatedHuman) + '</div>');
-
-        // Inputs
-        const inputKeys = Object.keys(payload.inputs);
-        if (inputKeys.length) {
-            parts.push('<h2>Patient inputs</h2>');
-            inputKeys.forEach(k => {
-                const label = escapeHtml(k.replace(/^\d+_?/, '').replace(/_/g, ' '));
-                parts.push('<div class="pdf-kv"><span>' + label + '</span><span>' + escapeHtml(payload.inputs[k]) + '</span></div>');
-            });
-        }
-
-        // Scores
-        parts.push('<h2>Scores</h2>');
-        payload.scores.forEach(s => {
-            parts.push(
-                '<div class="pdf-score"><strong>' + escapeHtml(s.name) + '</strong>'
-                + '<span class="val">' + escapeHtml(s.value) + '</span>'
-                + (s.interpretation ? '<p style="margin:4px 0 0;font-size:11px;color:#333">' + escapeHtml(s.interpretation) + '</p>' : '')
-                + '</div>'
-            );
-        });
-
-        // References — reuse the DOM content from the modal
+    function refTextFor(scoreName) {
         const modal = document.getElementById('referenceBody');
-        if (modal) {
-            parts.push('<h2>References</h2>');
-            payload.scores.forEach(s => {
-                const key = s.name.replace(/\s+/g, '');
-                const ref = modal.querySelector('.reference.' + CSS.escape(key))
-                         || (/BRAFIL/i.test(s.name) ? modal.querySelector('.reference.BRAFIL') : null);
-                if (ref) {
-                    parts.push('<div class="pdf-ref">' + ref.innerHTML + '</div>');
-                }
-            });
-        }
-
-        return parts.join('');
+        if (!modal) return '';
+        const key = scoreName.replace(/\s+/g, '');
+        const ref = modal.querySelector('.reference.' + CSS.escape(key))
+                 || (/BRAFIL/i.test(scoreName) ? modal.querySelector('.reference.BRAFIL') : null);
+        if (!ref) return '';
+        return (ref.innerText || ref.textContent || '').replace(/\s+\n/g, '\n').replace(/\n\s+/g, '\n').trim();
     }
 
-    function makePdfOverlay() {
-        const o = document.createElement('div');
-        o.setAttribute('data-afibrisk-pdf-overlay', '');
-        o.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(248,250,252,0.96);backdrop-filter:blur(2px);font:600 15px system-ui,sans-serif;color:#0f172a;letter-spacing:0.02em';
-        o.textContent = 'Generating PDF…';
-        return o;
-    }
-
-    async function doPDF() {
-        if (typeof window.html2pdf === 'undefined') {
-            toast('PDF failed to generate. Try Print as a workaround.', 'error');
+    function doPDF() {
+        const jspdfNs = window.jspdf;
+        const JsPDF = jspdfNs && jspdfNs.jsPDF;
+        if (!JsPDF) {
+            toast('PDF library failed to load. Try Print as a workaround.', 'error');
             return;
         }
-        const tpl = document.getElementById('pdfTemplate');
-        const body = document.getElementById('pdfBody');
-        if (!tpl || !body) return;
-
-        body.innerHTML = buildPdfBody();
-
-        // Move the template on-screen so html2canvas can render it reliably,
-        // and cover the page with a loading overlay so the user doesn't see the flash.
-        const origLeft = tpl.style.left;
-        const origTop  = tpl.style.top;
-        tpl.style.left = '0';
-        tpl.style.top  = '0';
-        const overlay = makePdfOverlay();
-        document.body.appendChild(overlay);
 
         try {
-            await window.html2pdf()
-                .from(tpl)
-                .set({
-                    filename: 'afibrisk-report-' + nowFilename() + '.pdf',
-                    margin: [15, 15, 15, 15],
-                    image: { type: 'jpeg', quality: 0.95 },
-                    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                    pagebreak: { mode: ['css', 'legacy'] }
-                })
-                .save();
+            const pdf = new JsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+            const pageWidth  = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const margin = 15;
+            const contentWidth = pageWidth - 2 * margin;
+            let y = margin;
+
+            function ensureSpace(needed) {
+                if (y + needed > pageHeight - margin) {
+                    pdf.addPage();
+                    y = margin;
+                }
+            }
+            function writeText(text, opts) {
+                opts = opts || {};
+                const size   = opts.size   || 10;
+                const style  = opts.style  || 'normal';
+                const color  = opts.color  || [15, 23, 42];
+                const indent = opts.indent || 0;
+                const lineH  = size * 0.45;
+                pdf.setFont('helvetica', style);
+                pdf.setFontSize(size);
+                pdf.setTextColor(color[0], color[1], color[2]);
+                const lines = pdf.splitTextToSize(String(text), contentWidth - indent);
+                lines.forEach(line => {
+                    ensureSpace(lineH);
+                    pdf.text(line, margin + indent, y);
+                    y += lineH;
+                });
+            }
+            function hr() {
+                ensureSpace(4);
+                pdf.setDrawColor(226, 232, 240);
+                pdf.setLineWidth(0.2);
+                pdf.line(margin, y, pageWidth - margin, y);
+                y += 3;
+            }
+            function gap(mm) { y += mm; }
+
+            // Title block
+            writeText('AFibRisk — Assessment Report', { size: 18, style: 'bold' });
+            writeText('Generated on ' + payload.generatedHuman, { size: 9, color: [100, 116, 139] });
+            gap(4);
+            hr();
+
+            // Patient inputs
+            const inputKeys = Object.keys(payload.inputs);
+            if (inputKeys.length) {
+                writeText('Patient inputs', { size: 13, style: 'bold' });
+                gap(1);
+                inputKeys.forEach(k => {
+                    const label = k.replace(/^\d+_?/, '').replace(/_/g, ' ');
+                    writeText(label + ': ' + payload.inputs[k], { size: 10, color: [30, 41, 59] });
+                });
+                gap(3);
+                hr();
+            }
+
+            // Scores
+            writeText('Scores', { size: 13, style: 'bold' });
+            gap(1);
+            payload.scores.forEach(s => {
+                ensureSpace(10);
+                writeText(s.name + ' — ' + s.value, { size: 11, style: 'bold', color: [37, 99, 235] });
+                if (s.interpretation) {
+                    writeText(s.interpretation, { size: 9, color: [51, 65, 85], indent: 2 });
+                }
+                gap(1);
+            });
+            gap(2);
+
+            // References
+            const hasRefs = payload.scores.some(s => refTextFor(s.name));
+            if (hasRefs) {
+                hr();
+                writeText('References', { size: 13, style: 'bold' });
+                gap(1);
+                payload.scores.forEach(s => {
+                    const text = refTextFor(s.name);
+                    if (!text) return;
+                    ensureSpace(8);
+                    writeText(s.name, { size: 10, style: 'bold' });
+                    writeText(text, { size: 8, color: [71, 85, 105], indent: 2 });
+                    gap(2);
+                });
+            }
+
+            // Footer on every page
+            const pageCount = pdf.internal.getNumberOfPages();
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(8);
+            pdf.setTextColor(100, 116, 139);
+            for (let i = 1; i <= pageCount; i++) {
+                pdf.setPage(i);
+                pdf.text('Not a medical device. For educational/research use only. Page ' + i + ' of ' + pageCount,
+                    pageWidth / 2, pageHeight - 8, { align: 'center' });
+            }
+
+            pdf.save('afibrisk-report-' + nowFilename() + '.pdf');
             toast('PDF downloaded', 'success');
         } catch (e) {
+            console.error('[afibrisk] PDF generation failed:', e);
             toast('PDF failed to generate. Try Print as a workaround.', 'error');
-        } finally {
-            tpl.style.left = origLeft || '-10000px';
-            tpl.style.top  = origTop  || '0';
-            body.innerHTML = '';
-            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
         }
     }
 

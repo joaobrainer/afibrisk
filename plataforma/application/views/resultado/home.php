@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php $this->load->view('header'); ?>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js" integrity="sha512-+EeCylkt9WHJk5tGJxYdecHOcXFRME7qnbsfeMsdQL6NUPYm2+uGFmyleEqsmVoap/f3dN/sc3BX9t9kHXkHHg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <header class="topbar">
@@ -71,16 +71,6 @@
             <script>
                 window.AFIBRISK_INPUTS = <?= json_encode($respostas, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>;
             </script>
-
-            <!-- Offscreen PDF template: export.js fills `#pdfBody` on demand -->
-            <div class="pdf-template" id="pdfTemplate" aria-hidden="true">
-                <h1>AFibRisk — Assessment Report</h1>
-                <div id="pdfBody"></div>
-                <footer>
-                    Not a medical device. This report is for educational/research use only.
-                    See the About page for the full disclaimer.
-                </footer>
-            </div>
 
             <!-- References modal (markup preserved from previous version, re-classed) -->
             <div class="modal-backdrop" id="referenceModal" role="dialog" aria-modal="true" aria-labelledby="referenceModalLabel">

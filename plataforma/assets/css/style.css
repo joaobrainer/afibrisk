@@ -408,22 +408,6 @@ input[type="text"]:focus, input[type="number"]:focus {
 .modal-body .reference p { font-size: 14px; color: var(--color-ink-2); line-height: 1.6; }
 .modal-body .reference p:first-child b { color: var(--color-ink); }
 
-/* PDF template (offscreen) */
-.pdf-template {
-    position: absolute; left: -10000px; top: 0; width: 780px;
-    padding: 20px; background: #fff; color: #000;
-    font-family: var(--font-sans); font-size: 12px;
-}
-.pdf-template h1 { font-size: 20px; }
-.pdf-template h2 { font-size: 14px; margin-top: 18px; }
-.pdf-template .pdf-kv { display: grid; grid-template-columns: 200px 1fr; gap: 4px 12px; margin-bottom: 4px; font-size: 12px; }
-.pdf-template .pdf-kv span:first-child { color: #555; }
-.pdf-template .pdf-score { border-top: 1px solid #ddd; padding-top: 8px; margin-top: 6px; }
-.pdf-template .pdf-score strong { font-size: 13px; }
-.pdf-template .pdf-score .val { color: #2563eb; font-family: var(--font-mono); font-weight: 700; margin-left: 8px; }
-.pdf-template .pdf-ref { border-top: 1px solid #eee; padding-top: 6px; margin-top: 8px; font-size: 11px; color: #333; }
-.pdf-template footer { margin-top: 24px; padding-top: 12px; border-top: 2px solid #0f172a; font-size: 10px; color: #555; }
-
 @media (max-width: 640px) {
     .toolbar .btn-label { display: none; }
     .toolbar .btn { padding: 8px 10px; }
@@ -435,7 +419,7 @@ input[type="text"]:focus, input[type="number"]:focus {
 @media print {
     body { background: #fff; color: #000; }
     .topbar, .toolbar, .mobile-submit, .drawer-backdrop, .modal-backdrop, .toast,
-    .sidebar, .ref-btn, .btn, .pdf-template { display: none !important; }
+    .sidebar, .ref-btn, .btn { display: none !important; }
     .results-shell { max-width: none; padding: 0; margin: 0; }
     .results-header { display: block; margin-bottom: 16px; }
     .results-header h1 { font-size: 22px; color: #000; }
