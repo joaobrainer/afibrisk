@@ -12,12 +12,17 @@
     </header>
 
     <main class="home-hero">
-        <div class="eyebrow">Clinical Risk Assessment</div>
-        <h1>AFibRisk</h1>
-        <p class="lead">A research tool that aggregates 17 clinical scores for Atrial Fibrillation risk prediction from published literature.</p>
-        <div class="actions">
-            <a href="<?php echo base_url('questions'); ?>" class="btn btn-primary">Start assessment</a>
-            <a href="<?php echo base_url('about'); ?>" class="btn btn-secondary">About</a>
+        <div class="hero-copy">
+            <div class="eyebrow">Clinical Risk Assessment</div>
+            <h1>AFibRisk</h1>
+            <p class="lead">A research tool that aggregates 17 clinical scores for Atrial Fibrillation risk prediction from published literature.</p>
+            <div class="actions">
+                <a href="<?php echo base_url('questions'); ?>" class="btn btn-primary">Start assessment</a>
+                <a href="<?php echo base_url('about'); ?>" class="btn btn-secondary">About</a>
+            </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+            <img src="<?php echo base_url('assets/images/bg-1.jpg'); ?>" alt="">
         </div>
     </main>
 
