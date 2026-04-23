@@ -52,9 +52,11 @@ body {
         radial-gradient(620px 380px at 5% 95%, rgba(9, 100, 203, 0.18), transparent 65%),
         radial-gradient(520px 320px at 50% 50%, rgba(167, 243, 208, 0.08), transparent 70%),
         var(--color-surface-alt);
-    background-attachment: fixed;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    body { background-attachment: fixed; }
 }
 
 h1, h2, h3, h4 { color: var(--color-ink); font-weight: 700; margin: 0 0 var(--space-4); line-height: 1.25; }
@@ -209,9 +211,14 @@ input[type="text"]:focus, input[type="number"]:focus {
 }
 .home-hero h1 {
     font-size: 48px; margin-bottom: var(--space-4);
+    color: var(--color-ink);
     background: linear-gradient(90deg, #0b2545 0%, #0964cb 60%, #14b8a6 100%);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: transparent;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .home-hero h1 {
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+    }
 }
 .home-hero .lead {
     font-size: 18px; color: var(--color-muted); max-width: 520px; margin: 0 0 var(--space-8);
@@ -408,9 +415,14 @@ input[type="text"]:focus, input[type="number"]:focus {
 .results-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); }
 .results-header h1 {
     margin: 0;
+    color: var(--color-ink);
     background: linear-gradient(90deg, #0b2545 0%, #0964cb 70%, #14b8a6 100%);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: transparent;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .results-header h1 {
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+    }
 }
 .results-header .timestamp { color: var(--color-muted); font-size: 13px; }
 
