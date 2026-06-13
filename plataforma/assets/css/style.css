@@ -299,6 +299,22 @@ input[type="text"]:focus, input[type="number"]:focus {
 .disclaimer-card p { font-size: 13px; color: var(--color-ink-2); margin-bottom: var(--space-3); }
 .disclaimer-card p:last-child { margin-bottom: 0; }
 
+.citations h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--color-primary); margin-bottom: var(--space-4);
+}
+.citation-list {
+    list-style: decimal; padding-left: 1.25rem; margin: 0;
+    counter-reset: cite;
+}
+.citation-list li {
+    font-size: 13px; line-height: 1.55; color: var(--color-ink-2);
+    margin-bottom: var(--space-4); padding-left: 4px;
+}
+.citation-list li:last-child { margin-bottom: 0; }
+.citation-list li::marker { color: var(--color-muted); font-weight: 600; }
+.citation-list a { word-break: break-word; }
+
 /* ============================================================================
    Questions page layout
    ============================================================================ */
